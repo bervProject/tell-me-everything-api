@@ -6,6 +6,7 @@ export default (options = {}): Hook => {
   return async (context: HookContext) => {
     const { headers } = context.params;
     const { data } = context;
+    context.statusCode = 200;
     return context;
   };
 }
