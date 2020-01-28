@@ -52,7 +52,7 @@
     "@types/compression": "^1.0.1",
     "@types/cors": "^2.8.6",
     "@types/helmet": "^0.0.45",
-    "@types/jest": "^24.9.1",
+    "@types/jest": "^25.1.0",
     "@types/serve-favicon": "^2.5.0",
     "axios": "^0.19.2",
     "jest": "^25.1.0",
