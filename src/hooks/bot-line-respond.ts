@@ -2,7 +2,7 @@
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 import { Hook, HookContext } from '@feathersjs/feathers';
 import logger from '../logger';
-//import Client from '../line-client';
+import Client from '../line-client';
 
 export default (options = {}): Hook => {
   return async (context: HookContext) => {
@@ -10,6 +10,13 @@ export default (options = {}): Hook => {
     const { data } = context;
     logger.info(JSON.stringify(headers));
     logger.info(JSON.stringify(data));
+    const event = data.events[0];
+    if (event.source.type == "user") {
+      Client.replyMessage(event.replyToken, {
+        type: 'text',
+        text: 'Hello World'
+      });
+    }
     //Client.pushMessage()
     context.statusCode = 200;
     context.result = data;
