@@ -12,15 +12,25 @@ export default (options = {}): Hook => {
     logger.info(JSON.stringify(data));
     const event = data.events[0];
     logger.info(JSON.stringify(event));
-    if (event.source.type == "user") {
-      logger.info("Reply User");
-      try {
+    if (event.type === "message") {
+      const message = event.message;
+      logger.info(JSON.stringify(message));
+      if (message.type === "text" && message.text === "bye") {
+        if (event.source.type === "room") {
+          client.leaveRoom(event.source.roomId);
+        } else if (event.source.type === "group") {
+          client.leaveGroup(event.source.groupId);
+        } else {
+          client.replyMessage(event.replyToken, {
+            type: "text",
+            text: "I cannot leave a 1-on-1 chat!",
+          });
+        }
+      } else if (message.type == "text" && message.text == "hi") {
         client.replyMessage(event.replyToken, {
           type: "text",
-          text: "Hello World"
+          text: "Hello World!"
         });
-      } catch (err) {
-        logger.error(JSON.stringify(err));
       }
     }
     context.statusCode = 200;
