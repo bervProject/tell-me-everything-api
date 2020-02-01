@@ -11,14 +11,17 @@ export default (options = {}): Hook => {
     logger.info(JSON.stringify(headers));
     logger.info(JSON.stringify(data));
     const event = data.events[0];
-    logger.info(event);
+    logger.info(JSON.stringify(event));
     if (event.source.type == "user") {
       logger.info("Reply User");
-      logger.info(event.replyToken);
-      client.replyMessage(event.replyToken, {
-        type: "text",
-        text: "Hello World"
-      });
+      try {
+        client.replyMessage(event.replyToken, {
+          type: "text",
+          text: "Hello World"
+        });
+      } catch (err) {
+        logger.error(JSON.stringify(err));
+      }
     }
     context.statusCode = 200;
     context.result = data.events;
