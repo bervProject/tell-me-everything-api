@@ -11,14 +11,17 @@ export default (options = {}): Hook => {
     logger.info(JSON.stringify(headers));
     logger.info(JSON.stringify(data));
     const event = data.events[0];
+    const sourceType = event.source.type;
     logger.info(JSON.stringify(event));
     if (event.type === "message") {
       const message = event.message;
+      const messageType = message.type;
+      const messageText = message.text.toLowerCase();
       logger.info(JSON.stringify(message));
-      if (message.type === "text" && message.text === "bye") {
-        if (event.source.type === "room") {
+      if (messageType === "text" && messageText === "bye") {
+        if (sourceType === "room") {
           client.leaveRoom(event.source.roomId);
-        } else if (event.source.type === "group") {
+        } else if (sourceType === "group") {
           client.leaveGroup(event.source.groupId);
         } else {
           client.replyMessage(event.replyToken, {
@@ -26,7 +29,7 @@ export default (options = {}): Hook => {
             text: "I cannot leave a 1-on-1 chat!",
           });
         }
-      } else if (message.type == "text" && message.text == "hi") {
+      } else if (messageType == "text" && messageText == "hi") {
         client.replyMessage(event.replyToken, {
           type: "text",
           text: "Hello World!"
