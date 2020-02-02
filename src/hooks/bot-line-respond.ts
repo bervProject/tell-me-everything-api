@@ -17,7 +17,7 @@ async function handleEvent(event: WebhookEvent) {
   logger.info(JSON.stringify(event));
   const eventType = event.type;
   const sourceType = event.source.type;
-  logger.info(eventType);
+  logger.info(`We get event type: ${eventType}`);
   if (eventType === "message") {
     const messageEvent = event as MessageEvent;
     const message = messageEvent.message;
@@ -47,7 +47,7 @@ async function handleEvent(event: WebhookEvent) {
     const joinEvent = event as MemberJoinEvent;
     const joinedMembers = joinEvent.joined.members;
     for (const member of joinedMembers) {
-      logger.info(`Welcome to ${member.userId}`);
+      logger.info(`Welcome ${member.userId}`);
       const profile = await client.getProfile(member.userId);
       await client.replyMessage(joinEvent.replyToken, {
         type: "text",
@@ -60,8 +60,10 @@ async function handleEvent(event: WebhookEvent) {
 export default (options = {}): Hook => {
   return async (context: HookContext) => {
     const { data } = context;
-    logger.info(JSON.stringify(data));
-    const events = (data as WebhookRequestBody).events;
+    logger.info(`Data sending to us: ${JSON.stringify(data)}`);
+    const hookBody = data as WebhookRequestBody;
+    logger.info(`Event sending to ${hookBody.destination}`);
+    const events = hookBody.events;
     for (const event of events) {
       handleEvent(event);
     }
