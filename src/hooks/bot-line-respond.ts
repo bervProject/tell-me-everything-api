@@ -10,17 +10,18 @@ import {
   WebhookEvent,
   WebhookRequestBody,
   Room,
-  Group
+  Group,
+  FollowEvent
 } from '@line/bot-sdk';
 
 async function handleEvent(event: WebhookEvent) {
   logger.info(JSON.stringify(event));
-  const eventType = event.type;
-  const sourceType = event.source.type;
+  const eventType = event.type.toLowerCase();
   logger.info(`We get event type: ${eventType}`);
   if (eventType === "message") {
     const messageEvent = event as MessageEvent;
     const message = messageEvent.message;
+    const sourceType = messageEvent.source.type;
     logger.info(JSON.stringify(message));
     const messageType = message.type;
     if (messageType === "text") {
@@ -53,6 +54,20 @@ async function handleEvent(event: WebhookEvent) {
         type: "text",
         text: `Hi, ${profile.displayName}! Welcome to the group!`
       });
+    }
+  } else if (eventType === "follow") {
+    const followEvent = event as FollowEvent;
+    const sourceType = followEvent.source.type.toLowerCase();
+    if (sourceType === "user") {
+      const userId = followEvent.source.userId;
+      logger.info(`Welcoming to ${userId}`);
+      if (userId != undefined) {
+        const profile = await client.getProfile(userId);
+        await client.replyMessage(followEvent.replyToken, {
+          type: "text",
+          text: `Hi ${profile.displayName}, thank you for add us!`
+        });
+      }
     }
   }
 }
