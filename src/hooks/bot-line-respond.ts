@@ -42,6 +42,11 @@ async function handleEvent(event: WebhookEvent) {
           type: "text",
           text: "Hello World!"
         });
+      } else {
+        await client.replyMessage(messageEvent.replyToken, {
+          type: "text",
+          text: "Maaf saat ini perintah yang anda berikan tidak tersedia."
+        });
       }
     }
   } else if (eventType === "memberJoined") {
