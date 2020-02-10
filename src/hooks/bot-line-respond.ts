@@ -16,7 +16,7 @@ import {
 
 async function handleEvent(event: WebhookEvent) {
   logger.info(JSON.stringify(event));
-  const eventType = event.type.toLowerCase();
+  const eventType = event.type;
   logger.info(`We get event type: ${eventType}`);
   if (eventType === "message") {
     const messageEvent = event as MessageEvent;
@@ -53,11 +53,11 @@ async function handleEvent(event: WebhookEvent) {
     const joinEvent = event as MemberJoinEvent;
     const joinedMembers = joinEvent.joined.members;
     for (const member of joinedMembers) {
-      logger.info(`Welcome ${member.userId}`);
+      logger.info(`Welcome to ${member.userId}`);
       const profile = await client.getProfile(member.userId);
       await client.replyMessage(joinEvent.replyToken, {
         type: "text",
-        text: `Hi, ${profile.displayName}! Welcome to the group!`
+        text: `Halo kak, ${profile.displayName}! Selamat datang di grup!`
       });
     }
   } else if (eventType === "follow") {
@@ -70,7 +70,7 @@ async function handleEvent(event: WebhookEvent) {
         const profile = await client.getProfile(userId);
         await client.replyMessage(followEvent.replyToken, {
           type: "text",
-          text: `Hi ${profile.displayName}, thank you for add us!`
+          text: `Halo kak ${profile.displayName}, terima kasih sudah menambahkan saya!`
         });
       }
     }
