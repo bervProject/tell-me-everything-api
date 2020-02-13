@@ -51,8 +51,8 @@ async function handleEvent(event: WebhookEvent) {
           type: "text",
           text: name !== "" ? `Halo, kak ${name}!` : "Halo!"
         });
-      } else if (messageText.startsWith("search ")) {
-        const splitText = messageText.split(" ", 1);
+      } else if (messageText.startsWith("search")) {
+        const splitText = messageText.split(" ", 2);
         if (splitText.length > 1) {
           const searchText = splitText[1];
           const credentials = new CognitiveServicesCredentials(process.env.SEARCH_KEY || "");
