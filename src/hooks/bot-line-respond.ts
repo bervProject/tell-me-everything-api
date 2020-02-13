@@ -67,6 +67,8 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
             type: "text",
             text: "Sepertinya pencarian kakak tidak ditemukan. :("
           });
+        } else if (output.length > 5) {
+          await client.replyMessage(messageEvent.replyToken, output.slice(0,4));
         } else {
           await client.replyMessage(messageEvent.replyToken, output);
         }
