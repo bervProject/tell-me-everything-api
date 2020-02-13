@@ -53,12 +53,23 @@ async function handleEvent(event: WebhookEvent) {
         });
       } else if (messageText.startsWith("search ")) {
         const splitText = messageText.split(" ", 1);
-        const searchText = splitText[1];
-        const credentials = new CognitiveServicesCredentials(process.env.SEARCH_KEY || "");
-        const webSearchClient = new WebSearchClient(credentials);
-        const result = await webSearchClient.web.search(searchText);
-        console.log(result.webPages?.value);
-        console.log(result.images?.value);
+        if (splitText.length > 1) {
+          const searchText = splitText[1];
+          const credentials = new CognitiveServicesCredentials(process.env.SEARCH_KEY || "");
+          const webSearchClient = new WebSearchClient(credentials);
+          const result = await webSearchClient.web.search(searchText);
+          logger.info(JSON.stringify(result.webPages?.value));
+          logger.info(JSON.stringify(result.images?.value));
+          await client.replyMessage(messageEvent.replyToken, {
+            type: "text",
+            text: result.webPages ? `Hasilnya: ${JSON.stringify(result.webPages.value)}` : "Sepertinya pencarian kakak tidak ditemukan. :("
+          });
+        } else {
+          await client.replyMessage(messageEvent.replyToken, {
+            type: "text",
+            text: "Masukan kata kunci yang ingin anda cari. Misalkan, search ayam"
+          })
+        }
       } else {
         await client.replyMessage(messageEvent.replyToken, {
           type: "text",
