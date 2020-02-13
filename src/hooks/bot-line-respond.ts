@@ -15,7 +15,6 @@ import {
   Group,
   JoinEvent,
   FollowEvent,
-  Message,
   TextMessage
 } from '@line/bot-sdk';
 

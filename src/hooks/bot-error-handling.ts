@@ -2,6 +2,7 @@
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 import { Hook, HookContext } from '@feathersjs/feathers';
 import { SignatureValidationFailed, JSONParseError } from '@line/bot-sdk';
+import logger from '../logger';
 
 export default (options = {}): Hook => {
   return async (context: HookContext) => {
@@ -15,6 +16,7 @@ export default (options = {}): Hook => {
       context.error = error.raw;
       context.result = error.raw;
     }
+    logger.error(`Error: ${JSON.stringify(context)}`);
     return context;
   };
 }
