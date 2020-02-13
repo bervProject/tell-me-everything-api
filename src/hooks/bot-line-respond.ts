@@ -1,6 +1,8 @@
 // Use this hook to manipulate incoming or outgoing data.
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 import { Hook, HookContext } from '@feathersjs/feathers';
+import { CognitiveServicesCredentials } from 'ms-rest-azure';
+import { WebSearchClient } from 'azure-cognitiveservices-websearch';
 import logger from '../logger';
 import client from '../line-client';
 import {
@@ -10,7 +12,8 @@ import {
   WebhookEvent,
   WebhookRequestBody,
   Room,
-  Group
+  Group,
+  JoinEvent
 } from '@line/bot-sdk';
 
 async function handleEvent(event: WebhookEvent) {
@@ -36,11 +39,19 @@ async function handleEvent(event: WebhookEvent) {
             text: "I cannot leave a 1-on-1 chat!",
           });
         }
-      } else if (messageText == "hi") {
+      } else if (messageText === "hi") {
         await client.replyMessage(messageEvent.replyToken, {
           type: "text",
           text: "Hello World!"
         });
+      } else if (messageText.startsWith("search ")) {
+        const splitText = messageText.split(" ", 1);
+        const searchText = splitText[1];
+        const credentials = new CognitiveServicesCredentials(process.env.SEARCH_KEY || "");
+        const webSearchClient = new WebSearchClient(credentials);
+        const result = await webSearchClient.web.search(searchText);
+        console.log(result.webPages?.value);
+        console.log(result.images?.value);
       }
     }
   } else if (eventType === "memberJoined") {
@@ -54,6 +65,12 @@ async function handleEvent(event: WebhookEvent) {
         text: `Hi, ${profile.displayName}! Welcome to the group!`
       });
     }
+  } else if (eventType === "join") {
+    const joinEvent = event as JoinEvent;
+    await client.replyMessage(joinEvent.replyToken, {
+      type: "text",
+      text: "Halo semuanya! Terima kasih telah mengundang kami di grup ini! Ketik 'bantuan' tanpa tanda petik untuk melihat fungsi dari bot ini."
+    });
   }
 }
 
