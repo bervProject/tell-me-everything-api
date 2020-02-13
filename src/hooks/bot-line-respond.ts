@@ -14,7 +14,9 @@ import {
   Room,
   Group,
   JoinEvent,
-  FollowEvent
+  FollowEvent,
+  Message,
+  TextMessage
 } from '@line/bot-sdk';
 
 async function handleEvent(event: WebhookEvent) {
@@ -58,12 +60,22 @@ async function handleEvent(event: WebhookEvent) {
           const credentials = new CognitiveServicesCredentials(process.env.SEARCH_KEY || "");
           const webSearchClient = new WebSearchClient(credentials);
           const result = await webSearchClient.web.search(searchText);
+          const output = new Array<TextMessage>();
           logger.info(JSON.stringify(result.webPages?.value));
           logger.info(JSON.stringify(result.images?.value));
-          await client.replyMessage(messageEvent.replyToken, {
-            type: "text",
-            text: result.webPages ? `Hasilnya: ${JSON.stringify(result.webPages.value)}` : "Sepertinya pencarian kakak tidak ditemukan. :("
-          });
+          if (result.webPages) {
+            for (let content of result.webPages.value) {
+              output.push({type: "text", text: content.displayUrl || ""});
+            }
+          }
+          if (output.length == 0) {
+            await client.replyMessage(messageEvent.replyToken, {
+              type: "text",
+              text: "Sepertinya pencarian kakak tidak ditemukan. :("
+            });
+          } else {
+            await client.replyMessage(messageEvent.replyToken, output);
+          }
         } else {
           await client.replyMessage(messageEvent.replyToken, {
             type: "text",
