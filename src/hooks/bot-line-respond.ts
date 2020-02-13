@@ -13,17 +13,18 @@ import {
   WebhookRequestBody,
   Room,
   Group,
-  JoinEvent
+  JoinEvent,
+  FollowEvent
 } from '@line/bot-sdk';
 
 async function handleEvent(event: WebhookEvent) {
   logger.info(JSON.stringify(event));
   const eventType = event.type;
-  const sourceType = event.source.type;
   logger.info(`We get event type: ${eventType}`);
   if (eventType === "message") {
     const messageEvent = event as MessageEvent;
     const message = messageEvent.message;
+    const sourceType = messageEvent.source.type;
     logger.info(JSON.stringify(message));
     const messageType = message.type;
     if (messageType === "text") {
@@ -40,9 +41,15 @@ async function handleEvent(event: WebhookEvent) {
           });
         }
       } else if (messageText === "hi") {
+        const userId = messageEvent.source.userId;
+        let name = "";
+        if (userId != undefined) {
+          const profile = await client.getProfile(userId);
+          name = profile.displayName;
+        }
         await client.replyMessage(messageEvent.replyToken, {
           type: "text",
-          text: "Hello World!"
+          text: name !== "" ? `Halo, kak ${name}!` : "Halo!"
         });
       } else if (messageText.startsWith("search ")) {
         const splitText = messageText.split(" ", 1);
@@ -52,17 +59,22 @@ async function handleEvent(event: WebhookEvent) {
         const result = await webSearchClient.web.search(searchText);
         console.log(result.webPages?.value);
         console.log(result.images?.value);
+      } else {
+        await client.replyMessage(messageEvent.replyToken, {
+          type: "text",
+          text: "Maaf saat ini perintah yang anda berikan tidak tersedia. Mohon masukan 'bantuan' untuk info lebih lanjut."
+        });
       }
     }
   } else if (eventType === "memberJoined") {
     const joinEvent = event as MemberJoinEvent;
     const joinedMembers = joinEvent.joined.members;
     for (const member of joinedMembers) {
-      logger.info(`Welcome ${member.userId}`);
+      logger.info(`Welcome to ${member.userId}`);
       const profile = await client.getProfile(member.userId);
       await client.replyMessage(joinEvent.replyToken, {
         type: "text",
-        text: `Hi, ${profile.displayName}! Welcome to the group!`
+        text: `Halo kak, ${profile.displayName}! Selamat datang di grup!`
       });
     }
   } else if (eventType === "join") {
@@ -71,6 +83,20 @@ async function handleEvent(event: WebhookEvent) {
       type: "text",
       text: "Halo semuanya! Terima kasih telah mengundang kami di grup ini! Ketik 'bantuan' tanpa tanda petik untuk melihat fungsi dari bot ini."
     });
+  } else if (eventType === "follow") {
+    const followEvent = event as FollowEvent;
+    const sourceType = followEvent.source.type.toLowerCase();
+    if (sourceType === "user") {
+      const userId = followEvent.source.userId;
+      logger.info(`Welcoming to ${userId}`);
+      if (userId != undefined) {
+        const profile = await client.getProfile(userId);
+        await client.replyMessage(followEvent.replyToken, {
+          type: "text",
+          text: `Halo kak ${profile.displayName}, terima kasih sudah menambahkan saya!`
+        });
+      }
+    }
   }
 }
 
