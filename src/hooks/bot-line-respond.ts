@@ -38,7 +38,7 @@ async function handleEvent(event: WebhookEvent) {
         } else {
           await client.replyMessage(messageEvent.replyToken, {
             type: "text",
-            text: "I cannot leave a 1-on-1 chat!",
+            text: "Maaf, kak. Kita lagi saling chat. Kita gak bisa ninggalin kakak di chat ini. :'(",
           });
         }
       } else if (messageText === "hi") {
@@ -50,7 +50,7 @@ async function handleEvent(event: WebhookEvent) {
         }
         await client.replyMessage(messageEvent.replyToken, {
           type: "text",
-          text: name !== "" ? `Halo, kak ${name}!` : "Halo!"
+          text: name !== "" ? `Halo, kak ${name}! Semoga hari-harinya menyenangkan!` : "Halo! Semoga hari-harinya menyenangkan!"
         });
       } else if (messageText.startsWith("search")) {
         const splitText = messageText.split(" ", 2);
@@ -81,6 +81,14 @@ async function handleEvent(event: WebhookEvent) {
             text: "Masukan kata kunci yang ingin anda cari. Misalkan, search ayam"
           })
         }
+      } else if (messageText === "bantuan") {
+        await client.replyMessage(messageEvent.replyToken, [{
+          type: "text",
+          text: "Halo kak! Jadi kita cuman bisa perintah ini loh,"
+        }, {
+          type: "text",
+          text: "bye, hi, search"
+        }])
       } else {
         await client.replyMessage(messageEvent.replyToken, {
           type: "text",
