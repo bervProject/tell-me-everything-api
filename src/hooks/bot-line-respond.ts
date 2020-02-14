@@ -72,7 +72,7 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
                 type: "uri",
                 uri: content.displayUrl || "",
                 altUri: {
-                  desktop: "link"
+                  desktop: content.displayUrl || "link"
                 }
               }
             });
