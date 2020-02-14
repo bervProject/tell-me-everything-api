@@ -129,8 +129,8 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
                     text: "Hi",
                     action: {
                       label: "Hi",
-                      type: "postback",
-                      data: "Hi"
+                      type: "message",
+                      text: "Hi"
                     }
                   }
                 ]
@@ -147,8 +147,8 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
                     text: "Bye",
                     action: {
                       label: "Bye",
-                      type: "postback",
-                      data: "Bye"
+                      type: "message",
+                      text: "Bye"
                     }
                   }
                 ]
@@ -162,7 +162,12 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
                 contents: [
                   {
                     type: "text",
-                    text: "Search"
+                    text: "Search",
+                    action: {
+                      label: "Search",
+                      type: "message",
+                      text: "Search"
+                    }
                   }
                 ]
               }
