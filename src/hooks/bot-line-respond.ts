@@ -73,7 +73,7 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
                   layout: "vertical",
                   contents: [{
                     type: "text",
-                    text: content.displayUrl || ""
+                    text: content.url || ""
                   }]
                 },
                 action: {
