@@ -15,7 +15,7 @@ import {
   Group,
   JoinEvent,
   FollowEvent,
-  TextMessage
+  FlexBubble
 } from '@line/bot-sdk';
 
 async function proccessMessageEvent(messageEvent: MessageEvent) {
@@ -54,12 +54,38 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
         const credentials = new CognitiveServicesCredentials(process.env.SEARCH_KEY || "");
         const webSearchClient = new WebSearchClient(credentials);
         const result = await webSearchClient.web.search(searchText);
-        const output = new Array<TextMessage>();
-        // logger.info(JSON.stringify(result.webPages?.value));
-        // logger.info(JSON.stringify(result.images?.value));
+        const output = new Array<FlexBubble>();
         if (result.webPages) {
           for (let content of result.webPages.value) {
-            output.push({ type: "text", text: content.displayUrl || "" });
+            output.push({
+              type: "bubble",
+              header: {
+                type: "box",
+                layout: "vertical",
+                contents: [
+                  {
+                    text: content.name || "",
+                    type: "text"
+                  }
+                ]
+              },
+              body: {
+                type: "box",
+                layout: "vertical",
+                contents: [{
+                  type: "text",
+                  text: content.displayUrl || ""
+                }]
+              },
+              footer: {
+                type: "box",
+                layout: "vertical",
+                contents: [{
+                  type: "text",
+                  text: content.description || ""
+                }]
+              }
+            });
           }
         }
         if (output.length == 0) {
@@ -67,10 +93,24 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
             type: "text",
             text: "Sepertinya pencarian kakak tidak ditemukan. :("
           });
-        } else if (output.length > 5) {
-          await client.replyMessage(messageEvent.replyToken, output.slice(0,5));
+        } else if (output.length > 10) {
+          await client.replyMessage(messageEvent.replyToken, {
+            type: "flex",
+            altText: "Web Result",
+            contents: {
+              type: "carousel",
+              contents: output.slice(0, 10)
+            }
+          });
         } else {
-          await client.replyMessage(messageEvent.replyToken, output);
+          await client.replyMessage(messageEvent.replyToken, {
+            type: "flex",
+            altText: "Web Result",
+            contents: {
+              type: "carousel",
+              contents: output
+            }
+          });
         }
       } else {
         await client.replyMessage(messageEvent.replyToken, {
@@ -114,10 +154,16 @@ async function proccessFollowEvent(followEvent: FollowEvent) {
     logger.info(`Welcoming to ${userId}`);
     if (userId != undefined) {
       const profile = await client.getProfile(userId);
-      await client.replyMessage(followEvent.replyToken, {
+      await client.replyMessage(followEvent.replyToken, [{
         type: "text",
         text: `Halo kak ${profile.displayName}, terima kasih sudah menambahkan saya!`
-      });
+      }, {
+        type: "text",
+        text: "Ketik 'bantuan' untuk perintah lebih lanjut ya, kak."
+      }, {
+        type: "text",
+        text: "Kami bisa membantu kakak mencari banyak hal di web."
+      }]);
     }
   }
 }
@@ -135,10 +181,13 @@ async function handleEvent(event: WebhookEvent) {
       await proccessMemberJoin(joinEvent);
     } else if (eventType === "join") {
       const joinEvent = event as JoinEvent;
-      await client.replyMessage(joinEvent.replyToken, {
+      await client.replyMessage(joinEvent.replyToken, [{
         type: "text",
         text: "Halo semuanya! Terima kasih telah mengundang kami di grup ini! Ketik 'bantuan' tanpa tanda petik untuk melihat fungsi dari bot ini."
-      });
+      }, {
+        type: "text",
+        text: "Bot ini berfungsi memberikan sugesti halaman web yang dapat dituju berdasarkan kata kunci dari kakak."
+      }]);
     } else if (eventType === "follow") {
       const followEvent = event as FollowEvent;
       await proccessFollowEvent(followEvent);
