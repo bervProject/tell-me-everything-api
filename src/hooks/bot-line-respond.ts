@@ -66,7 +66,7 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
                   type: "text",
                   text: content.displayUrl || "",
                   action: {
-                    label: content.displayUrl || "",
+                    label: "link",
                     type: "uri",
                     uri: content.displayUrl || "",
                     altUri: {
@@ -126,14 +126,14 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
                 contents: [
                   {
                     type: "text",
-                    text: "Hi"
+                    text: "Hi",
+                    action: {
+                      label: "Hi",
+                      type: "postback",
+                      data: "Hi"
+                    }
                   }
                 ]
-              },
-              action: {
-                label: "Hi",
-                type: "postback",
-                data: "Hi"
               }
             },
             {
@@ -144,14 +144,14 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
                 contents: [
                   {
                     type: "text",
-                    text: "Bye"
+                    text: "Bye",
+                    action: {
+                      label: "Bye",
+                      type: "postback",
+                      data: "Bye"
+                    }
                   }
                 ]
-              },
-              action: {
-                label: "Bye",
-                type: "postback",
-                data: "Bye"
               }
             },
             {
