@@ -113,9 +113,63 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
         type: "text",
         text: "Halo kak! Jadi kita cuman bisa perintah ini loh,"
       }, {
-        type: "text",
-        text: "bye, hi, search"
-      }])
+        type: "flex",
+        altText: "bye, hi, search",
+        contents: {
+          type: "carousel",
+          contents: [
+            {
+              type: "bubble",
+              body: {
+                type: "box",
+                layout: "horizontal",
+                contents: [
+                  {
+                    type: "text",
+                    text: "Hi"
+                  }
+                ]
+              },
+              action: {
+                label: "Hi",
+                type: "postback",
+                data: "Hi"
+              }
+            },
+            {
+              type: "bubble",
+              body: {
+                type: "box",
+                layout: "horizontal",
+                contents: [
+                  {
+                    type: "text",
+                    text: "Bye"
+                  }
+                ]
+              },
+              action: {
+                label: "Bye",
+                type: "postback",
+                data: "Bye"
+              }
+            },
+            {
+              type: "bubble",
+              body: {
+                type: "box",
+                layout: "horizontal",
+                contents: [
+                  {
+                    type: "text",
+                    text: "Search"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }]);
     } else {
       await client.replyMessage(messageEvent.replyToken, {
         type: "text",
