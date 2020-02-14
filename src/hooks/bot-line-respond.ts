@@ -66,6 +66,14 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
                   type: "text",
                   text: content.displayUrl || ""
                 }]
+              },
+              action: {
+                label: content.displayUrl || "",
+                type: "uri",
+                uri: content.displayUrl || "",
+                altUri: {
+                  desktop: content.displayUrl || ""
+                }
               }
             });
           }
