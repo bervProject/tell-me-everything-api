@@ -59,30 +59,12 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
           for (let content of result.webPages.value) {
             output.push({
               type: "bubble",
-              header: {
-                type: "box",
-                layout: "vertical",
-                contents: [
-                  {
-                    text: content.name || "",
-                    type: "text"
-                  }
-                ]
-              },
               body: {
                 type: "box",
                 layout: "vertical",
                 contents: [{
                   type: "text",
                   text: content.displayUrl || ""
-                }]
-              },
-              footer: {
-                type: "box",
-                layout: "vertical",
-                contents: [{
-                  type: "text",
-                  text: content.description || ""
                 }]
               }
             });
