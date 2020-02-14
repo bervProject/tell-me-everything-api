@@ -64,16 +64,16 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
                 layout: "vertical",
                 contents: [{
                   type: "text",
-                  text: content.displayUrl || "",
-                  action: {
-                    label: "link",
-                    type: "uri",
-                    uri: content.displayUrl || "",
-                    altUri: {
-                      desktop: content.displayUrl || ""
-                    }
-                  }
+                  text: content.displayUrl || ""
                 }]
+              },
+              action: {
+                label: "link",
+                type: "uri",
+                uri: content.displayUrl || "",
+                altUri: {
+                  desktop: "link"
+                }
               }
             });
           }
