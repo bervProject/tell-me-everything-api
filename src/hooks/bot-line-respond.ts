@@ -57,22 +57,32 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
         const output = new Array<FlexBubble>();
         if (result.webPages) {
           for (let content of result.webPages.value) {
-            output.push({
-              type: "bubble",
-              body: {
-                type: "box",
-                layout: "vertical",
-                contents: [{
-                  type: "text",
-                  text: content.displayUrl || ""
-                }]
-              },
-              action: {
-                label: "link",
-                type: "uri",
-                uri: content.displayUrl || ""
-              }
-            });
+            if (content.displayUrl && (content.displayUrl.startsWith("https://") || content.displayUrl.startsWith("http://"))) {
+              output.push({
+                type: "bubble",
+                header: {
+                  type: "box",
+                  layout: "vertical",
+                  contents: [{
+                    type: "text",
+                    text: content.name || ""
+                  }]
+                },
+                body: {
+                  type: "box",
+                  layout: "vertical",
+                  contents: [{
+                    type: "text",
+                    text: content.displayUrl || ""
+                  }]
+                },
+                action: {
+                  label: "link",
+                  type: "uri",
+                  uri: content.displayUrl || ""
+                }
+              });
+            }
           }
         }
         if (output.length == 0) {
