@@ -5,5 +5,36 @@
   "paginate": {
     "default": 10,
     "max": 50
+  },
+  "postgres": "postgres://postgres:@localhost:5432/test-tell-me",
+  "authentication": {
+    "entity": "user",
+    "service": "users",
+    "secret": "sNG73ZV3b6leI2Oa6oCD9/uFxmo=",
+    "authStrategies": [
+      "jwt",
+      "local"
+    ],
+    "jwtOptions": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "usernameField": "email",
+      "passwordField": "password"
+    },
+    "oauth": {
+      "redirect": "/",
+      "auth0": {
+        "key": "<auth0 oauth key>",
+        "secret": "<auth0 oauth secret>",
+        "subdomain": "<auth0 subdomain>"
+      }
+    }
   }
 }
