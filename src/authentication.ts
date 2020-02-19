@@ -11,8 +11,22 @@ declare module './declarations' {
   }
 }
 
-export default function(app: Application) {
-  const authentication = new AuthenticationService(app);
+class MyAuthService extends AuthenticationService {
+  async getPayload(authResult: any, params: any) {
+    // Call original `getPayload` first
+    const payload = await super.getPayload(authResult, params);
+    const { user } = authResult;
+
+    if (user && user.permissions) {
+      payload.permissions = user.permissions;
+    }
+
+    return payload;
+  }
+}
+
+export default function (app: Application) {
+  const authentication = new MyAuthService(app);
 
   authentication.register('jwt', new JWTStrategy());
   authentication.register('local', new LocalStrategy());

@@ -1,47 +1,52 @@
 import * as feathersAuthentication from '@feathersjs/authentication';
 import * as local from '@feathersjs/authentication-local';
-import { iff, required, preventChanges } from 'feathers-hooks-common';
+import { iff, isProvider, required, preventChanges } from 'feathers-hooks-common';
+import advanceHook from 'feathers-advance-hook/dist';
 import checkPermissions from 'feathers-permissions';
 import { setField } from 'feathers-authentication-hooks';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;
 const { hashPassword, protect } = local.hooks;
+const userAuditHook = advanceHook.userAuditHook;
 
 export default {
   before: {
     all: [],
     find: [
-      authenticate('jwt'),
-      checkPermissions({
-        roles: ['admin'],
-        field: 'roles',
-        error: false
-      }),
-      iff(context => !context.params.permitted,
-        setField({
-          from: 'params.user.id',
-          as: 'params.query.id'
-        })
+      iff(isProvider('external'),
+        authenticate('jwt'),
+        checkPermissions({
+          roles: ['admin'],
+          error: false
+        }),
+        iff(context => !context.params.permitted,
+          setField({
+            from: 'params.user.id',
+            as: 'params.query.id'
+          })
+        )
       )
     ],
     get: [
-      authenticate('jwt'),
-      checkPermissions({
-        roles: ['admin'],
-        field: 'roles',
-        error: false
-      }),
-      iff(context => !context.params.permitted,
-        setField({
-          from: 'params.user.id',
-          as: 'params.query.id'
-        })
+      iff(isProvider('external'),
+        authenticate('jwt'),
+        checkPermissions({
+          roles: ['admin'],
+          error: false
+        }),
+        iff(context => !context.params.permitted,
+          setField({
+            from: 'params.user.id',
+            as: 'params.query.id'
+          })
+        )
       )
     ],
     create: [
       required('email', 'password'),
-      hashPassword('password')
+      hashPassword('password'),
+      userAuditHook()
     ],
     update: [
       required('email', 'password'),
@@ -49,7 +54,8 @@ export default {
       authenticate('jwt'),
       checkPermissions({
         roles: ['admin']
-      })
+      }),
+      userAuditHook()
     ],
     patch: [
       preventChanges(true, 'email'),
@@ -58,7 +64,8 @@ export default {
       authenticate('jwt'),
       checkPermissions({
         roles: ['admin']
-      })
+      }),
+      userAuditHook()
     ],
     remove: [
       authenticate('jwt')

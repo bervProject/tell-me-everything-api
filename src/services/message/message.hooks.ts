@@ -1,6 +1,11 @@
 import advanceHook from 'feathers-advance-hook/dist';
 import * as feathersAuthentication from '@feathersjs/authentication';
 import * as local from '@feathersjs/authentication-local';
+import checkPermissions from 'feathers-permissions';
+import { required, preventChanges } from 'feathers-hooks-common';
+import messagesEncrypt from '../../hooks/messages-encrypt';
+import gettingMessage from '../../hooks/getting-message';
+import openMessage from '../../hooks/open-message';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const {
@@ -9,33 +14,48 @@ const {
 const userAuditHook = advanceHook.userAuditHook;
 
 const {
-  hashPassword,
   protect
 } = local.hooks;
 
 export default {
   before: {
-    all: [],
-    find: [
+    all: [
       authenticate('jwt')
     ],
+    find: [],
     get: [
-      authenticate('jwt')
+      gettingMessage()
     ],
     create: [
-      hashPassword('messagePassword'),
-      authenticate('jwt'),
+      checkPermissions({
+        roles: ['admin']
+      }),
+      required('text', 'messagePassword'),
+      messagesEncrypt(),
       userAuditHook()
     ],
     update: [
-      hashPassword('messagePassword'),
-      authenticate('jwt'),
-      userAuditHook()],
+      checkPermissions({
+        roles: ['admin']
+      }),
+      required('text', 'messagePassword'),
+      messagesEncrypt(),
+      userAuditHook()
+    ],
     patch: [
-      hashPassword('messagePassword'),
-      authenticate('jwt'),
-      userAuditHook()],
-    remove: [authenticate('jwt'), userAuditHook()]
+      checkPermissions({
+        roles: ['admin']
+      }),
+      preventChanges(true, 'text'),
+      messagesEncrypt(),
+      userAuditHook()
+    ],
+    remove: [
+      checkPermissions({
+        roles: ['admin']
+      }),
+      userAuditHook()
+    ]
   },
 
   after: {
@@ -43,7 +63,9 @@ export default {
       protect('messagePassword')
     ],
     find: [],
-    get: [],
+    get: [
+      openMessage()
+    ],
     create: [],
     update: [],
     patch: [],
