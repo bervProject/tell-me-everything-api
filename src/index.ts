@@ -1,5 +1,10 @@
+import dotenv from 'dotenv';
 import logger from './logger';
 import app from './app';
+
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 const port = process.env.PORT || app.get('port');
 const server = app.listen(port);
