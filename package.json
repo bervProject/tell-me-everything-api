@@ -56,8 +56,8 @@
     "helmet": "^3.21.2",
     "ms-rest-azure": "^3.0.0",
     "nodemailer": "^6.4.2",
-    "pg": "^7.18.1",
-    "sequelize": "^5.21.4",
+    "pg": "^7.18.2",
+    "sequelize": "^5.21.5",
     "serve-favicon": "^2.5.0",
     "uuid": "^3.4.0",
     "winston": "^3.2.1"
@@ -83,6 +83,6 @@
     "ts-jest": "^25.2.0",
     "ts-node-dev": "^1.0.0-pre.44",
     "tslint": "^6.0.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.2"
   }
 }
