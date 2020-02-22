@@ -9,7 +9,7 @@ export default (options = {}): Hook => {
       from: 'notification@berviantoleo.my.id',
       to: result.email,
       subject: 'You\'re invited to secret message site',
-      html: `<h1>Hello ${result.email}</h1><p>Visit to https://tell-secret.onrender.com/ for more information.</p><p>Please ask administrator for login credential.</p>`
+      html: `<h1>Hello ${result.email}</h1><p>Visit to <a href="https://tell-secret.onrender.com/">here</a> for more information.</p><p>Please ask administrator for login credential.</p>`
     })
     return context;
   };
