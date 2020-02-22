@@ -4,6 +4,7 @@ import { iff, isProvider, required, preventChanges } from 'feathers-hooks-common
 import advanceHook from 'feathers-advance-hook/dist';
 import checkPermissions from 'feathers-permissions';
 import { setField } from 'feathers-authentication-hooks';
+import emailUser from '../../hooks/email-user';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;
@@ -80,7 +81,9 @@ export default {
     ],
     find: [],
     get: [],
-    create: [],
+    create: [
+      emailUser()
+    ],
     update: [],
     patch: [],
     remove: []

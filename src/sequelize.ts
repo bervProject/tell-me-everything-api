@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import { Application } from './declarations';
+import logger from './logger';
 
 export default function (app: Application) {
   const connectionString = process.env.DATABASE_URL || app.get('postgres');
@@ -26,7 +27,7 @@ export default function (app: Application) {
     });
 
     // Sync to the database
-    app.set('sequelizeSync', sequelize.sync());
+    app.set('sequelizeSync', sequelize.sync().catch(err => logger.error(JSON.stringify(err))));
 
     return result;
   };

@@ -2,10 +2,13 @@ import advanceHook from 'feathers-advance-hook/dist';
 import * as feathersAuthentication from '@feathersjs/authentication';
 import * as local from '@feathersjs/authentication-local';
 import checkPermissions from 'feathers-permissions';
-import { required, preventChanges } from 'feathers-hooks-common';
+import { iff, required, preventChanges } from 'feathers-hooks-common';
+import { setField } from 'feathers-authentication-hooks';
+
 import messagesEncrypt from '../../hooks/messages-encrypt';
 import gettingMessage from '../../hooks/getting-message';
 import openMessage from '../../hooks/open-message';
+import messageSend from '../../hooks/message-send';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const {
@@ -22,8 +25,29 @@ export default {
     all: [
       authenticate('jwt')
     ],
-    find: [],
+    find: [
+      checkPermissions({
+        roles: ['admin'],
+        error: false
+      }),
+      iff(context => !context.params.permitted,
+        setField({
+          from: 'params.user.email',
+          as: 'params.query.to'
+        })
+      ),
+    ],
     get: [
+      checkPermissions({
+        roles: ['admin'],
+        error: false
+      }),
+      iff(context => !context.params.permitted,
+        setField({
+          from: 'params.user.email',
+          as: 'params.query.to'
+        })
+      ),
       gettingMessage()
     ],
     create: [
@@ -66,7 +90,9 @@ export default {
     get: [
       openMessage()
     ],
-    create: [],
+    create: [
+      messageSend()
+    ],
     update: [],
     patch: [],
     remove: []

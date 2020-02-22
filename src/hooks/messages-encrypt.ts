@@ -12,10 +12,10 @@ export default (options = {}): Hook => {
     const password = data.messagePassword;
     const hashPassword = CryptoJS.enc.Base64.stringify(CryptoJS.SHA512(password + mySalt));
     const textEncrypted = CryptoJS.AES.encrypt(text, password).toString();
-    context.data = {
+    context.data = Object.assign(data, {
       text: textEncrypted,
       messagePassword: hashPassword
-    };
+    });
     return context;
   };
 }
