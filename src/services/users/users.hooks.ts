@@ -5,6 +5,7 @@ import advanceHook from 'feathers-advance-hook/dist';
 import checkPermissions from 'feathers-permissions';
 import { setField } from 'feathers-authentication-hooks';
 import emailUser from '../../hooks/email-user';
+import userCreationLimit from '../../hooks/user-creation-limit';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;
@@ -45,6 +46,13 @@ export default {
       )
     ],
     create: [
+      userCreationLimit(),
+      iff(context => !context.params.canAll,
+        authenticate('jwt'),
+        checkPermissions({
+          roles: ['admin']
+        })
+      ),
       required('email', 'password'),
       hashPassword('password'),
       userAuditHook()
