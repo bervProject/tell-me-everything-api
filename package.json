@@ -47,7 +47,7 @@
     "cors": "^2.8.5",
     "crypto-js": "^4.0.0",
     "feathers-advance-hook": "^0.0.5",
-    "feathers-authentication-hooks": "^1.0.1",
+    "feathers-authentication-hooks": "^1.0.2",
     "feathers-hooks-common": "^5.0.2",
     "feathers-memory": "^4.1.0",
     "feathers-permissions": "^2.0.1",
