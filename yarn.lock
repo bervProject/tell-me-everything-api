@@ -306,10 +306,10 @@
   resolved "https://registry.npmjs.org/@google-cloud/promisify/-/promisify-1.0.4.tgz#ce86ffa94f9cfafa2e68f7b3e4a7fad194189723"
   integrity sha512-VccZDcOql77obTnFh0TbNED/6ZbbmHDf8UMNnzO1d5g9V0Htfm4k5cllY8P1tJsRKC3zWYGRLaViiupcgVjBoQ==
 
-"@google-cloud/storage@^4.3.0":
-  version "4.3.1"
-  resolved "https://registry.npmjs.org/@google-cloud/storage/-/storage-4.3.1.tgz#fce4c4ab74d3524ab040e0e15b9b50e6df13fd39"
-  integrity sha512-/i7tAcUZDQNDs8/+oN+U2mOXdWdP2eld0pFKLkpthmWmaD89JQlrgHAFL7uvlgCSbaD7YxgbSyJebgd6YBgMgQ==
+"@google-cloud/storage@^4.5.0":
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/@google-cloud/storage/-/storage-4.6.0.tgz#c6afef92627b96fd8b9f436c1b622be3d2b9a949"
+  integrity sha512-ubhbLAnj+hrp32x5gI+JajKU0kvhApA6PsLOLkuOj4Cz4b6MNsyhSWZ5rq2W7TylqfNNW8M9QxPCKWg3Sb0IbA==
   dependencies:
     "@google-cloud/common" "^2.1.1"
     "@google-cloud/paginator" "^2.0.0"
@@ -2439,16 +2439,16 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
-feathers-advance-hook@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/feathers-advance-hook/-/feathers-advance-hook-0.0.5.tgz#6972e6a1563e37c100bfb4239f37c0743d4885bc"
-  integrity sha512-fmDJbNozYkBBcgkYXU0YTSDIKHOgdJXjS98KaDZ5xYV4YnkZn2TrDjapzWSZmu8aFULfkViYMBeuboLB3UWWrg==
+feathers-advance-hook@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/feathers-advance-hook/-/feathers-advance-hook-0.0.7.tgz#b4b8a516ecd15ac588f6cfd7f4afcac0245a4109"
+  integrity sha512-ywNd4eHITUbEEU+rTD2x2FHgGROF3faVM7Mi/rp6fbxj7jAvHJxRQwUm+yi1GxzJFHZOWRLo7WZY173uSPZF/A==
   dependencies:
-    "@feathersjs/feathers" "^4.5.1"
-    "@google-cloud/storage" "^4.3.0"
+    "@feathersjs/feathers" "^4.5.2"
+    "@google-cloud/storage" "^4.5.0"
     dist "^0.1.2"
     mime-types "^2.1.26"
-    uuid "^3.4.0"
+    uuid "^7.0.2"
 
 feathers-authentication-hooks@^1.0.2:
   version "1.0.2"
@@ -6394,7 +6394,7 @@ uuid@3.3.2:
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
 
-uuid@^3.1.0, uuid@^3.2.1, uuid@^3.3.2, uuid@^3.3.3, uuid@^3.4.0:
+uuid@^3.1.0, uuid@^3.2.1, uuid@^3.3.2, uuid@^3.3.3:
   version "3.4.0"
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
