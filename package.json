@@ -68,7 +68,7 @@
     "@types/cors": "^2.8.6",
     "@types/crypto-js": "^3.1.44",
     "@types/helmet": "^0.0.45",
-    "@types/jest": "^25.1.4",
+    "@types/jest": "^25.1.5",
     "@types/jsonwebtoken": "^8.3.8",
     "@types/node": "^13.9.8",
     "@types/nodemailer": "^6.4.0",
