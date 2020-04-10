@@ -50,7 +50,7 @@
     "feathers-authentication-hooks": "^1.0.2",
     "feathers-hooks-common": "^5.0.2",
     "feathers-memory": "^4.1.0",
-    "feathers-permissions": "^2.0.1",
+    "feathers-permissions": "^2.0.2",
     "feathers-sequelize": "^6.1.0",
     "helmet": "^3.22.0",
     "ms-rest-azure": "^3.0.0",

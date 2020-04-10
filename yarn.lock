@@ -277,7 +277,7 @@
     config "^3.2.6"
     debug "^4.1.1"
 
-"@feathersjs/errors@^4.3.3", "@feathersjs/errors@^4.3.4", "@feathersjs/errors@^4.4.1", "@feathersjs/errors@^4.5.1", "@feathersjs/errors@^4.5.2":
+"@feathersjs/errors@^4.3.4", "@feathersjs/errors@^4.4.1", "@feathersjs/errors@^4.5.1", "@feathersjs/errors@^4.5.2":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.5.2.tgz#b6573d8b27be7069867066157c4effbc2e78ceb5"
   integrity sha512-sfjmakwZSqbzeKxYYtuxZGTBCHANwASuqzvn6iJa83epPJFn0m2tkjpvpJujclSU6SNZoKAavG29ZKwPgxkYgA==
@@ -2522,12 +2522,12 @@ feathers-memory@^4.1.0:
     "@feathersjs/errors" "^4.3.4"
     sift "^8.5.0"
 
-feathers-permissions@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/feathers-permissions/-/feathers-permissions-2.0.1.tgz#1944fbb80a2a4bcc2dcf86b0fcb07a7b136d40ce"
-  integrity sha512-1ZlBiK8rN/4xrlNYf8bwkZq3FI2laAcfdvzdWafFB4Kw8TcRLHJKL1qnyeJv6T5apT4/yWbrSMPxNgmCpeC4Aw==
+feathers-permissions@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/feathers-permissions/-/feathers-permissions-2.0.2.tgz#46935d9e7dd968b9627e49929813955149ef091e"
+  integrity sha512-E3wHVWV2VMbGKYp1tAVNpkFuyqssGDK0NkaGqOKFGWZYYYQ+y/dz4l39xMgyKWR7U8hOKk/yAKUYtXEddUcR9Q==
   dependencies:
-    "@feathersjs/errors" "^4.3.3"
+    "@feathersjs/errors" "^4.5.2"
     debug "^4.1.1"
     lodash "^4.17.15"
 
