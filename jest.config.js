@@ -5,5 +5,10 @@ module.exports = {
     'ts-jest': {
       diagnostics: false
     }
-  }
+  },
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "**/src/*.{ts,tsx}"
+  ],
+  coverageDirectory: "./coverage/",
 };
