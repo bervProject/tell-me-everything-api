@@ -2536,10 +2536,10 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
-feathers-advance-hook@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.npmjs.org/feathers-advance-hook/-/feathers-advance-hook-0.0.7.tgz#b4b8a516ecd15ac588f6cfd7f4afcac0245a4109"
-  integrity sha512-ywNd4eHITUbEEU+rTD2x2FHgGROF3faVM7Mi/rp6fbxj7jAvHJxRQwUm+yi1GxzJFHZOWRLo7WZY173uSPZF/A==
+feathers-advance-hook@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/feathers-advance-hook/-/feathers-advance-hook-0.0.8.tgz#a1c6c8f4f37f2dc8e497f8430f079016777805e5"
+  integrity sha512-GYp0jjd/OTpa3niLT0zGGzJZH8MotW7AmyTXOCSwucThfTguZ9zvcogduLkdWIpSuWJLN/xpfPgw72t8djhwbw==
   dependencies:
     "@feathersjs/feathers" "^4.5.2"
     "@google-cloud/storage" "^4.5.0"
