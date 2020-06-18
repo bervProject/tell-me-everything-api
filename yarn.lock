@@ -631,15 +631,15 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@line/bot-sdk@^6.8.4":
-  version "6.8.4"
-  resolved "https://registry.npmjs.org/@line/bot-sdk/-/bot-sdk-6.8.4.tgz#9262ff5989d48edba35c851f7401a6e26d83c32d"
-  integrity sha512-ul0GT9CHW2A5K3xUi6BRuFSWZfePXcnArFFeDtf4wbLhVMZoO3yyslrEaDuNt4UiKYK1BxU09LvXNU7/ha4i9w==
+"@line/bot-sdk@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@line/bot-sdk/-/bot-sdk-7.0.0.tgz#1fe53154024c829d3432088568c9597679cef473"
+  integrity sha512-piS9LUg/fyFFlSMP9OdnxtlAS0pcEkhABVCG2xVaZ2wlaSCfG8pMSAOrVsZQYMRQwS3p3QTEFwuVaXnN4vn7tw==
   dependencies:
-    "@types/body-parser" "^1.17.1"
+    "@types/body-parser" "^1.19.0"
     "@types/file-type" "^5.2.2"
-    "@types/node" "^7.10.9"
-    axios "^0.19.0"
+    "@types/node" "^12.12.47"
+    axios "^0.19.2"
     body-parser "^1.19.0"
     file-type "^7.7.1"
 
@@ -705,7 +705,7 @@
   resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.32.tgz#381e7b59e39f010d20bbf7e044e48f5caf1ab620"
   integrity sha512-dIOxFfI0C+jz89g6lQ+TqhGgPQ0MxSnh/E4xuC0blhFtyW269+mPG5QeLgbdwst/LvdP8o1y0o/Gz5EHXLec/g==
 
-"@types/body-parser@*", "@types/body-parser@^1.17.1":
+"@types/body-parser@*", "@types/body-parser@^1.19.0":
   version "1.19.0"
   resolved "https://registry.npmjs.org/@types/body-parser/-/body-parser-1.19.0.tgz#0685b3c47eb3006ffed117cdd55164b61f80538f"
   integrity sha512-W98JrE0j2K78swW4ukqMleo8R7h/pFETjM2DQ90MF6XK2i4LO4W3gQ71Lt4w3bfm2EvVSyWHplECvB5sK22yFQ==
@@ -835,10 +835,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.13.tgz#ee1128e881b874c371374c1f72201893616417c9"
   integrity sha512-rouEWBImiRaSJsVA+ITTFM6ZxibuAlTuNOCyxVbwreu6k6+ujs7DfnU9o+PShFhET78pMBl3eH+AGSI5eOTkPA==
 
-"@types/node@^7.10.9":
-  version "7.10.10"
-  resolved "https://registry.npmjs.org/@types/node/-/node-7.10.10.tgz#af1d109f45cda5bd7510035f0fda0c2e13e3ec15"
-  integrity sha512-gvuWz7pNex4xCFqk/2Z/x1J4AO7kZxgv4iSZH0dwZHYiFuO7rQr06xnBoiarrd8bcOxlqQCFv7MsKcAVq3FFfQ==
+"@types/node@^12.12.47":
+  version "12.12.47"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.47.tgz#5007b8866a2f9150de82335ca7e24dd1d59bdfb5"
+  integrity sha512-yzBInQFhdY8kaZmqoL2+3U5dSTMrKaYcb561VU+lDzAYvqt+2lojvBEy+hmpSNuXnPTx7m9+04CzWYOUqWME2A==
 
 "@types/node@^8.0.47":
   version "8.10.60"
@@ -1221,7 +1221,7 @@ aws4@^1.8.0:
   resolved "https://registry.npmjs.org/aws4/-/aws4-1.9.1.tgz#7e33d8f7d449b3f673cd72deb9abdc552dbe528e"
   integrity sha512-wMHVg2EOHaMRxbzgFJ9gtjOOCrI80OHLG14rxi28XwOW8ux6IiEbRCGGGqCtdAIg4FQCbW20k9RsT4y3gJlFug==
 
-axios@^0.19.0, axios@^0.19.2:
+axios@^0.19.2:
   version "0.19.2"
   resolved "https://registry.npmjs.org/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
