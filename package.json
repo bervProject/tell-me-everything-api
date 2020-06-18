@@ -39,7 +39,7 @@
     "@feathersjs/express": "^4.5.4",
     "@feathersjs/feathers": "^4.5.3",
     "@feathersjs/socketio": "^4.5.4",
-    "@line/bot-sdk": "^6.8.4",
+    "@line/bot-sdk": "^7.0.0",
     "aws-sdk": "^2.699.0",
     "azure-cognitiveservices-websearch": "^2.0.0",
     "cls-hooked": "^4.2.2",
