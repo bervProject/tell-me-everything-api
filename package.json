@@ -1,7 +1,7 @@
 {
   "name": "tell-me-everything-api",
   "description": "Just Tell to Me. I will keep your secret.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://tell-me-everything.herokuapp.com/",
   "main": "src",
   "keywords": [
@@ -9,9 +9,23 @@
   ],
   "author": {
     "name": "Bervianto Leo Pratama",
-    "email": "bervianto.leo@gmail.com"
+    "email": "bervianto.leo@gmail.com",
+    "url": "https://berviantoleo.my.id"
   },
-  "contributors": [],
+  "contributors": [
+    {
+      "email": "bervianto.leo@gmail.com",
+      "name": "Bervianto Leo Pratama",
+      "url": "https://berviantoleo.my.id"
+    }
+  ],
+  "maintainers": [
+    {
+      "email": "bervianto.leo@gmail.com",
+      "name": "Bervianto Leo Pratama",
+      "url": "https://berviantoleo.my.id"
+    }
+  ],
   "bugs": {},
   "directories": {
     "lib": "src",
@@ -31,12 +45,12 @@
   },
   "types": "lib/",
   "dependencies": {
-    "@feathersjs/authentication": "^4.5.3",
+    "@feathersjs/authentication": "^4.5.6",
     "@feathersjs/authentication-local": "^4.5.6",
     "@feathersjs/authentication-oauth": "^4.5.6",
     "@feathersjs/configuration": "^4.5.5",
-    "@feathersjs/errors": "^4.5.3",
-    "@feathersjs/express": "^4.5.4",
+    "@feathersjs/errors": "^4.5.5",
+    "@feathersjs/express": "^4.5.6",
     "@feathersjs/feathers": "^4.5.5",
     "@feathersjs/socketio": "^4.5.6",
     "@line/bot-sdk": "^7.0.0",
