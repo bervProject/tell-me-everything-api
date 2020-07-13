@@ -36,7 +36,7 @@
     "@feathersjs/authentication-oauth": "^4.5.4",
     "@feathersjs/configuration": "^4.5.3",
     "@feathersjs/errors": "^4.5.3",
-    "@feathersjs/express": "^4.5.4",
+    "@feathersjs/express": "^4.5.6",
     "@feathersjs/feathers": "^4.5.5",
     "@feathersjs/socketio": "^4.5.4",
     "@line/bot-sdk": "^7.0.0",
