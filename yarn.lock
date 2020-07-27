@@ -364,7 +364,7 @@
     lodash "^4.17.19"
     uberproto "^2.0.6"
 
-"@feathersjs/feathers@^4.5.2", "@feathersjs/feathers@^4.5.3", "@feathersjs/feathers@^4.5.5", "@feathersjs/feathers@^4.5.7":
+"@feathersjs/feathers@^4.5.2", "@feathersjs/feathers@^4.5.3", "@feathersjs/feathers@^4.5.7":
   version "4.5.7"
   resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.5.7.tgz#ed3b87e43d6dbef298c0ad67331425f18098bf80"
   integrity sha512-Qbw5e5Y5mJkxZOrgbaZXj2w0smoBJf2goud1Du+kNRMJfcexZ/tQDtPj6aFOIl6dduyB/3Xka4XQQn/T+rHB4w==
