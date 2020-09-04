@@ -62,7 +62,7 @@
     "crypto-js": "^4.0.0",
     "feathers-advance-hook": "^0.0.8",
     "feathers-authentication-hooks": "^1.0.2",
-    "feathers-hooks-common": "^5.0.3",
+    "feathers-hooks-common": "^5.0.4",
     "feathers-memory": "^4.1.0",
     "feathers-permissions": "^2.0.2",
     "feathers-sequelize": "^6.2.0",
