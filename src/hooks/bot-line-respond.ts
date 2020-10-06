@@ -26,162 +26,13 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
   if (messageType === "text") {
     const messageText = (message as TextEventMessage).text.toLowerCase();
     if (messageText === "bye") {
-      if (sourceType === "room") {
-        await client.leaveRoom((messageEvent.source as Room).roomId);
-      } else if (sourceType === "group") {
-        await client.leaveGroup((messageEvent.source as Group).groupId);
-      } else {
-        await client.replyMessage(messageEvent.replyToken, {
-          type: "text",
-          text: "Maaf, kak. Kita lagi saling chat. Kita gak bisa ninggalin kakak di chat ini. :'(",
-        });
-      }
+      await handleBye(sourceType, messageEvent);
     } else if (messageText === "hi") {
-      const userId = messageEvent.source.userId;
-      let name = "";
-      if (userId != undefined) {
-        const profile = await client.getProfile(userId);
-        name = profile.displayName;
-      }
-      await client.replyMessage(messageEvent.replyToken, {
-        type: "text",
-        text: name !== "" ? `Halo, kak ${name}! Semoga hari-harinya menyenangkan!` : "Halo! Semoga hari-harinya menyenangkan!"
-      });
+      await handleHi(messageEvent);
     } else if (messageText.startsWith("search")) {
-      const splitText = messageText.split(" ", 2);
-      if (splitText.length > 1) {
-        const searchText = splitText[1];
-        const credentials = new CognitiveServicesCredentials(process.env.SEARCH_KEY || "");
-        const webSearchClient = new WebSearchClient(credentials);
-        const result = await webSearchClient.web.search(searchText);
-        const output = new Array<FlexBubble>();
-        if (result.webPages) {
-          for (let content of result.webPages.value) {
-            if (content.displayUrl && (content.displayUrl.startsWith("https://") || content.displayUrl.startsWith("http://"))) {
-              output.push({
-                type: "bubble",
-                header: {
-                  type: "box",
-                  layout: "vertical",
-                  contents: [{
-                    type: "text",
-                    text: content.name || ""
-                  }]
-                },
-                body: {
-                  type: "box",
-                  layout: "vertical",
-                  contents: [{
-                    type: "text",
-                    text: content.url || ""
-                  }]
-                },
-                action: {
-                  label: "link",
-                  type: "uri",
-                  uri: content.displayUrl || ""
-                }
-              });
-            }
-          }
-        }
-        if (output.length == 0) {
-          await client.replyMessage(messageEvent.replyToken, {
-            type: "text",
-            text: "Sepertinya pencarian kakak tidak ditemukan. :("
-          });
-        } else if (output.length > 10) {
-          await client.replyMessage(messageEvent.replyToken, {
-            type: "flex",
-            altText: "Web Result",
-            contents: {
-              type: "carousel",
-              contents: output.slice(0, 10)
-            }
-          });
-        } else {
-          await client.replyMessage(messageEvent.replyToken, {
-            type: "flex",
-            altText: "Web Result",
-            contents: {
-              type: "carousel",
-              contents: output
-            }
-          });
-        }
-      } else {
-        await client.replyMessage(messageEvent.replyToken, {
-          type: "text",
-          text: "Masukan kata kunci yang ingin anda cari. Misalkan, search ayam"
-        })
-      }
+      await handleSearch(messageText, messageEvent);
     } else if (messageText === "bantuan") {
-      await client.replyMessage(messageEvent.replyToken, [{
-        type: "text",
-        text: "Halo kak! Jadi kita cuman bisa perintah ini loh,"
-      }, {
-        type: "flex",
-        altText: "bye, hi, search",
-        contents: {
-          type: "carousel",
-          contents: [
-            {
-              type: "bubble",
-              body: {
-                type: "box",
-                layout: "horizontal",
-                contents: [
-                  {
-                    type: "text",
-                    text: "Hi",
-                    action: {
-                      label: "Hi",
-                      type: "message",
-                      text: "Hi"
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              type: "bubble",
-              body: {
-                type: "box",
-                layout: "horizontal",
-                contents: [
-                  {
-                    type: "text",
-                    text: "Bye",
-                    action: {
-                      label: "Bye",
-                      type: "message",
-                      text: "Bye"
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              type: "bubble",
-              body: {
-                type: "box",
-                layout: "horizontal",
-                contents: [
-                  {
-                    type: "text",
-                    text: "Search",
-                    action: {
-                      label: "Search",
-                      type: "message",
-                      text: "Search"
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      }]);
+      await handleHelp(messageEvent);
     } else {
       await client.replyMessage(messageEvent.replyToken, {
         type: "text",
@@ -189,6 +40,171 @@ async function proccessMessageEvent(messageEvent: MessageEvent) {
       });
     }
   }
+}
+
+async function handleBye(sourceType: "room" | "group" | "user", messageEvent: MessageEvent) {
+  if (sourceType === "room") {
+    await client.leaveRoom((messageEvent.source as Room).roomId);
+  } else if (sourceType === "group") {
+    await client.leaveGroup((messageEvent.source as Group).groupId);
+  } else {
+    await client.replyMessage(messageEvent.replyToken, {
+      type: "text",
+      text: "Maaf, kak. Kita lagi saling chat. Kita gak bisa ninggalin kakak di chat ini. :'(",
+    });
+  }
+}
+
+async function handleHi(messageEvent: MessageEvent) {
+  const userId = messageEvent.source.userId;
+  let name = "";
+  if (userId != undefined) {
+    const profile = await client.getProfile(userId);
+    name = profile.displayName;
+  }
+  await client.replyMessage(messageEvent.replyToken, {
+    type: "text",
+    text: name !== "" ? `Halo, kak ${name}! Semoga hari-harinya menyenangkan!` : "Halo! Semoga hari-harinya menyenangkan!"
+  });
+}
+
+async function handleSearch(messageText: string, messageEvent: MessageEvent) {
+  const splitText = messageText.split(" ", 2);
+  if (splitText.length > 1) {
+    const searchText = splitText[1];
+    const credentials = new CognitiveServicesCredentials(process.env.SEARCH_KEY || "");
+    const webSearchClient = new WebSearchClient(credentials);
+    const result = await webSearchClient.web.search(searchText);
+    const output = new Array<FlexBubble>();
+    if (result.webPages) {
+      for (let content of result.webPages.value) {
+        if (content.displayUrl && (content.displayUrl.startsWith("https://") || content.displayUrl.startsWith("http://"))) {
+          output.push({
+            type: "bubble",
+            header: {
+              type: "box",
+              layout: "vertical",
+              contents: [{
+                type: "text",
+                text: content.name || ""
+              }]
+            },
+            body: {
+              type: "box",
+              layout: "vertical",
+              contents: [{
+                type: "text",
+                text: content.url || ""
+              }]
+            },
+            action: {
+              label: "link",
+              type: "uri",
+              uri: content.displayUrl || ""
+            }
+          });
+        }
+      }
+    }
+    if (output.length == 0) {
+      await client.replyMessage(messageEvent.replyToken, {
+        type: "text",
+        text: "Sepertinya pencarian kakak tidak ditemukan. :("
+      });
+    } else if (output.length > 10) {
+      await client.replyMessage(messageEvent.replyToken, {
+        type: "flex",
+        altText: "Web Result",
+        contents: {
+          type: "carousel",
+          contents: output.slice(0, 10)
+        }
+      });
+    } else {
+      await client.replyMessage(messageEvent.replyToken, {
+        type: "flex",
+        altText: "Web Result",
+        contents: {
+          type: "carousel",
+          contents: output
+        }
+      });
+    }
+  } else {
+    await client.replyMessage(messageEvent.replyToken, {
+      type: "text",
+      text: "Masukan kata kunci yang ingin anda cari. Misalkan, search ayam"
+    })
+  }
+}
+
+async function handleHelp(messageEvent: MessageEvent) {
+  await client.replyMessage(messageEvent.replyToken, [{
+    type: "text",
+    text: "Halo kak! Jadi kita cuman bisa perintah ini loh,"
+  }, {
+    type: "flex",
+    altText: "bye, hi, search",
+    contents: {
+      type: "carousel",
+      contents: [
+        {
+          type: "bubble",
+          body: {
+            type: "box",
+            layout: "horizontal",
+            contents: [
+              {
+                type: "text",
+                text: "Hi",
+                action: {
+                  label: "Hi",
+                  type: "message",
+                  text: "Hi"
+                }
+              }
+            ]
+          }
+        },
+        {
+          type: "bubble",
+          body: {
+            type: "box",
+            layout: "horizontal",
+            contents: [
+              {
+                type: "text",
+                text: "Bye",
+                action: {
+                  label: "Bye",
+                  type: "message",
+                  text: "Bye"
+                }
+              }
+            ]
+          }
+        },
+        {
+          type: "bubble",
+          body: {
+            type: "box",
+            layout: "horizontal",
+            contents: [
+              {
+                type: "text",
+                text: "Search",
+                action: {
+                  label: "Search",
+                  type: "message",
+                  text: "Search"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }]);
 }
 
 async function proccessMemberJoin(joinEvent: MemberJoinEvent) {
@@ -261,7 +277,7 @@ export default (options = {}): Hook => {
     logger.info(`Event sending to ${hookBody.destination}`);
     const events = hookBody.events;
     for (const event of events) {
-      handleEvent(event);
+      await handleEvent(event);
     }
     context.statusCode = 200;
     context.result = data.events;
