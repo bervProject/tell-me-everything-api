@@ -54,7 +54,7 @@
     "@feathersjs/feathers": "^4.5.8",
     "@feathersjs/socketio": "^4.5.8",
     "@line/bot-sdk": "^7.1.0",
-    "aws-sdk": "^2.767.0",
+    "aws-sdk": "^2.769.0",
     "azure-cognitiveservices-websearch": "^2.0.0",
     "cls-hooked": "^4.2.2",
     "compression": "^1.7.4",
