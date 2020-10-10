@@ -52,7 +52,7 @@
     "@feathersjs/errors": "^4.5.9",
     "@feathersjs/express": "^4.5.8",
     "@feathersjs/feathers": "^4.5.8",
-    "@feathersjs/socketio": "^4.5.8",
+    "@feathersjs/socketio": "^4.5.9",
     "@line/bot-sdk": "^7.1.0",
     "aws-sdk": "^2.771.0",
     "azure-cognitiveservices-websearch": "^2.0.0",
