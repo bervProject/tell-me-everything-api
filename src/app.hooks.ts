@@ -12,7 +12,7 @@ export default {
     create: [],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   after: {
@@ -22,16 +22,20 @@ export default {
     create: [],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   error: {
-    all: [(context: HookContext) => { logger.error(JSON.stringify(context.error)) }],
+    all: [
+      (context: HookContext) => {
+        logger.error(JSON.stringify(context.error));
+      },
+    ],
     find: [],
     get: [],
     create: [],
     update: [],
     patch: [],
-    remove: []
-  }
+    remove: [],
+  },
 };

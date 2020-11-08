@@ -4,8 +4,8 @@
 
 ## Build Status
 
-| Action Github | Codecov |
-|:-------------:|:-------:|
+|                                          Action Github                                          |                                                                            Codecov                                                                             |
+| :---------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | ![Node CI](https://github.com/bervProject/tell-me-everything-api/workflows/Node%20CI/badge.svg) | [![codecov](https://codecov.io/gh/bervProject/tell-me-everything-api/branch/master/graph/badge.svg)](https://codecov.io/gh/bervProject/tell-me-everything-api) |
 
 ## Last Version
@@ -24,6 +24,7 @@ LINE_CHANNEL_SECRET=
 SEARCH_KEY=
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
+ENCRYPT_SALT=
 ```
 
 ## LICENSE

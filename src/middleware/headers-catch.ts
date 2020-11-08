@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from "express";
 
 export default () => {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -8,4 +8,4 @@ export default () => {
     req.feathers.headers = req.headers;
     next();
   };
-}
+};

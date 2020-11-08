@@ -1,4 +1,8 @@
 {
-  "host": "tell-me-everything-api-app.feathersjs.com",
-  "port": "3030"
+  "host": "tell-me-everything.herokuapp.com",
+  "port": "PORT",
+  "lineAccessToken": "LINE_CHANNEL_ACCESS_TOKEN",
+  "lineSecret": "LINE_CHANNEL_SECRET",
+  "postgres": "DATABASE_URL",
+  "salt": "ENCRYPT_SALT"
 }

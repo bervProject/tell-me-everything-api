@@ -1,15 +1,14 @@
-import hookCommon from 'feathers-hooks-common';
-const { disallow } = hookCommon;
+import { disallow } from "feathers-hooks-common";
 
 export default {
   before: {
-    all: [disallow('external')],
+    all: [disallow("external")],
     find: [],
     get: [],
     create: [],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   after: {
@@ -19,7 +18,7 @@ export default {
     create: [],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   error: {
@@ -29,6 +28,6 @@ export default {
     create: [],
     update: [],
     patch: [],
-    remove: []
-  }
+    remove: [],
+  },
 };

@@ -1,101 +1,91 @@
-import advanceHook from 'feathers-advance-hook/dist';
-import * as feathersAuthentication from '@feathersjs/authentication';
-import * as local from '@feathersjs/authentication-local';
-import checkPermissions from 'feathers-permissions';
-import { iff, required, preventChanges } from 'feathers-hooks-common';
-import { setField } from 'feathers-authentication-hooks';
+import advanceHook from "feathers-advance-hook/dist";
+import * as feathersAuthentication from "@feathersjs/authentication";
+import * as local from "@feathersjs/authentication-local";
+import checkPermissions from "feathers-permissions";
+import { iff, required, preventChanges } from "feathers-hooks-common";
+import { setField } from "feathers-authentication-hooks";
 
-import messagesEncrypt from '../../hooks/messages-encrypt';
-import gettingMessage from '../../hooks/getting-message';
-import openMessage from '../../hooks/open-message';
-import messageSend from '../../hooks/message-send';
+import messagesEncrypt from "../../hooks/messages-encrypt";
+import gettingMessage from "../../hooks/getting-message";
+import openMessage from "../../hooks/open-message";
+import messageSend from "../../hooks/message-send";
 // Don't remove this comment. It's needed to format import lines nicely.
 
-const {
-  authenticate
-} = feathersAuthentication.hooks;
+const { authenticate } = feathersAuthentication.hooks;
 const userAuditHook = advanceHook.userAuditHook;
 
-const {
-  protect
-} = local.hooks;
+const { protect } = local.hooks;
 
 export default {
   before: {
-    all: [
-      authenticate('jwt')
-    ],
+    all: [authenticate("jwt")],
     find: [
       checkPermissions({
-        roles: ['admin'],
-        error: false
+        roles: ["admin"],
+        error: false,
       }),
-      iff(context => !context.params.permitted,
+      iff(
+        (context) => !context.params.permitted,
         setField({
-          from: 'params.user.email',
-          as: 'params.query.to'
-        })
+          from: "params.user.email",
+          as: "params.query.to",
+        }),
       ),
     ],
     get: [
       checkPermissions({
-        roles: ['admin'],
-        error: false
+        roles: ["admin"],
+        error: false,
       }),
-      iff(context => !context.params.permitted,
+      iff(
+        (context) => !context.params.permitted,
         setField({
-          from: 'params.user.email',
-          as: 'params.query.to'
-        })
+          from: "params.user.email",
+          as: "params.query.to",
+        }),
       ),
-      gettingMessage()
+      gettingMessage(),
     ],
     create: [
       checkPermissions({
-        roles: ['admin']
+        roles: ["admin"],
       }),
-      required('text', 'messagePassword'),
+      required("text", "messagePassword"),
       messagesEncrypt(),
-      userAuditHook()
+      userAuditHook(),
     ],
     update: [
       checkPermissions({
-        roles: ['admin']
+        roles: ["admin"],
       }),
-      required('text', 'messagePassword'),
+      required("text", "messagePassword"),
       messagesEncrypt(),
-      userAuditHook()
+      userAuditHook(),
     ],
     patch: [
       checkPermissions({
-        roles: ['admin']
+        roles: ["admin"],
       }),
-      preventChanges(true, 'text'),
+      preventChanges(true, "text"),
       messagesEncrypt(),
-      userAuditHook()
+      userAuditHook(),
     ],
     remove: [
       checkPermissions({
-        roles: ['admin']
+        roles: ["admin"],
       }),
-      userAuditHook()
-    ]
+      userAuditHook(),
+    ],
   },
 
   after: {
-    all: [
-      protect('messagePassword')
-    ],
+    all: [protect("messagePassword")],
     find: [],
-    get: [
-      openMessage()
-    ],
-    create: [
-      messageSend()
-    ],
+    get: [openMessage()],
+    create: [messageSend()],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   error: {
@@ -105,6 +95,6 @@ export default {
     create: [],
     update: [],
     patch: [],
-    remove: []
-  }
+    remove: [],
+  },
 };

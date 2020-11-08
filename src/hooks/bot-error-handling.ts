@@ -1,9 +1,9 @@
 // Use this hook to manipulate incoming or outgoing data.
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
-import { Hook, HookContext } from '@feathersjs/feathers';
-import { SignatureValidationFailed, JSONParseError } from '@line/bot-sdk';
-import logger from '../logger';
-
+import { Hook, HookContext } from "@feathersjs/feathers";
+import { SignatureValidationFailed, JSONParseError } from "@line/bot-sdk";
+import logger from "../logger";
+// eslint-disable-next-line no-unused-vars
 export default (options = {}): Hook => {
   return async (context: HookContext) => {
     const { error } = context;
@@ -19,4 +19,4 @@ export default (options = {}): Hook => {
     logger.error(`Error: ${JSON.stringify(context)}`);
     return context;
   };
-}
+};

@@ -1,8 +1,8 @@
 import app from "../../src/app";
 
-describe("'line-bot' service", () => {
+describe("'email' service", () => {
   it("registered the service", () => {
-    const service = app.service("line-bot");
+    const service = app.service("email");
     expect(service).toBeTruthy();
   });
 });

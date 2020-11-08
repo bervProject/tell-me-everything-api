@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-import { v4 as uuidv4 } from 'uuid';
-import { Namespace } from 'cls-hooked';
+import { Request, Response, NextFunction } from "express";
+import { v4 as uuidv4 } from "uuid";
+import { Namespace } from "cls-hooked";
 
 export default (namespace: Namespace) => {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -10,8 +10,8 @@ export default (namespace: Namespace) => {
     }
     req.feathers.correlationId = correlationId;
     namespace.run(() => {
-      namespace.set('correlationId', correlationId);
+      namespace.set("correlationId", correlationId);
       next();
     });
   };
-}
+};

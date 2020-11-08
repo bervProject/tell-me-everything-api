@@ -1,6 +1,11 @@
-import { Client } from '@line/bot-sdk';
-import config from './line-config';
+import { Client } from "@line/bot-sdk";
+import { Application } from "./declarations";
 
-const client = new Client(config);
-
-export default client;
+export default function (app: Application): void {
+  const lineConfig = {
+    channelAccessToken: app.get("lineAccessToken"),
+    channelSecret: app.get("lineSecret"),
+  };
+  const client = new Client(lineConfig);
+  app.set("lineClient", client);
+}

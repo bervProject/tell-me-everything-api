@@ -1,6 +1,5 @@
-
-import botLineRespond from '../../hooks/bot-line-respond';
-import botErrorHandling from '../../hooks/bot-error-handling';
+import botLineRespond from "../../hooks/bot-line-respond";
+import botErrorHandling from "../../hooks/bot-error-handling";
 export default {
   before: {
     all: [],
@@ -9,7 +8,7 @@ export default {
     create: [botLineRespond()],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   after: {
@@ -19,7 +18,7 @@ export default {
     create: [],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   error: {
@@ -29,6 +28,6 @@ export default {
     create: [botErrorHandling()],
     update: [],
     patch: [],
-    remove: []
-  }
+    remove: [],
+  },
 };

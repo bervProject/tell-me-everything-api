@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
-import logger from '../logger';
+import { Request, Response, NextFunction } from "express";
+import logger from "../logger";
 
 export default () => {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -7,4 +7,4 @@ export default () => {
     logger.info(req.body.destination);
     next();
   };
-}
+};

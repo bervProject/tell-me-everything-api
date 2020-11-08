@@ -1,5 +1,5 @@
-import { Service, MemoryServiceOptions } from 'feathers-memory';
-import { Application } from '../../declarations';
+import { Service, MemoryServiceOptions } from "feathers-memory";
+import { Application } from "../../declarations";
 
 export class LineBot extends Service {
   constructor(options: Partial<MemoryServiceOptions>, app: Application) {
