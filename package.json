@@ -52,7 +52,7 @@
         "@feathersjs/configuration": "^4.5.10",
         "@feathersjs/errors": "^4.5.9",
         "@feathersjs/express": "^4.5.9",
-        "@feathersjs/feathers": "^4.5.9",
+        "@feathersjs/feathers": "^4.5.11",
         "@feathersjs/socketio": "^4.5.11",
         "@line/bot-sdk": "^7.1.0",
         "aws-sdk": "^2.803.0",
