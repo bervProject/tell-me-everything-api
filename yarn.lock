@@ -674,10 +674,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@line/bot-sdk@^7.1.0":
-  version "7.1.0"
-  resolved "https://registry.npmjs.org/@line/bot-sdk/-/bot-sdk-7.1.0.tgz#ec4115a54503677cbe71c2fd153b674a1a869e89"
-  integrity sha512-2yjbIuIPLkBuK6/spXWXaxdj8lz1fP3vkkBG6iknVlj1UrVy8InnT+F6WmiFFsi1OeDKGXvhIDtiWslwWYH6JQ==
+"@line/bot-sdk@^7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@line/bot-sdk/-/bot-sdk-7.2.0.tgz#8962c3f1e4a37fa72184233a9297c8bd7b9768cf"
+  integrity sha512-TW9BB1Om1lFWWo3sw9A4kx+9ZTHBjfqIj6NmUY9md+DDR5Z4X98wEeM3l74mkrbZ7naK6AtRgUw5UIaKQgi3nA==
   dependencies:
     "@types/body-parser" "^1.19.0"
     "@types/node" "^14.10.0"
