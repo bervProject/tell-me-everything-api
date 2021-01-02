@@ -2914,10 +2914,10 @@ feathers-memory@^4.1.0:
     "@feathersjs/errors" "^4.3.4"
     sift "^8.5.0"
 
-feathers-permissions@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/feathers-permissions/-/feathers-permissions-2.0.3.tgz#1b2be8e1d108b56c65e50d5239e312ca5242f711"
-  integrity sha512-dl66CPXqfCgirjK8qCBv5Zyen6otrSJMtsOZQSkAwkquE85zxgf4BJ4HxspOEejOFzII88/+5tnD6Oi72D3WCA==
+feathers-permissions@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/feathers-permissions/-/feathers-permissions-2.1.4.tgz#66306cf7f50c91329e907a70980e32d137082967"
+  integrity sha512-7z6nBw0FqKQUS31WwRSyXG9LHesCxryVtkhP3L87pvwFB1WeFEMiOwvP4toeYaBmzZ1aFsHDIVECgEIQ9naxtg==
   dependencies:
     "@feathersjs/errors" "^4.5.8"
     debug "^4.2.0"
