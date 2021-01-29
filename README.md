@@ -6,7 +6,7 @@
 
 |                                          Action Github                                          |                                                                            Codecov                                                                             |
 | :---------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| ![Node CI](https://github.com/bervProject/tell-me-everything-api/workflows/Node%20CI/badge.svg) | [![codecov](https://codecov.io/gh/bervProject/tell-me-everything-api/branch/master/graph/badge.svg)](https://codecov.io/gh/bervProject/tell-me-everything-api) |
+| ![Node CI](https://github.com/bervProject/tell-me-everything-api/workflows/Node&Docker/badge.svg) | [![codecov](https://codecov.io/gh/bervProject/tell-me-everything-api/branch/master/graph/badge.svg)](https://codecov.io/gh/bervProject/tell-me-everything-api) |
 
 ## Last Version
 
