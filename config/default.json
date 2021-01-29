@@ -7,6 +7,7 @@
     "max": 50
   },
   "postgres": "postgres://postgres:@localhost:5432/test-tell-me",
+  "frontend": "https://tell-secret.berviantoleo.my.id/",
   "lineAccessToken": "LINE_CHANNEL_ACCESS_TOKEN",
   "lineSecret": "LINE_CHANNEL_SECRET",
   "salt": "ENCRYPT_SALT",
