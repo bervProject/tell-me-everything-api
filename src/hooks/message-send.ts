@@ -6,7 +6,7 @@ export default (options = {}): Hook => {
   return async (context: HookContext) => {
     const { app, result } = context;
     if (result.to) {
-      await app.service("mailer")._create({
+      await app.service("email")._create({
         from: "notification@berviantoleo.my.id",
         to: result.to,
         subject: "You've got secret message",
