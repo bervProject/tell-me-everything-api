@@ -4,6 +4,7 @@
     "version": "0.0.3",
     "homepage": "https://tell-me-everything.herokuapp.com/",
     "main": "src",
+    "license": "MIT",
     "keywords": [
         "feathers"
     ],
