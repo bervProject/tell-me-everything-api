@@ -5,9 +5,10 @@ COPY package.json yarn.lock ./
 RUN apk add --no-cache git
 RUN yarn
 COPY . .
+RUN yarn compile
 
 FROM node:14-alpine as runner
 # Bundle app source
 COPY --from=build /usr/src/app /usr/src/app
 WORKDIR /usr/src/app
-CMD [ "yarn", "start" ]
+CMD [ "yarn", "start:prod" ]

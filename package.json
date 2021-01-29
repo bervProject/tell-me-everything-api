@@ -37,10 +37,10 @@
         "yarn": ">= 0.18.0"
     },
     "scripts": {
-        "test": "yarn run compile && yarn run jest",
+        "test": "jest  --forceExit",
         "dev": "ts-node-dev --no-notify src/",
         "start": "yarn run compile && cross-env NODE_ENV=production node lib/",
-        "jest": "jest  --forceExit",
+        "start:prod": "cross-env NODE_ENV=production node lib/",
         "lint": "eslint . --ext .json,.ts,.md --quiet --fix",
         "compile": "shx rm -rf lib/ && tsc"
     },
