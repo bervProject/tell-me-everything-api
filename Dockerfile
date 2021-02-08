@@ -1,14 +1,17 @@
 FROM node:14-alpine as build
 # Create app directory
-WORKDIR /usr/src/app
-COPY package.json yarn.lock ./
-RUN apk add --no-cache git
-RUN yarn
+ARG NODE_AUTH_TOKEN
+WORKDIR /app
+COPY package.json yarn.lock .npmrc ./
+RUN apk add --no-cache git && yarn
 COPY . .
 RUN yarn compile
 
 FROM node:14-alpine as runner
 # Bundle app source
-COPY --from=build /usr/src/app /usr/src/app
-WORKDIR /usr/src/app
+WORKDIR /app
+COPY --from=build /app /app
+RUN rm -f .npmrc
+RUN adduser -D tmea
+USER tmea
 CMD [ "yarn", "start:prod" ]

@@ -47,6 +47,7 @@
     },
     "types": "lib/",
     "dependencies": {
+        "@bervproject/feathers-advance-hook": "^1.0.2",
         "@feathersjs/authentication": "^4.5.11",
         "@feathersjs/authentication-local": "^4.5.11",
         "@feathersjs/authentication-oauth": "^4.5.11",
@@ -63,7 +64,6 @@
         "cors": "^2.8.5",
         "cross-env": "^7.0.3",
         "crypto-js": "^4.0.0",
-        "feathers-advance-hook": "^0.0.8",
         "feathers-authentication-hooks": "^1.0.2",
         "feathers-hooks-common": "^5.0.4",
         "feathers-memory": "^4.1.0",

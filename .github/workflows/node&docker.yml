@@ -10,8 +10,9 @@ on:
   # Run tests for any PRs.
   pull_request:
 env:
-  # TODO: Change variable to your image's name.
   IMAGE_NAME: tell-me-everything-api
+  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  HEROKU_APP_NAME: tell-me-everything
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,31 +25,22 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: yarn and yarn test
+        registry-url: https://npm.pkg.github.com/
+        always-auth: true
+    - name: Build & Test
       run: |
         yarn
         yarn test
+        yarn compile
       env:
         CI: true
-    - uses: codecov/codecov-action@v1
-  docker-test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Run tests
-        run: |
-          if [ -f docker-compose.test.yml ]; then
-            docker-compose --file docker-compose.test.yml build
-            docker-compose --file docker-compose.test.yml run sut
-          else
-            docker build . --file Dockerfile
-          fi
+    - name: Codecov
+      run: bash <(curl -s https://codecov.io/bash)
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   docker-push:
     # Ensure test job passes before pushing image.
-    needs: docker-test
+    needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
@@ -72,3 +64,20 @@ jobs:
           echo VERSION=$VERSION
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
+      - uses: akhileshns/heroku-deploy@v3.10.9 # This is the action
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "" #Must be unique in Heroku
+          heroku_email: "bervianto.leo@gmail.com"
+          justlogin: true
+      - name: Heroku Container Login & Update
+        run: |
+          heroku update
+          heroku container:login
+      - name: Push image & Release
+        run: |
+          HEROKU_IMAGE=registry.heroku.com/$HEROKU_APP_NAME/web
+          docker tag $IMAGE_NAME $HEROKU_IMAGE
+          docker push $HEROKU_IMAGE
+          heroku container:release web --app=${HEROKU_APP_NAME}
+
