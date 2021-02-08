@@ -6,7 +6,7 @@ import {
   required,
   preventChanges,
 } from "feathers-hooks-common";
-import advanceHook from "feathers-advance-hook/dist";
+import { userAuditHook } from "@bervproject/feathers-advance-hook";
 import checkPermissions from "feathers-permissions";
 import { setField } from "feathers-authentication-hooks";
 import emailUser from "../../hooks/email-user";
@@ -15,7 +15,6 @@ import userCreationLimit from "../../hooks/user-creation-limit";
 
 const { authenticate } = feathersAuthentication.hooks;
 const { hashPassword, protect } = local.hooks;
-const userAuditHook = advanceHook.userAuditHook;
 
 export default {
   before: {
