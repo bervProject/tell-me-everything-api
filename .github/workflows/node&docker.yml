@@ -20,7 +20,7 @@ jobs:
       matrix:
         node-version: [12.x, 14.x]
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
@@ -36,6 +36,14 @@ jobs:
         CI: true
     - name: Codecov
       run: bash <(curl -s https://codecov.io/bash)
+  docker-test:
+    runs-on: ubuntu-20.04
+    needs: build
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: docker build . --file Dockerfile --build-arg NODE_AUTH_TOKEN=${NODE_AUTH_TOKEN}
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   docker-push:
