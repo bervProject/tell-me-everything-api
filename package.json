@@ -65,7 +65,7 @@
         "cross-env": "^7.0.3",
         "crypto-js": "^4.0.0",
         "feathers-authentication-hooks": "^1.0.2",
-        "feathers-hooks-common": "^5.0.4",
+        "feathers-hooks-common": "^5.0.5",
         "feathers-memory": "^4.1.0",
         "feathers-permissions": "^2.1.4",
         "feathers-sequelize": "^6.2.0",
