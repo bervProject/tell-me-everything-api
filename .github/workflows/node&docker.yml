@@ -30,6 +30,7 @@ jobs:
     - name: Build & Test
       run: |
         yarn
+        yarn lint
         yarn test
         yarn compile
       env:

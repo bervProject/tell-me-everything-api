@@ -42,7 +42,8 @@
         "dev": "ts-node-dev --no-notify src/",
         "start": "yarn run compile && cross-env NODE_ENV=production node lib/",
         "start:prod": "cross-env NODE_ENV=production node lib/",
-        "lint": "eslint . --ext .json,.ts,.md --quiet --fix",
+        "lint": "eslint . --ext .json,.ts,.md",
+        "fix-lint": "eslint . --ext .json,.ts,.md --quiet --fix",
         "compile": "shx rm -rf lib/ && tsc"
     },
     "types": "lib/",
@@ -96,7 +97,7 @@
         "@typescript-eslint/parser": "^4.15.2",
         "axios": "^0.21.1",
         "eslint": "^7.20.0",
-        "eslint-config-prettier": "^7.2.0",
+        "eslint-config-prettier": "^8.1.0",
         "eslint-plugin-json": "^2.1.2",
         "eslint-plugin-markdown": "^2.0.0",
         "eslint-plugin-prettier": "^3.3.1",
