@@ -1,0 +1,9 @@
+test/
+coverage/
+.vscode/
+.github/
+.editorconfig
+.eslintrc.js
+.prettierrc.js
+jest.config.js
+node_modules/
