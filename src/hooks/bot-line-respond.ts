@@ -30,8 +30,7 @@ async function handleBye(
   } else {
     await client.replyMessage(messageEvent.replyToken, {
       type: "text",
-      text:
-        "Maaf, kak. Kita lagi saling chat. Kita gak bisa ninggalin kakak di chat ini. :'(",
+      text: "Maaf, kak. Kita lagi saling chat. Kita gak bisa ninggalin kakak di chat ini. :'(",
     });
   }
 }
@@ -234,8 +233,7 @@ async function proccessMessageEvent(
         } else {
           await client.replyMessage(messageEvent.replyToken, {
             type: "text",
-            text:
-              "Maaf saat ini perintah yang anda berikan tidak tersedia. Mohon masukan 'bantuan' untuk info lebih lanjut.",
+            text: "Maaf saat ini perintah yang anda berikan tidak tersedia. Mohon masukan 'bantuan' untuk info lebih lanjut.",
           });
         }
         break;
@@ -299,13 +297,11 @@ async function handleEvent(event: WebhookEvent, client: Client) {
         await client.replyMessage(joinEvent.replyToken, [
           {
             type: "text",
-            text:
-              "Halo semuanya! Terima kasih telah mengundang kami di grup ini! Ketik 'bantuan' tanpa tanda petik untuk melihat fungsi dari bot ini.",
+            text: "Halo semuanya! Terima kasih telah mengundang kami di grup ini! Ketik 'bantuan' tanpa tanda petik untuk melihat fungsi dari bot ini.",
           },
           {
             type: "text",
-            text:
-              "Bot ini berfungsi memberikan sugesti halaman web yang dapat dituju berdasarkan kata kunci dari kakak.",
+            text: "Bot ini berfungsi memberikan sugesti halaman web yang dapat dituju berdasarkan kata kunci dari kakak.",
           },
         ]);
         break;
