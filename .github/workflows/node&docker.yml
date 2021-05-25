@@ -25,6 +25,11 @@ jobs:
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: testpassword
+      postgres:
+        image: postgres:13-alpine
+        env:
+          POSTGRES_PASSWORD: testpsqlpassword
+          POSTGRES_DB: tme
     runs-on: ubuntu-latest
     strategy:
       matrix:
