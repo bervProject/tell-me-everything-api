@@ -7,6 +7,7 @@
   "salt": "ENCRYPT_SALT",
   "frontend": "FRONTEND_URL",
   "mongodb": "MONGO_URL",
+  "mongodbname": "MONGO_DB_NAME",
   "authentication": {
     "secret": "AUTH_SECRET",
     "authStrategies": [

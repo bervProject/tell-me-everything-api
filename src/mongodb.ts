@@ -4,7 +4,7 @@ import logger from "./logger";
 
 export default function (app: Application): void {
   const connection = app.get("mongodb");
-  const database = connection.substr(connection.lastIndexOf("/") + 1);
+  const database = app.get("mongodbname");
   const mongoClient = MongoClient.connect(connection, {
     useNewUrlParser: true,
   })
