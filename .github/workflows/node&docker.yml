@@ -22,14 +22,23 @@ jobs:
     services:
       mongodb:
         image: mongo:4.4
+        ports:
+          - 27017:27017
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: testpassword
       postgres:
         image: postgres:13-alpine
+        ports:
+          - 5432:5432
         env:
           POSTGRES_PASSWORD: testpsqlpassword
           POSTGRES_DB: tme
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     runs-on: ubuntu-latest
     strategy:
       matrix:
