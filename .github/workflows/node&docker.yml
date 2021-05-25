@@ -19,6 +19,12 @@ env:
   HEROKU_APP_NAME: tell-me-everything
 jobs:
   build:
+    services:
+      mongodb:
+        image: mongo:4.4
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: testpassword
     runs-on: ubuntu-latest
     strategy:
       matrix:

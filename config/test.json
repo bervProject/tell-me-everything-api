@@ -1,1 +1,4 @@
-{}
+{
+  "mongodb": "mongodb://root:testpassword@localhost:27017",
+  "mongodbname": "tme"
+}
