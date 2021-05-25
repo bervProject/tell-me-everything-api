@@ -7,7 +7,7 @@ import lineBotMiddleware from "./line-bot-middleware";
 // Don't remove this comment. It's needed to format import lines nicely.
 const logNamespace = createNamespace("logger");
 
-export default function (app: Application) {
+export default function (app: Application): void {
   app.use(correlation(logNamespace));
   app.use(headersCatch());
   const lineConfig = {

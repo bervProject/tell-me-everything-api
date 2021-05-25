@@ -1,9 +1,9 @@
 // See http://docs.sequelizejs.com/en/latest/docs/models-definition/
 // for more of what you can do here.
-import { Sequelize, DataTypes, UUIDV4 } from "sequelize";
+import { Sequelize, DataTypes, UUIDV4, ModelCtor, Model } from "sequelize";
 import { Application } from "../declarations";
 
-export default function (app: Application) {
+export default function (app: Application): ModelCtor<Model<any, any>> {
   const sequelizeClient: Sequelize = app.get("sequelizeClient");
   const message = sequelizeClient.define(
     "message",

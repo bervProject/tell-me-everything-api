@@ -5,5 +5,35 @@
   "lineSecret": "LINE_CHANNEL_SECRET",
   "postgres": "DATABASE_URL",
   "salt": "ENCRYPT_SALT",
-  "frontend": "https://tell-secret.berviantoleo.my.id/"
+  "frontend": "FRONTEND_URL",
+  "authentication": {
+    "secret": "AUTH_SECRET",
+    "authStrategies": [
+      "jwt",
+      "local",
+      "oauth"
+    ],
+    "jwtOptions": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "JWT_AUDIANCE",
+      "issuer": "JWT_ISSUERS",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "oauth": {
+      "redirect": "OAUTH_REDIRECT_URL",
+      "auth0": {
+        "key": "OAUTH_CLIENT_ID",
+        "secret": "OAUTH_CLIENT_SECRET",
+        "subdomain": "OAUTH_SUBDOMAIN",
+        "scope": [
+          "openid",
+          "profile",
+          "email"
+        ]
+      }
+    }
+  }
 }
