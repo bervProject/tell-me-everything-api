@@ -17,6 +17,7 @@ import appHooks from "./app.hooks";
 import channels from "./channels";
 import sequelize from "./sequelize";
 import authentication from "./authentication";
+import mongodb from "./mongodb";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const app: Application = express(feathers());
@@ -38,6 +39,8 @@ app.configure(express.rest());
 app.configure(socketio());
 
 app.configure(sequelize);
+
+app.configure(mongodb);
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);

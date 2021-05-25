@@ -40,5 +40,6 @@
         "subdomain": "<auth0 subdomain>"
       }
     }
-  }
+  },
+  "mongodb": "mongodb://localhost:27017/tell_me_everything_api"
 }

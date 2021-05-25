@@ -6,6 +6,7 @@
   "postgres": "DATABASE_URL",
   "salt": "ENCRYPT_SALT",
   "frontend": "FRONTEND_URL",
+  "mongodb": "MONGO_URL",
   "authentication": {
     "secret": "AUTH_SECRET",
     "authStrategies": [
