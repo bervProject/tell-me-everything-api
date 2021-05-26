@@ -61,10 +61,18 @@ jobs:
         CI: true
     - name: Codecov
       run: bash <(curl -s https://codecov.io/bash)
+    - name: Push to Railway
+      if: ${{ github.event_name == 'push' }}
+      run: |
+        npm i -g @railway/cli
+        [[ "${{ github.ref }}" == "refs/heads/production" ]] && RAILWAY_TOKEN="${{secrets.RAILWAY_PROD}}"
+        railway up
+      env:
+        RAILWAY_TOKEN: ${{ secrets.RAILWAY_STG }}
   docker-test:
     runs-on: ubuntu-20.04
     needs: build
-    if: github.event_name == 'pull_request'
+    if: ${{ github.event_name == 'pull_request' }}
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
@@ -75,7 +83,7 @@ jobs:
     # Ensure test job passes before pushing image.
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    if: ${{ github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v2
       - name: Build image
