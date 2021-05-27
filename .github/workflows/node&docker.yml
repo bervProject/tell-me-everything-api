@@ -66,8 +66,7 @@ jobs:
       run: |
         npm i -g @railway/cli
         [[ "${{ github.ref }}" == "refs/heads/production" ]] && RAILWAY_TOKEN="${{secrets.RAILWAY_PROD}}"
-        railway link "${{ secrets.RAILWAY_ID }}"
-        railway up
+        RAILWAY_TOKEN=$RAILWAY_TOKEN railway up
       env:
         RAILWAY_TOKEN: ${{ secrets.RAILWAY_STG }}
   docker-test:
