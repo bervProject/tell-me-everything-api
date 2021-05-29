@@ -15,9 +15,5 @@ updates:
     time: "08:00"
     timezone: Asia/Jakarta
   open-pull-requests-limit: 100
-  ignore:
-  - dependency-name: eslint-config-prettier
-    versions:
-    - 8.1.0
   registries:
   - npm-registry-npm-pkg-github-com
