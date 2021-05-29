@@ -61,10 +61,18 @@ jobs:
         CI: true
     - name: Codecov
       run: bash <(curl -s https://codecov.io/bash)
+    - name: Push to Railway
+      if: ${{ github.event_name == 'push' && matrix.node-version == '14.x' }}
+      run: |
+        npm i -g @railway/cli
+        [[ "${{ github.ref }}" == "refs/heads/production" ]] && RAILWAY_TOKEN="${{secrets.RAILWAY_PROD}}"
+        railway up
+      env:
+        RAILWAY_TOKEN: ${{ secrets.RAILWAY_STG }}
   docker-test:
     runs-on: ubuntu-20.04
     needs: build
-    if: github.event_name == 'pull_request'
+    if: ${{ github.event_name == 'pull_request' }}
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
@@ -75,7 +83,7 @@ jobs:
     # Ensure test job passes before pushing image.
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    if: ${{ github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v2
       - name: Build image
@@ -98,23 +106,3 @@ jobs:
           echo VERSION=$VERSION
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
-      - uses: akhileshns/heroku-deploy@v3.10.9 # This is the action
-        if: ${{ github.ref == 'refs/heads/master' }}
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "" #Must be unique in Heroku
-          heroku_email: "bervianto.leo@gmail.com"
-          justlogin: true
-      - name: Heroku Container Login & Update
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: |
-          heroku update
-          heroku container:login
-      - name: Push image & Release
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: |
-          HEROKU_IMAGE=registry.heroku.com/$HEROKU_APP_NAME/web
-          docker tag $IMAGE_NAME $HEROKU_IMAGE
-          docker push $HEROKU_IMAGE
-          heroku container:release web --app=${HEROKU_APP_NAME}
-
