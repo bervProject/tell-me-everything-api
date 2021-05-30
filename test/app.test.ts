@@ -1,19 +1,18 @@
 import assert from "assert";
 import { Server } from "http";
-import url from "url";
+import { URL } from "url";
 import axios from "axios";
 
 import app from "../src/app";
 
 const port = app.get("port") || 8998;
-const getUrl = (pathname?: string) =>
-  url.format({
-    hostname: app.get("host") || "localhost",
-    protocol: "http",
-    port,
-    pathname,
-  });
-
+const getUrl = (pathname?: string) => {
+  const hostname = app.get("host") || "localhost";
+  const path = !pathname ? "" : pathname;
+  const url = new URL(`http://${hostname}:${port}/${path}`);
+  const urlString = url.toString();
+  return urlString;
+};
 describe("Feathers application tests (with jest)", () => {
   let server: Server;
 
