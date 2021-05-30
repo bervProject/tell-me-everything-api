@@ -16,7 +16,8 @@ export default (options = {}): Hook => {
       context.error = error.raw;
       context.result = error.raw;
     }
-    logger.error(`Error: ${JSON.stringify(context)}`);
+
+    logger.error(`Error: ${JSON.stringify(error)}`);
     return context;
   };
 };

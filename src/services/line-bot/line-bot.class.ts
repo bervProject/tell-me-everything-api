@@ -1,8 +1,15 @@
-import { Service, MemoryServiceOptions } from "feathers-memory";
+import { Db } from "mongodb";
+import { Service, MongoDBServiceOptions } from "feathers-mongodb";
 import { Application } from "../../declarations";
 
 export class LineBot extends Service {
-  constructor(options: Partial<MemoryServiceOptions>, app: Application) {
+  //eslint-disable-next-line @typescript-eslint/no-unused-vars
+  constructor(options: Partial<MongoDBServiceOptions>, app: Application) {
     super(options);
+    const client: Promise<Db> = app.get("mongoClient");
+
+    client.then((db) => {
+      this.Model = db.collection("lineinput");
+    });
   }
 }

@@ -17,6 +17,7 @@ import {
   FollowEvent,
   FlexBubble,
 } from "@line/bot-sdk";
+import { GeneralError } from "@feathersjs/errors";
 
 async function handleBye(
   sourceType: "room" | "group" | "user",
