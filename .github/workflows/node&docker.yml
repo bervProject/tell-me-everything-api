@@ -64,7 +64,7 @@ jobs:
     - name: Push to Railway
       if: ${{ github.event_name == 'push' && matrix.node-version == '14.x' }}
       run: |
-        npm i -g @railway/cli@0.2.27
+        npm i -g @railway/cli@0.2.25
         [[ "${{ github.ref }}" == "refs/heads/production" ]] && RAILWAY_TOKEN="${{secrets.RAILWAY_PROD}}"
         railway up
       env:
