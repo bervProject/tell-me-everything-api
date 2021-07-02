@@ -112,5 +112,5 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            NODE_AUTH_TOKEN=${{ secrets.NODE_AUTH_TOKEN }}
+            NODE_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
 
