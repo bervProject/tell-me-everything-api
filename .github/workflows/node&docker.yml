@@ -15,8 +15,6 @@ on:
       - production
 env:
   IMAGE_NAME: tell-me-everything-api
-  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  HEROKU_APP_NAME: tell-me-everything
 jobs:
   build:
     services:
@@ -49,8 +47,6 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-        registry-url: https://npm.pkg.github.com/
-        always-auth: true
     - name: Install
       run: yarn --frozen-lockfile
     - name: Lint
@@ -71,8 +67,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-          registry-url: https://npm.pkg.github.com/
-          always-auth: true
       - name: Push to Railway
         run: |
           npm i -g @railway/cli
@@ -87,7 +81,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
-        run: docker build . --file Dockerfile --build-arg NODE_AUTH_TOKEN=${NODE_AUTH_TOKEN}
+        run: docker build .
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   docker-push:
@@ -122,6 +116,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            NODE_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
-
