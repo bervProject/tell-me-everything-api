@@ -9,6 +9,7 @@ export default (options = {}): Hook => {
     const { headers } = context.params;
     const messagePassword = headers?.key;
     if (!messagePassword) {
+      // without header
       return context;
     }
     const { result } = context;

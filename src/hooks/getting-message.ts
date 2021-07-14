@@ -10,7 +10,8 @@ export default (options = {}): Hook => {
     const { headers } = params;
     const messagePassword = headers?.key;
     if (!messagePassword) {
-      throw new Forbidden("You are not authorized to check this messages");
+      // without header
+      return context;
     }
     const data = await app.service("message")._get(id);
     if (!data) {
