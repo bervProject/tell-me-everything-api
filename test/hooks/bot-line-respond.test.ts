@@ -15,7 +15,9 @@ describe("Hook test 'bot-error-handling ", () => {
     server = feathers();
     server.use("random", {
       async create(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
         data: Partial<any> | Partial<any>[],
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         params: feathers.Params,
       ) {
         return {};
@@ -24,6 +26,7 @@ describe("Hook test 'bot-error-handling ", () => {
     server.service("random").hooks({
       before: { create: [botLineRespond()] },
     });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const clientMock = jest.fn().mockImplementation((query) => ({
       getProfile: jest.fn(),
       replyMessage: jest.fn(),
@@ -58,7 +61,6 @@ describe("Hook test 'bot-error-handling ", () => {
       events: [memberJoinEvent],
     };
     const result = await server.service("random").create(request);
-    console.log(JSON.stringify(result));
     expect(result).toBe(request.events);
   });
 
@@ -76,7 +78,6 @@ describe("Hook test 'bot-error-handling ", () => {
       events: [joinEvent],
     };
     const result = await server.service("random").create(request);
-    console.log(JSON.stringify(result));
     expect(result).toBe(request.events);
   });
 
@@ -94,7 +95,6 @@ describe("Hook test 'bot-error-handling ", () => {
       events: [followEvent],
     };
     const result = await server.service("random").create(request);
-    console.log(JSON.stringify(result));
     expect(result).toBe(request.events);
   });
 
@@ -113,7 +113,6 @@ describe("Hook test 'bot-error-handling ", () => {
       events: [messageEvent],
     };
     const result = await server.service("random").create(request);
-    console.log(JSON.stringify(result));
     expect(result).toBe(request.events);
   });
 
@@ -132,7 +131,6 @@ describe("Hook test 'bot-error-handling ", () => {
       events: [messageEvent],
     };
     const result = await server.service("random").create(request);
-    console.log(JSON.stringify(result));
     expect(result).toBe(request.events);
   });
 
@@ -151,7 +149,6 @@ describe("Hook test 'bot-error-handling ", () => {
       events: [messageEvent],
     };
     const result = await server.service("random").create(request);
-    console.log(JSON.stringify(result));
     expect(result).toBe(request.events);
   });
 
@@ -170,7 +167,6 @@ describe("Hook test 'bot-error-handling ", () => {
       events: [messageEvent],
     };
     const result = await server.service("random").create(request);
-    console.log(JSON.stringify(result));
     expect(result).toBe(request.events);
   });
 
@@ -189,7 +185,6 @@ describe("Hook test 'bot-error-handling ", () => {
       events: [messageEvent],
     };
     const result = await server.service("random").create(request);
-    console.log(JSON.stringify(result));
     expect(result).toBe(request.events);
   });
 
@@ -208,7 +203,6 @@ describe("Hook test 'bot-error-handling ", () => {
       events: [messageEvent],
     };
     const result = await server.service("random").create(request);
-    console.log(JSON.stringify(result));
     expect(result).toBe(request.events);
   });
 
@@ -227,7 +221,6 @@ describe("Hook test 'bot-error-handling ", () => {
       events: [messageEvent],
     };
     const result = await server.service("random").create(request);
-    console.log(JSON.stringify(result));
     expect(result).toBe(request.events);
   });
 
@@ -246,7 +239,6 @@ describe("Hook test 'bot-error-handling ", () => {
       events: [accountLinkEvent],
     };
     const result = await server.service("random").create(request);
-    console.log(JSON.stringify(result));
     expect(result).toBe(request.events);
   });
 });

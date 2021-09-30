@@ -2,8 +2,9 @@
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 import { Forbidden, NotFound } from "@feathersjs/errors";
 import { Hook, HookContext } from "@feathersjs/feathers";
-import bcryptjs from "bcryptjs";
+import * as argon2 from "argon2";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default (options = {}): Hook => {
   return async (context: HookContext) => {
     const { id, params, app } = context;
@@ -17,8 +18,8 @@ export default (options = {}): Hook => {
     if (!data) {
       throw new NotFound("Data Not Found!");
     }
-    const originalPassword = data.messagePassword;
-    const same = bcryptjs.compareSync(messagePassword, originalPassword);
+    const hashedPassword = data.messagePassword;
+    const same = argon2.verify(hashedPassword, messagePassword);
     if (!same) {
       throw new Forbidden("You are not authorized to check this messages");
     }

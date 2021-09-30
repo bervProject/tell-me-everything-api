@@ -8,6 +8,7 @@ import hooks from "./users.hooks";
 // Add this service to the service type index
 declare module "../../declarations" {
   interface ServiceTypes {
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     users: Users & ServiceAddons<any>;
   }
 }

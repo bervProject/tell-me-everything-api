@@ -1,15 +1,21 @@
-import { Db } from "mongodb";
+import { MongoClient } from "mongodb";
 import { Service, MongoDBServiceOptions } from "feathers-mongodb";
 import { Application } from "../../declarations";
+import logger from "../../logger";
 
 export class LineBot extends Service {
-  //eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(options: Partial<MongoDBServiceOptions>, app: Application) {
     super(options);
-    const client: Promise<Db> = app.get("mongoClient");
+    const client: MongoClient = app.get("mongoClient");
+    const dbName = app.get("mongodbname");
 
-    client.then((db) => {
-      this.Model = db.collection("lineinput");
-    });
+    client
+      .connect()
+      .then((clientConnected) => {
+        this.Model = clientConnected.db(dbName).collection("linebot");
+      })
+      .catch((error: Error) => {
+        logger.error(error.message);
+      });
   }
 }
