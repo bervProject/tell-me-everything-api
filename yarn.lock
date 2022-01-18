@@ -982,7 +982,7 @@
   resolved "https://registry.npmjs.org/@feathers-plus/batch-loader/-/batch-loader-0.3.6.tgz#1e096e95fcdffb83fb1a65468e6ef80b416f7d98"
   integrity sha512-r+n31iZ/B5Rl1mLkC9/S20UI445MdkZvE3VBmjupep2t8OuyTYHPkFEgR25HY6khH+RothK1VL3B5eumk9N2QQ==
 
-"@feathersjs/adapter-commons@^4.5.11", "@feathersjs/adapter-commons@^4.5.2":
+"@feathersjs/adapter-commons@^4.5.11":
   version "4.5.12"
   resolved "https://registry.yarnpkg.com/@feathersjs/adapter-commons/-/adapter-commons-4.5.12.tgz#5b924e0d20745d37ba9f8d804d15687dbbe7d5a7"
   integrity sha512-5UTo3M0WARIAUSOWFrHuf668pVewuQyOBuZXvvOa76SKe6/n31HulKFlXI2+FmBascOhaJibVBsP7jfcoQ6HfQ==
@@ -1033,7 +1033,7 @@
     long-timeout "^0.1.1"
     uuid "^8.3.1"
 
-"@feathersjs/commons@^4.5.11", "@feathersjs/commons@^4.5.12", "@feathersjs/commons@^4.5.3":
+"@feathersjs/commons@^4.5.11", "@feathersjs/commons@^4.5.12":
   version "4.5.12"
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.5.12.tgz#42e60e933849905b8803a3ebd7d4424f85ee7d3f"
   integrity sha512-ss3yyk8HurmOCSD+wvENIrT9iSa8vg9SmikoP5c9JaLkbtMmKpH88jCjgRl7jiO54f2+UcjW3PqccNgUGSNSDQ==
@@ -1047,7 +1047,7 @@
     config "^3.3.6"
     debug "^4.3.3"
 
-"@feathersjs/errors@^4.5.11", "@feathersjs/errors@^4.5.12", "@feathersjs/errors@^4.5.2", "@feathersjs/errors@^4.5.3", "@feathersjs/errors@^4.5.8":
+"@feathersjs/errors@^4.5.11", "@feathersjs/errors@^4.5.12", "@feathersjs/errors@^4.5.2", "@feathersjs/errors@^4.5.8":
   version "4.5.12"
   resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.5.12.tgz#c9d408a103e2ead228e6c61ea24516e6fe635a43"
   integrity sha512-xIQJ7t/acTuL1fTC6mpf0qlcWfJkA9x0rRMrSgjD3mzUnJU6VqxXFxusL8895ksGD0vQHwPueblbm8Hn6Ifqqw==
@@ -3515,14 +3515,14 @@ feathers-hooks-common@^5.0.6:
     process "0.11.10"
     traverse "^0.6.6"
 
-feathers-mongodb@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.npmjs.org/feathers-mongodb/-/feathers-mongodb-6.3.0.tgz#ee203689820b4466fec3990189c93e2308ed6619"
-  integrity sha512-6TVfvphV8E98woJUsiIE4zboXL+knQ5oUkbIqYfHd4NSQ8kwTc9WXkTZfrCDw5SJNpfOEmw/GlGf8KJQckkfsg==
+feathers-mongodb@^6.4.1:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/feathers-mongodb/-/feathers-mongodb-6.4.1.tgz#594dad260ac60883e741a0bc9792130ad1228a88"
+  integrity sha512-EZssrp/EIeMxQ3qzNOdlXbUoTXOKvwCMsuYZ5JuPsahRjQluxPEY2WIKmBAzFi4/Jgfl+JhQQLxceRTjZlsynw==
   dependencies:
-    "@feathersjs/adapter-commons" "^4.5.2"
-    "@feathersjs/commons" "^4.5.3"
-    "@feathersjs/errors" "^4.5.3"
+    "@feathersjs/adapter-commons" "^4.5.11"
+    "@feathersjs/commons" "^4.5.11"
+    "@feathersjs/errors" "^4.5.11"
 
 feathers-permissions@^2.1.4:
   version "2.1.4"
