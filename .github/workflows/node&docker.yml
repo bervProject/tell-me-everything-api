@@ -3,7 +3,7 @@ on:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
-      - master
+      - main
       - production
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -11,7 +11,7 @@ on:
   # Run tests for any PRs.
   pull_request:
     branches:
-      - master
+      - main
       - production
 env:
   IMAGE_NAME: tell-me-everything-api
