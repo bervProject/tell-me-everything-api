@@ -57,7 +57,7 @@
         "@feathersjs/configuration": "^4.5.11",
         "@feathersjs/errors": "^4.5.11",
         "@feathersjs/express": "^4.5.12",
-        "@feathersjs/feathers": "^4.5.11",
+        "@feathersjs/feathers": "^4.5.12",
         "@feathersjs/socketio": "^4.5.13",
         "@line/bot-sdk": "^7.4.0",
         "argon2": "^0.28.3",
