@@ -49,7 +49,7 @@
     },
     "types": "lib/",
     "dependencies": {
-        "@aws-sdk/client-ses": "^3.53.0",
+        "@aws-sdk/client-ses": "^3.54.0",
         "@bervproject/feathers-advance-hook": "^1.1.1",
         "@feathersjs/authentication": "^4.5.11",
         "@feathersjs/authentication-local": "^4.5.12",
