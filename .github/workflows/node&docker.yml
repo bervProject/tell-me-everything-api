@@ -67,13 +67,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-      - name: Push to Railway
-        run: |
-          npm i -g @railway/cli
-          [[ "${{ github.ref }}" == "refs/heads/production" ]] && RAILWAY_TOKEN="${{secrets.RAILWAY_PROD}}"
-          railway up
+      - name: Railway deploy
+        uses: bervProject/railway-deploy@0.0.2-alpha
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_STG }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
   docker-test:
     runs-on: ubuntu-20.04
     needs: build
