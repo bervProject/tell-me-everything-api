@@ -74,7 +74,7 @@
         "helmet": "^5.0.2",
         "mongodb": "^4.5.0",
         "mongodb-core": "^3.2.7",
-        "ms-rest-azure": "^3.0.1",
+        "ms-rest-azure": "^3.0.2",
         "nodemailer": "^6.7.3",
         "pg": "^8.7.3",
         "sequelize": "^6.19.0",
