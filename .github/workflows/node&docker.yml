@@ -68,7 +68,7 @@ jobs:
         with:
           node-version: '16.x'
       - name: Railway deploy
-        uses: bervProject/railway-deploy@0.0.3-alpha
+        uses: bervProject/railway-deploy@0.0.4-alpha
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
   docker-test:
