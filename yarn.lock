@@ -1219,10 +1219,10 @@
     long-timeout "^0.1.1"
     uuid "^8.3.2"
 
-"@feathersjs/commons@^4.5.11", "@feathersjs/commons@^4.5.12":
-  version "4.5.12"
-  resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.5.12.tgz#42e60e933849905b8803a3ebd7d4424f85ee7d3f"
-  integrity sha512-ss3yyk8HurmOCSD+wvENIrT9iSa8vg9SmikoP5c9JaLkbtMmKpH88jCjgRl7jiO54f2+UcjW3PqccNgUGSNSDQ==
+"@feathersjs/commons@^4.5.11", "@feathersjs/commons@^4.5.12", "@feathersjs/commons@^4.5.15":
+  version "4.5.15"
+  resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.5.15.tgz#2f9c2599fd93607206ee40ab0e5639b79c7781b8"
+  integrity sha512-eVEcLJL3GcPQBQcD77jI3fZ4MMx+iD02Px2Z1lDw+cn/iGCeQkWWAPQs4Tp+HGR1rTL5JO+unyhzN8V9X7OYmw==
 
 "@feathersjs/commons@^4.5.15":
   version "4.5.15"
