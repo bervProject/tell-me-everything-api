@@ -57,20 +57,20 @@ jobs:
       run: yarn compile
     - name: Codecov
       run: bash <(curl -s https://codecov.io/bash)
-  push-to-railway:
-    runs-on: ubuntu-20.04
-    if: ${{ github.event_name == 'push' }}
-    needs: build
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-      - name: Railway deploy
-        uses: bervProject/railway-deploy@0.0.5-alpha
-        with:
-          railway_token: ${{ secrets.RAILWAY_TOKEN }}
+#  push-to-railway:
+#    runs-on: ubuntu-20.04
+#    if: ${{ github.event_name == 'push' }}
+#    needs: build
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Use Node.js ${{ matrix.node-version }}
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '16.x'
+#      - name: Railway deploy
+#        uses: bervProject/railway-deploy@0.0.5-alpha
+#        env:
+#          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
   docker-test:
     runs-on: ubuntu-20.04
     needs: build
