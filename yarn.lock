@@ -3658,10 +3658,10 @@ feathers-authentication-hooks@^1.0.2:
     debug "^4.1.1"
     lodash "^4.17.15"
 
-feathers-hooks-common@^6.1.4:
-  version "6.1.4"
-  resolved "https://registry.yarnpkg.com/feathers-hooks-common/-/feathers-hooks-common-6.1.4.tgz#641f309904e74cda9f8c060fc09305bbb9a3f86d"
-  integrity sha512-xtVI4rif6QZDKpDf8cAF6aOKL6AIWTqCPrJ+RAk4S+VRAo91VbuLVEd/QEFTDzV8lK/Uu50awKrLN5Dz1xZs2Q==
+feathers-hooks-common@^6.1.5:
+  version "6.1.5"
+  resolved "https://registry.yarnpkg.com/feathers-hooks-common/-/feathers-hooks-common-6.1.5.tgz#2884dda17d9f011fd63ff97f13b00ba5f89e49f3"
+  integrity sha512-xbAm8lKHBLghMgPoGvetg+mlTm04kG9sVy1IaPjRDAXOR3fblZDpMamqWjQ8vuHLU5zZ1SnrdEN9gmr53Xk+PA==
   dependencies:
     "@feathers-plus/batch-loader" "^0.3.6"
     "@feathersjs/commons" "^4.5.15"
