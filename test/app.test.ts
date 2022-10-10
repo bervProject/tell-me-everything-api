@@ -44,10 +44,13 @@ describe("Feathers application tests (with jest)", () => {
           },
         });
       } catch (error) {
-        const { response } = error;
-
-        expect(response.status).toBe(404);
-        expect(response.data.indexOf("<html>")).not.toBe(-1);
+        if (axios.isAxiosError(error)) {
+          const { response } = error;
+          if (response) {
+            expect(response.status).toBe(404);
+            expect(response.data.indexOf("<html>")).not.toBe(-1);
+          }
+        }
       }
     });
 
@@ -57,12 +60,15 @@ describe("Feathers application tests (with jest)", () => {
       try {
         await axios.get(getUrl("path/to/nowhere"));
       } catch (error) {
-        const { response } = error;
-
-        expect(response.status).toBe(404);
-        expect(response.data.code).toBe(404);
-        expect(response.data.message).toBe("Page not found");
-        expect(response.data.name).toBe("NotFound");
+        if (axios.isAxiosError(error)) {
+          const { response } = error;
+          if (response) {
+            expect(response.status).toBe(404);
+            expect(response.data.code).toBe(404);
+            expect(response.data.message).toBe("Page not found");
+            expect(response.data.name).toBe("NotFound");
+          }
+        }
       }
     });
   });
