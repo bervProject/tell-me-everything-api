@@ -41,15 +41,14 @@ describe("Feathers application tests (with jest)", () => {
         await axios.get(getUrl("path/to/nowhere"), {
           headers: {
             Accept: "text/html",
+            "Accept-Encoding": "text/html;charset=UTF-8",
           },
         });
       } catch (error) {
-        if (axios.isAxiosError(error)) {
+        if (axios.isAxiosError(error) && error.response) {
           const { response } = error;
-          if (response) {
-            expect(response.status).toBe(404);
-            expect(response.data.indexOf("<html>")).not.toBe(-1);
-          }
+          expect(response.status).toBe(404);
+          expect(response.data.indexOf("<html>")).not.toBe(-1);
         }
       }
     });
