@@ -1,4 +1,4 @@
-name: Node&Docker
+name: Node & Docker
 on:
   push:
     # Publish `master` as Docker `latest` image.
@@ -19,7 +19,7 @@ jobs:
   build:
     services:
       mongodb:
-        image: mongo:4.4
+        image: mongo:6.0.3
         ports:
           - 27017:27017
         env:
@@ -37,7 +37,7 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         node-version: [18.x, 19.x]
@@ -56,7 +56,7 @@ jobs:
     - name: Build
       run: yarn compile
     - name: Codecov
-      run: bash <(curl -s https://codecov.io/bash)
+      uses: codecov/codecov-action@v3
 #  push-to-railway:
 #    runs-on: ubuntu-20.04
 #    if: ${{ github.event_name == 'push' }}
@@ -72,7 +72,7 @@ jobs:
 #        env:
 #          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
   docker-test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: build
     if: ${{ github.event_name == 'pull_request' }}
     steps:
@@ -84,7 +84,7 @@ jobs:
   docker-push:
     # Ensure test job passes before pushing image.
     needs: build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: ${{ github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v3
