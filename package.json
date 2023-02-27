@@ -70,7 +70,7 @@
         "feathers-hooks-common": "^6.1.5",
         "feathers-mongodb": "^6.4.1",
         "feathers-permissions": "^2.1.4",
-        "feathers-sequelize": "^6.4.0",
+        "feathers-sequelize": "^7.0.0",
         "helmet": "^6.0.1",
         "mongodb": "^5.1.0",
         "mongodb-core": "^3.2.7",
