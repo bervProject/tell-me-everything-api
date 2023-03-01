@@ -1,0 +1,13 @@
+name: Railway Deploy
+on: workflow_dispatch
+
+jobs:
+  push-to-railway:
+    runs-on: ubuntu-22.04
+    # if: ${{ github.event_name == 'push' }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Railway deploy
+        uses: bervProject/railway-deploy@0.0.5-alpha
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
