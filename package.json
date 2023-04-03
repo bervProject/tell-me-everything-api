@@ -67,7 +67,7 @@
         "cors": "^2.8.5",
         "crypto-js": "^4.1.1",
         "feathers-authentication-hooks": "^1.0.2",
-        "feathers-hooks-common": "^6.1.5",
+        "feathers-hooks-common": "^7.0.2",
         "feathers-mongodb": "^6.4.1",
         "feathers-permissions": "^2.1.4",
         "feathers-sequelize": "^6.4.0",
