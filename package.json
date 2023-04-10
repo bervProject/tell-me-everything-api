@@ -51,7 +51,7 @@
     "dependencies": {
         "@aws-sdk/client-ses": "^3.309.0",
         "@bervproject/feathers-advance-hook": "^1.1.1",
-        "@feathersjs/authentication": "^4.5.15",
+        "@feathersjs/authentication": "^5.0.3",
         "@feathersjs/authentication-local": "^4.5.15",
         "@feathersjs/authentication-oauth": "^4.5.15",
         "@feathersjs/configuration": "^4.5.15",
