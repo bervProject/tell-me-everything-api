@@ -1,4 +1,4 @@
-FROM node:19-alpine as build
+FROM node:20-alpine as build
 # Create app directory
 WORKDIR /app
 COPY package.json yarn.lock ./
@@ -6,7 +6,7 @@ RUN apk add --no-cache git && yarn --frozen-lockfile
 COPY . .
 RUN yarn compile
 
-FROM node:19-alpine as runner
+FROM node:20-alpine as runner
 WORKDIR /app
 COPY --from=build /app/lib /app/lib
 COPY package.json yarn.lock ./
