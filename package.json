@@ -71,7 +71,7 @@
         "feathers-mongodb": "^6.4.1",
         "feathers-permissions": "^2.1.4",
         "feathers-sequelize": "^6.4.0",
-        "helmet": "^6.1.5",
+        "helmet": "^7.0.0",
         "mongodb": "^5.3.0",
         "mongodb-core": "^3.2.7",
         "ms-rest-azure": "^3.0.2",
