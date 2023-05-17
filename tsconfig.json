@@ -9,6 +9,7 @@
     "esModuleInterop": true
   },
   "exclude": [
-    "test"
+    "test",
+    "infra"
   ]
 }

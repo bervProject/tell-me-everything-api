@@ -1,5 +1,5 @@
 {
-  "postgres": "postgresql://postgres:testpsqlpassword@localhost:5432/tme",
-  "mongodb": "mongodb://root:testpassword@localhost:27017",
+  "postgres": "postgresql://postgres:devpass4444@localhost:5432/tme_test",
+  "mongodb": "mongodb://root:mongo-dev@localhost:27017",
   "mongodbname": "tme"
 }

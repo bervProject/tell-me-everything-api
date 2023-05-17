@@ -6,7 +6,7 @@
     "default": 10,
     "max": 50
   },
-  "postgres": "postgres://postgres:@localhost:5432/test-tell-me",
+  "postgres": "postgresql://postgres:devpass4444@localhost:5432/tmeapi",
   "frontend": "https://tell-secret.berviantoleo.my.id/",
   "lineAccessToken": "LINE_CHANNEL_ACCESS_TOKEN",
   "lineSecret": "LINE_CHANNEL_SECRET",
@@ -41,5 +41,6 @@
       }
     }
   },
-  "mongodb": "mongodb://localhost:27017/tell_me_everything_api"
+  "mongodb": "mongodb://root:mongo-dev@localhost:27017",
+  "mongodbname": "tme"
 }
