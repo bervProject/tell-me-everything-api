@@ -46,6 +46,7 @@ jobs:
   deploy-apprunner:
     runs-on: ubuntu-22.04
     environment: production
+    needs: deploy-image
     permissions:
       id-token: write   # This is required for requesting the JWT
       contents: read
