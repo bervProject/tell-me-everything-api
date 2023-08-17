@@ -9,6 +9,7 @@ describe("Hook test 'bot-error-handling ", () => {
     server.use("random", {
       async create(
         data: Partial<any> | Partial<any>[],
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         params: feathers.Params,
       ) {
         if (Array.isArray(data)) {

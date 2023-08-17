@@ -3,7 +3,7 @@
 import { Hook, HookContext } from "@feathersjs/feathers";
 import { SignatureValidationFailed, JSONParseError } from "@line/bot-sdk";
 import logger from "../logger";
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default (options = {}): Hook => {
   return async (context: HookContext) => {
     const { error } = context;
