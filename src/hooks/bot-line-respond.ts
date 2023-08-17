@@ -317,6 +317,7 @@ async function handleEvent(event: WebhookEvent, client: Client) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default (options = {}): Hook => {
   return async (context: HookContext) => {
     const { data, app } = context;

@@ -4,6 +4,7 @@ import { Hook, HookContext } from "@feathersjs/feathers";
 import AES from "crypto-js/aes";
 import Utf8 from "crypto-js/enc-utf8";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default (options = {}): Hook => {
   return async (context: HookContext) => {
     const { headers } = context.params;
