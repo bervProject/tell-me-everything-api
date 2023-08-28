@@ -85,7 +85,7 @@
     "devDependencies": {
         "@types/bcryptjs": "^2.4.2",
         "@types/bluebird": "^3.5.38",
-        "@types/cls-hooked": "^4.3.4",
+        "@types/cls-hooked": "^4.3.5",
         "@types/compression": "^1.7.2",
         "@types/cors": "^2.8.13",
         "@types/crypto-js": "^4.1.1",
