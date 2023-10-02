@@ -95,7 +95,7 @@
         "@types/mongodb": "^4.0.7",
         "@types/node": "^20.6.5",
         "@types/nodemailer": "^6.4.11",
-        "@types/serve-favicon": "^2.5.4",
+        "@types/serve-favicon": "^2.5.5",
         "@types/uuid": "^8.3.4",
         "@types/validator": "^13.11.1",
         "@typescript-eslint/eslint-plugin": "^6.7.2",
