@@ -93,7 +93,7 @@
         "@types/jest": "^29.5.5",
         "@types/jsonwebtoken": "^9.0.3",
         "@types/mongodb": "^4.0.7",
-        "@types/node": "^20.8.0",
+        "@types/node": "^20.8.3",
         "@types/nodemailer": "^6.4.11",
         "@types/serve-favicon": "^2.5.5",
         "@types/uuid": "^8.3.4",
