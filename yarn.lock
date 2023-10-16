@@ -2333,10 +2333,10 @@
   resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.4.tgz#bd86a43617df0594787d38b735f55c805becf1bc"
   integrity sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==
 
-"@types/validator@^13.11.2", "@types/validator@^13.7.17":
-  version "13.11.2"
-  resolved "https://registry.yarnpkg.com/@types/validator/-/validator-13.11.2.tgz#a2502325a3c0bd29f36dbac3b763223edd801e17"
-  integrity sha512-nIKVVQKT6kGKysnNt+xLobr+pFJNssJRi2s034wgWeFBUx01fI8BeHTW2TcRp7VcFu9QCYG8IlChTuovcm0oKQ==
+"@types/validator@^13.11.3", "@types/validator@^13.7.17":
+  version "13.11.3"
+  resolved "https://registry.yarnpkg.com/@types/validator/-/validator-13.11.3.tgz#6afba392782b44dd6cfeb390cc06c45833066ad9"
+  integrity sha512-jxjhh33aTYDHnrV1vZ3AvWQHfrGx2f5UxKjaP13l5q04fG+/hCKKm0MfodIoCqxevhbcfBb6ZjynyHuQ/jueGQ==
 
 "@types/webidl-conversions@*":
   version "6.1.1"
