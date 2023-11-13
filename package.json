@@ -58,7 +58,7 @@
         "@feathersjs/errors": "^4.5.11",
         "@feathersjs/express": "^4.5.15",
         "@feathersjs/feathers": "^4.5.15",
-        "@feathersjs/socketio": "^4.5.18",
+        "@feathersjs/socketio": "^5.0.11",
         "@line/bot-sdk": "^7.5.2",
         "argon2": "^0.31.2",
         "azure-cognitiveservices-websearch": "^2.0.0",
