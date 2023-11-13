@@ -1594,14 +1594,14 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@line/bot-sdk@^7.5.2":
-  version "7.5.2"
-  resolved "https://registry.yarnpkg.com/@line/bot-sdk/-/bot-sdk-7.5.2.tgz#ecf5410e2ceda0ed491aa178c587be8f2b691ddd"
-  integrity sha512-mMaDnr+mOqQDLYJcUp+fQwZklg/LoOZzNILlWdsj2IFD2nXF+HhAm3KEy5tyUx629Y2bCx6nv9Jl0UlMwBiAiw==
+"@line/bot-sdk@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@line/bot-sdk/-/bot-sdk-8.0.1.tgz#b5a273a44f641cc50b8ec486245681744c52cbfc"
+  integrity sha512-CkurX297VF70BMzWn1WJrhvTJ+2cs9W+gq68ifwsfkzme67Hx1dSeP+DufOw07Pk1K6AzRImMmpEoRyXKpTcTA==
   dependencies:
     "@types/body-parser" "^1.19.2"
-    "@types/node" "^16.0.0"
-    axios "^0.27.0"
+    "@types/node" "^20.0.0"
+    axios "^1.0.0"
     body-parser "^1.20.0"
     file-type "^16.5.4"
     form-data "^4.0.0"
@@ -2324,17 +2324,12 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
-"@types/node@*", "@types/node@^20.8.9":
-  version "20.8.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.8.9.tgz#646390b4fab269abce59c308fc286dcd818a2b08"
-  integrity sha512-UzykFsT3FhHb1h7yD4CA4YhBHq545JC0YnEz41xkipN88eKQtL6rSgocL5tbAP6Ola9Izm/Aw4Ora8He4x0BHg==
+"@types/node@*", "@types/node@^20.0.0", "@types/node@^20.8.9":
+  version "20.9.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.9.0.tgz#bfcdc230583aeb891cf51e73cfdaacdd8deae298"
+  integrity sha512-nekiGu2NDb1BcVofVcEKMIwzlx4NjHlcjhoxxKBNLtz15Y1z7MYf549DFvkHSId02Ax6kGwWntIBPC3l/JZcmw==
   dependencies:
     undici-types "~5.26.4"
-
-"@types/node@^16.0.0":
-  version "16.11.58"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.58.tgz#0a3698dee3492617a8d5fe7998d18d7520b63026"
-  integrity sha512-uMVxJ111wpHzkx/vshZFb6Qni3BOMnlWLq7q9jrwej7Yw/KvjsEbpxCCxw+hLKxexFMc8YmpG8J9tnEe/rKsIg==
 
 "@types/nodemailer@^6.4.13":
   version "6.4.13"
@@ -2807,15 +2802,7 @@ axios@^0.21.1:
   dependencies:
     follow-redirects "^1.14.0"
 
-axios@^0.27.0:
-  version "0.27.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.27.2.tgz#207658cc8621606e586c85db4b41a750e756d972"
-  integrity sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==
-  dependencies:
-    follow-redirects "^1.14.9"
-    form-data "^4.0.0"
-
-axios@^1.6.1:
+axios@^1.0.0, axios@^1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.1.tgz#76550d644bf0a2d469a01f9244db6753208397d7"
   integrity sha512-vfBmhDpKafglh0EldBEbVuoe7DyAavGSLWhuSm5ZSEKQnHhBf0xAAwybbNH1IkrJNGnS/VG4I5yxig1pCEXE4g==
@@ -4194,7 +4181,7 @@ fn.name@1.x.x:
   resolved "https://registry.npmjs.org/fn.name/-/fn.name-1.1.0.tgz#26cad8017967aea8731bc42961d04a3d5988accc"
   integrity sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==
 
-follow-redirects@^1.14.0, follow-redirects@^1.14.9, follow-redirects@^1.15.0:
+follow-redirects@^1.14.0, follow-redirects@^1.15.0:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
   integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
