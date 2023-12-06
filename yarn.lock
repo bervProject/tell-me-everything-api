@@ -2156,10 +2156,10 @@
   resolved "https://registry.yarnpkg.com/@types/bcryptjs/-/bcryptjs-2.4.6.tgz#2b92e3c2121c66eba3901e64faf8bb922ec291fa"
   integrity sha512-9xlo6R2qDs5uixm0bcIqCeMCE6HiQsIyel9KQySStiyqNl2tnj2mP3DX1Nf56MD6KMenNNlBBsy3LJ7gUEQPXQ==
 
-"@types/bluebird@^3.5.41":
-  version "3.5.41"
-  resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.41.tgz#0ef9959efaf1de8ddd7bcef9664fc7bada60ee35"
-  integrity sha512-/OT2UoYPu2fqGNS85UYUx0Ke8Zd/vM0/Au0JqLInTprkRO0NexYe7qAUkDsjhsO3BKHI14wX/UhN5SUaoFVDUQ==
+"@types/bluebird@^3.5.42":
+  version "3.5.42"
+  resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.42.tgz#7ec05f1ce9986d920313c1377a5662b1b563d366"
+  integrity sha512-Jhy+MWRlro6UjVi578V/4ZGNfeCOcNCp0YaFNIUGFKlImowqwb1O/22wDVk3FDGMLqxdpOV3qQHD5fPEH4hK6A==
 
 "@types/body-parser@*", "@types/body-parser@^1.19.2":
   version "1.19.2"
