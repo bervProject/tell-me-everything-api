@@ -99,7 +99,7 @@
         "@types/uuid": "^8.3.4",
         "@types/validator": "^13.11.7",
         "@typescript-eslint/eslint-plugin": "^6.18.0",
-        "@typescript-eslint/parser": "^6.17.0",
+        "@typescript-eslint/parser": "^6.18.0",
         "axios": "^1.6.5",
         "cross-env": "^7.0.3",
         "eslint": "^8.56.0",
