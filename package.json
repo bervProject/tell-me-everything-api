@@ -53,7 +53,7 @@
         "@bervproject/feathers-advance-hook": "^1.1.1",
         "@feathersjs/authentication": "^4.5.15",
         "@feathersjs/authentication-local": "^4.5.15",
-        "@feathersjs/authentication-oauth": "^4.5.15",
+        "@feathersjs/authentication-oauth": "^5.0.21",
         "@feathersjs/configuration": "^4.5.15",
         "@feathersjs/errors": "^4.5.11",
         "@feathersjs/express": "^4.5.15",
