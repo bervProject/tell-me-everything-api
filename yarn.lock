@@ -1160,15 +1160,15 @@
     long-timeout "^0.1.1"
     uuid "^8.3.2"
 
-"@feathersjs/commons@^4.5.11", "@feathersjs/commons@^4.5.15":
-  version "4.5.15"
-  resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.5.15.tgz#2f9c2599fd93607206ee40ab0e5639b79c7781b8"
-  integrity sha512-eVEcLJL3GcPQBQcD77jI3fZ4MMx+iD02Px2Z1lDw+cn/iGCeQkWWAPQs4Tp+HGR1rTL5JO+unyhzN8V9X7OYmw==
-
-"@feathersjs/commons@^4.5.16":
+"@feathersjs/commons@^4.5.11", "@feathersjs/commons@^4.5.15", "@feathersjs/commons@^4.5.16":
   version "4.5.16"
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.5.16.tgz#878311fe316459642ba53399e0758efa021ed351"
   integrity sha512-FXKAcGApcd9w3M42gjLi8+oaPijabS8qbD4ynQK3PM8J7BqpbSdCzURsI7EpReoQxFxdhrR4jix8cQIC/iAeuw==
+
+"@feathersjs/commons@^5.0.24":
+  version "5.0.24"
+  resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-5.0.24.tgz#37faec3714c2fea113bdab8e4dd70db58d8f42c5"
+  integrity sha512-zjm3QRa1B0kZ3W4OTjFa4D73ABJrzUtN0xYPeCI4Fm19pi1/ANQULkqD3+f6Xi74nDr+uj5MadDYcsyGgHEsgA==
 
 "@feathersjs/configuration@^4.5.15":
   version "4.5.15"
@@ -1215,6 +1215,20 @@
     debug "^4.3.3"
     events "^3.3.0"
     uberproto "^2.0.6"
+
+"@feathersjs/feathers@^5.0.24":
+  version "5.0.24"
+  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-5.0.24.tgz#04ff43df02f5a58c3d9c5b681c6116c284ccb90f"
+  integrity sha512-Vz2/byMxIBVNUUw0nNY+Z0yaWpcZKA1ohSLfvUx3eCgc1ulViS0a2BpadMq3NtgszvcUVP3US4Y+2f6yPe8v6w==
+  dependencies:
+    "@feathersjs/commons" "^5.0.24"
+    "@feathersjs/hooks" "^0.9.0"
+    events "^3.3.0"
+
+"@feathersjs/hooks@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/hooks/-/hooks-0.9.0.tgz#8aa339b83d17fcbd929e80113a3c0616979b33cb"
+  integrity sha512-kLfWnuhbC25CPkR1/TDcVs0rSiv0JLNxrpUivLwc7FUnkyeciRi5VOmC1SOzL2SOagcozu3+m4VQiONyzgfY7w==
 
 "@feathersjs/socketio@^4.5.18":
   version "4.5.18"
