@@ -55,6 +55,8 @@ describe("Hook test 'bot-error-handling ", () => {
       source: { type: "group", groupId: "anon" },
       mode: "active",
       replyToken: "mock",
+      webhookEventId: "xxxx",
+      deliveryContext: { isRedelivery: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
