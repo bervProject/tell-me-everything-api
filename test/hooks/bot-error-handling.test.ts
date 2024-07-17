@@ -16,9 +16,13 @@ describe("Hook test 'bot-error-handling ", () => {
           return {};
         }
         if (data.isSignatureError) {
-          throw new SignatureValidationFailed("Dummy Error", "Something Error");
+          throw new SignatureValidationFailed("Dummy Error", {
+            signature: "Something Error",
+          });
         } else if (data.isJsonParseError) {
-          throw new JSONParseError("Json Error", "Can't read the json");
+          throw new JSONParseError("Json Error", {
+            raw: "Can't read the json",
+          });
         }
         return {};
       },

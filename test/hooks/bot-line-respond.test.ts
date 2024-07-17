@@ -55,6 +55,8 @@ describe("Hook test 'bot-error-handling ", () => {
       source: { type: "group", groupId: "anon" },
       mode: "active",
       replyToken: "mock",
+      webhookEventId: "xxxx",
+      deliveryContext: { isRedelivery: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
@@ -72,6 +74,8 @@ describe("Hook test 'bot-error-handling ", () => {
       source: { type: "group", groupId: "anon" },
       mode: "active",
       replyToken: "mock",
+      webhookEventId: "anyid-1",
+      deliveryContext: { isRedelivery: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
@@ -89,6 +93,8 @@ describe("Hook test 'bot-error-handling ", () => {
       source: { type: "user", userId: "anon" },
       mode: "active",
       replyToken: "mock",
+      webhookEventId: "anyid-1",
+      deliveryContext: { isRedelivery: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
@@ -104,9 +110,16 @@ describe("Hook test 'bot-error-handling ", () => {
       type: "message",
       timestamp: 0,
       source: { type: "user", userId: "ok" },
-      message: { type: "text", text: "hi", id: "randomly" },
+      message: {
+        type: "text",
+        text: "hi",
+        id: "randomly",
+        quoteToken: "any-quote-token",
+      },
       mode: "active",
       replyToken: "mock",
+      webhookEventId: "xxxx",
+      deliveryContext: { isRedelivery: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
@@ -122,9 +135,16 @@ describe("Hook test 'bot-error-handling ", () => {
       type: "message",
       timestamp: 0,
       source: { type: "group", groupId: "ok" },
-      message: { type: "text", text: "bantuan", id: "randomly" },
+      message: {
+        type: "text",
+        text: "bantuan",
+        id: "randomly",
+        quoteToken: "any-quote-token",
+      },
       mode: "active",
       replyToken: "mock",
+      webhookEventId: "xxxx",
+      deliveryContext: { isRedelivery: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
@@ -140,9 +160,16 @@ describe("Hook test 'bot-error-handling ", () => {
       type: "message",
       timestamp: 0,
       source: { type: "group", groupId: "ok" },
-      message: { type: "text", text: "bye", id: "randomly" },
+      message: {
+        type: "text",
+        text: "bye",
+        id: "randomly",
+        quoteToken: "any-quote-token",
+      },
       mode: "active",
       replyToken: "mock",
+      webhookEventId: "xxxx",
+      deliveryContext: { isRedelivery: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
@@ -158,9 +185,16 @@ describe("Hook test 'bot-error-handling ", () => {
       type: "message",
       timestamp: 0,
       source: { type: "room", roomId: "ok" },
-      message: { type: "text", text: "bye", id: "randomly" },
+      message: {
+        type: "text",
+        text: "bye",
+        id: "randomly",
+        quoteToken: "any-quote-token",
+      },
       mode: "active",
       replyToken: "mock",
+      webhookEventId: "xxxx",
+      deliveryContext: { isRedelivery: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
@@ -176,9 +210,16 @@ describe("Hook test 'bot-error-handling ", () => {
       type: "message",
       timestamp: 0,
       source: { type: "user", userId: "ok" },
-      message: { type: "text", text: "bye", id: "randomly" },
+      message: {
+        type: "text",
+        text: "bye",
+        id: "randomly",
+        quoteToken: "any-quote-token",
+      },
       mode: "active",
       replyToken: "mock",
+      webhookEventId: "xxxx",
+      deliveryContext: { isRedelivery: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
@@ -194,9 +235,16 @@ describe("Hook test 'bot-error-handling ", () => {
       type: "message",
       timestamp: 0,
       source: { type: "user", userId: "ok" },
-      message: { type: "text", text: "search", id: "randomly" },
+      message: {
+        type: "text",
+        text: "search",
+        id: "randomly",
+        quoteToken: "any-quote-token",
+      },
       mode: "active",
       replyToken: "mock",
+      webhookEventId: "xxxx",
+      deliveryContext: { isRedelivery: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
@@ -212,9 +260,16 @@ describe("Hook test 'bot-error-handling ", () => {
       type: "message",
       timestamp: 0,
       source: { type: "user", userId: "ok" },
-      message: { type: "text", text: "randomly", id: "randomly" },
+      message: {
+        type: "text",
+        text: "randomly",
+        id: "randomly",
+        quoteToken: "any-quote-token",
+      },
       mode: "active",
       replyToken: "mock",
+      webhookEventId: "xxxx",
+      deliveryContext: { isRedelivery: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
@@ -233,6 +288,8 @@ describe("Hook test 'bot-error-handling ", () => {
       mode: "active",
       replyToken: "mock",
       link: { result: "ok", nonce: "" },
+      webhookEventId: "xxxx",
+      deliveryContext: { isRedelivery: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
