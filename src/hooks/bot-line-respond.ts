@@ -4,7 +4,7 @@ import { Hook, HookContext } from "@feathersjs/feathers";
 import { CognitiveServicesCredentials } from "ms-rest-azure";
 import { WebSearchClient } from "azure-cognitiveservices-websearch";
 import logger from "../logger";
-import { Client } from "@line/bot-sdk";
+import { messagingApi } from "@line/bot-sdk";
 import {
   MemberJoinEvent,
   MessageEvent,
@@ -15,118 +15,137 @@ import {
   Group,
   JoinEvent,
   FollowEvent,
-  FlexBubble,
 } from "@line/bot-sdk";
+import { FlexBubble } from "@line/bot-sdk/dist/messaging-api/api";
 
 async function handleBye(
   sourceType: "room" | "group" | "user",
   messageEvent: MessageEvent,
-  client: Client,
+  client: messagingApi.MessagingApiClient,
 ) {
   if (sourceType === "room") {
     await client.leaveRoom((messageEvent.source as Room).roomId);
   } else if (sourceType === "group") {
     await client.leaveGroup((messageEvent.source as Group).groupId);
   } else {
-    await client.replyMessage(messageEvent.replyToken, {
-      type: "text",
-      text: "Maaf, kak. Kita lagi saling chat. Kita gak bisa ninggalin kakak di chat ini. :'(",
+    await client.replyMessage({
+      replyToken: messageEvent.replyToken,
+      messages: [
+        {
+          type: "text",
+          text: "Maaf, kak. Kita lagi saling chat. Kita gak bisa ninggalin kakak di chat ini. :'(",
+        },
+      ],
     });
   }
 }
 
-async function handleHi(messageEvent: MessageEvent, client: Client) {
+async function handleHi(
+  messageEvent: MessageEvent,
+  client: messagingApi.MessagingApiClient,
+) {
   const userId = messageEvent.source.userId;
   let name = "";
   if (userId != undefined) {
     const profile = await client.getProfile(userId);
     name = profile.displayName;
   }
-  await client.replyMessage(messageEvent.replyToken, {
-    type: "text",
-    text:
-      name !== ""
-        ? `Halo, kak ${name}! Semoga hari-harinya menyenangkan!`
-        : "Halo! Semoga hari-harinya menyenangkan!",
+  await client.replyMessage({
+    replyToken: messageEvent.replyToken,
+    messages: [
+      {
+        type: "text",
+        text:
+          name !== ""
+            ? `Halo, kak ${name}! Semoga hari-harinya menyenangkan!`
+            : "Halo! Semoga hari-harinya menyenangkan!",
+      },
+    ],
   });
 }
 
-async function handleHelp(messageEvent: MessageEvent, client: Client) {
-  await client.replyMessage(messageEvent.replyToken, [
-    {
-      type: "text",
-      text: "Halo kak! Jadi kita cuman bisa perintah ini loh,",
-    },
-    {
-      type: "flex",
-      altText: "bye, hi, search",
-      contents: {
-        type: "carousel",
-        contents: [
-          {
-            type: "bubble",
-            body: {
-              type: "box",
-              layout: "horizontal",
-              contents: [
-                {
-                  type: "text",
-                  text: "Hi",
-                  action: {
-                    label: "Hi",
-                    type: "message",
-                    text: "Hi",
-                  },
-                },
-              ],
-            },
-          },
-          {
-            type: "bubble",
-            body: {
-              type: "box",
-              layout: "horizontal",
-              contents: [
-                {
-                  type: "text",
-                  text: "Bye",
-                  action: {
-                    label: "Bye",
-                    type: "message",
-                    text: "Bye",
-                  },
-                },
-              ],
-            },
-          },
-          {
-            type: "bubble",
-            body: {
-              type: "box",
-              layout: "horizontal",
-              contents: [
-                {
-                  type: "text",
-                  text: "Search",
-                  action: {
-                    label: "Search",
-                    type: "message",
-                    text: "Search",
-                  },
-                },
-              ],
-            },
-          },
-        ],
+async function handleHelp(
+  messageEvent: MessageEvent,
+  client: messagingApi.MessagingApiClient,
+) {
+  await client.replyMessage({
+    replyToken: messageEvent.replyToken,
+    messages: [
+      {
+        type: "text",
+        text: "Halo kak! Jadi kita cuman bisa perintah ini loh,",
       },
-    },
-  ]);
+      {
+        type: "flex",
+        altText: "bye, hi, search",
+        contents: {
+          type: "carousel",
+          contents: [
+            {
+              type: "bubble",
+              body: {
+                type: "box",
+                layout: "horizontal",
+                contents: [
+                  {
+                    type: "text",
+                    text: "Hi",
+                    action: {
+                      label: "Hi",
+                      type: "message",
+                      text: "Hi",
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              type: "bubble",
+              body: {
+                type: "box",
+                layout: "horizontal",
+                contents: [
+                  {
+                    type: "text",
+                    text: "Bye",
+                    action: {
+                      label: "Bye",
+                      type: "message",
+                      text: "Bye",
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              type: "bubble",
+              body: {
+                type: "box",
+                layout: "horizontal",
+                contents: [
+                  {
+                    type: "text",
+                    text: "Search",
+                    action: {
+                      label: "Search",
+                      type: "message",
+                      text: "Search",
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  });
 }
 
 async function handleSearch(
   messageText: string,
   messageEvent: MessageEvent,
-  client: Client,
+  client: messagingApi.MessagingApiClient,
 ) {
   const splitText = messageText.split(" ", 2);
   if (splitText.length > 1) {
@@ -176,40 +195,60 @@ async function handleSearch(
       }
     }
     if (output.length == 0) {
-      await client.replyMessage(messageEvent.replyToken, {
-        type: "text",
-        text: "Sepertinya pencarian kakak tidak ditemukan. :(",
+      await client.replyMessage({
+        replyToken: messageEvent.replyToken,
+        messages: [
+          {
+            type: "text",
+            text: "Sepertinya pencarian kakak tidak ditemukan. :(",
+          },
+        ],
       });
     } else if (output.length > 10) {
-      await client.replyMessage(messageEvent.replyToken, {
-        type: "flex",
-        altText: "Web Result",
-        contents: {
-          type: "carousel",
-          contents: output.slice(0, 10),
-        },
+      await client.replyMessage({
+        replyToken: messageEvent.replyToken,
+        messages: [
+          {
+            type: "flex",
+            altText: "Web Result",
+            contents: {
+              type: "carousel",
+              contents: output.slice(0, 10),
+            },
+          },
+        ],
       });
     } else {
-      await client.replyMessage(messageEvent.replyToken, {
-        type: "flex",
-        altText: "Web Result",
-        contents: {
-          type: "carousel",
-          contents: output,
-        },
+      await client.replyMessage({
+        replyToken: messageEvent.replyToken,
+        messages: [
+          {
+            type: "flex",
+            altText: "Web Result",
+            contents: {
+              type: "carousel",
+              contents: output,
+            },
+          },
+        ],
       });
     }
   } else {
-    await client.replyMessage(messageEvent.replyToken, {
-      type: "text",
-      text: "Masukan kata kunci yang ingin anda cari. Misalkan, search ayam",
+    await client.replyMessage({
+      replyToken: messageEvent.replyToken,
+      messages: [
+        {
+          type: "text",
+          text: "Masukan kata kunci yang ingin anda cari. Misalkan, search ayam",
+        },
+      ],
     });
   }
 }
 
 async function proccessMessageEvent(
   messageEvent: MessageEvent,
-  client: Client,
+  client: messagingApi.MessagingApiClient,
 ) {
   const message = messageEvent.message;
   const sourceType = messageEvent.source.type;
@@ -231,9 +270,14 @@ async function proccessMessageEvent(
         if (messageText.startsWith("search")) {
           await handleSearch(messageText, messageEvent, client);
         } else {
-          await client.replyMessage(messageEvent.replyToken, {
-            type: "text",
-            text: "Maaf saat ini perintah yang anda berikan tidak tersedia. Mohon masukan 'bantuan' untuk info lebih lanjut.",
+          await client.replyMessage({
+            replyToken: messageEvent.replyToken,
+            messages: [
+              {
+                type: "text",
+                text: "Maaf saat ini perintah yang anda berikan tidak tersedia. Mohon masukan 'bantuan' untuk info lebih lanjut.",
+              },
+            ],
           });
         }
         break;
@@ -241,44 +285,61 @@ async function proccessMessageEvent(
   }
 }
 
-async function proccessMemberJoin(joinEvent: MemberJoinEvent, client: Client) {
+async function proccessMemberJoin(
+  joinEvent: MemberJoinEvent,
+  client: messagingApi.MessagingApiClient,
+) {
   const joinedMembers = joinEvent.joined.members;
   for (const member of joinedMembers) {
     logger.info(`Welcome to ${member.userId}`);
     const profile = await client.getProfile(member.userId);
-    await client.replyMessage(joinEvent.replyToken, {
-      type: "text",
-      text: `Halo kak, ${profile.displayName}! Selamat datang di grup!`,
+    await client.replyMessage({
+      replyToken: joinEvent.replyToken,
+      messages: [
+        {
+          type: "text",
+          text: `Halo kak, ${profile.displayName}! Selamat datang di grup!`,
+        },
+      ],
     });
   }
 }
 
-async function proccessFollowEvent(followEvent: FollowEvent, client: Client) {
+async function proccessFollowEvent(
+  followEvent: FollowEvent,
+  client: messagingApi.MessagingApiClient,
+) {
   const sourceType = followEvent.source.type.toLowerCase();
   if (sourceType === "user") {
     const userId = followEvent.source.userId;
     logger.info(`Welcoming to ${userId}`);
     if (userId != undefined) {
       const profile = await client.getProfile(userId);
-      await client.replyMessage(followEvent.replyToken, [
-        {
-          type: "text",
-          text: `Halo kak ${profile.displayName}, terima kasih sudah menambahkan saya!`,
-        },
-        {
-          type: "text",
-          text: "Ketik 'bantuan' untuk perintah lebih lanjut ya, kak.",
-        },
-        {
-          type: "text",
-          text: "Kami bisa membantu kakak mencari banyak hal di web.",
-        },
-      ]);
+      await client.replyMessage({
+        replyToken: followEvent.replyToken,
+        messages: [
+          {
+            type: "text",
+            text: `Halo kak ${profile.displayName}, terima kasih sudah menambahkan saya!`,
+          },
+          {
+            type: "text",
+            text: "Ketik 'bantuan' untuk perintah lebih lanjut ya, kak.",
+          },
+          {
+            type: "text",
+            text: "Kami bisa membantu kakak mencari banyak hal di web.",
+          },
+        ],
+      });
     }
   }
 }
 
-async function handleEvent(event: WebhookEvent, client: Client) {
+async function handleEvent(
+  event: WebhookEvent,
+  client: messagingApi.MessagingApiClient,
+) {
   try {
     logger.info(JSON.stringify(event));
     const eventType = event.type;
@@ -294,16 +355,19 @@ async function handleEvent(event: WebhookEvent, client: Client) {
         break;
       case "join":
         const joinEvent = event as JoinEvent;
-        await client.replyMessage(joinEvent.replyToken, [
-          {
-            type: "text",
-            text: "Halo semuanya! Terima kasih telah mengundang kami di grup ini! Ketik 'bantuan' tanpa tanda petik untuk melihat fungsi dari bot ini.",
-          },
-          {
-            type: "text",
-            text: "Bot ini berfungsi memberikan sugesti halaman web yang dapat dituju berdasarkan kata kunci dari kakak.",
-          },
-        ]);
+        await client.replyMessage({
+          replyToken: joinEvent.replyToken,
+          messages: [
+            {
+              type: "text",
+              text: "Halo semuanya! Terima kasih telah mengundang kami di grup ini! Ketik 'bantuan' tanpa tanda petik untuk melihat fungsi dari bot ini.",
+            },
+            {
+              type: "text",
+              text: "Bot ini berfungsi memberikan sugesti halaman web yang dapat dituju berdasarkan kata kunci dari kakak.",
+            },
+          ],
+        });
         break;
       case "follow":
         const followEvent = event as FollowEvent;
@@ -325,7 +389,7 @@ export default (options = {}): Hook => {
     const hookBody = data as WebhookRequestBody;
     logger.info(`Event sending to ${hookBody.destination}`);
     const events = hookBody.events;
-    const client: Client = app.get("lineClient");
+    const client: messagingApi.MessagingApiClient = app.get("lineClient");
     for (const event of events) {
       await handleEvent(event, client);
     }

@@ -1,4 +1,5 @@
-import { Client } from "@line/bot-sdk";
+import { messagingApi } from "@line/bot-sdk";
+const { MessagingApiClient } = messagingApi;
 import { Application } from "./declarations";
 
 export default function (app: Application): void {
@@ -6,6 +7,6 @@ export default function (app: Application): void {
     channelAccessToken: app.get("lineAccessToken"),
     channelSecret: app.get("lineSecret"),
   };
-  const client = new Client(lineConfig);
+  const client = new MessagingApiClient(lineConfig);
   app.set("lineClient", client);
 }
