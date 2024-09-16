@@ -72,7 +72,7 @@
         "feathers-permissions": "^2.1.4",
         "feathers-sequelize": "^6.4.0",
         "helmet": "^7.1.0",
-        "mongodb": "^6.8.1",
+        "mongodb": "^6.9.0",
         "mongodb-core": "^3.2.7",
         "ms-rest-azure": "^3.0.2",
         "nodemailer": "^6.9.15",
