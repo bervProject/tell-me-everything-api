@@ -90,7 +90,7 @@
         "@types/cors": "^2.8.17",
         "@types/crypto-js": "^4.2.2",
         "@types/helmet": "^4.0.0",
-        "@types/jest": "^29.5.12",
+        "@types/jest": "^29.5.13",
         "@types/jsonwebtoken": "^9.0.6",
         "@types/mongodb": "^4.0.7",
         "@types/node": "^22.5.4",
