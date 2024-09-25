@@ -94,7 +94,7 @@
         "@types/jsonwebtoken": "^9.0.7",
         "@types/mongodb": "^4.0.7",
         "@types/node": "^22.5.5",
-        "@types/nodemailer": "^6.4.15",
+        "@types/nodemailer": "^6.4.16",
         "@types/serve-favicon": "^2.5.7",
         "@types/uuid": "^8.3.4",
         "@types/validator": "^13.12.1",
