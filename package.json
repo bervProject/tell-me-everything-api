@@ -77,7 +77,7 @@
         "ms-rest-azure": "^3.0.2",
         "nodemailer": "^6.9.15",
         "pg": "^8.13.0",
-        "sequelize": "^6.37.3",
+        "sequelize": "^6.37.4",
         "serve-favicon": "^2.5.0",
         "uuid": "^8.3.2",
         "winston": "^3.15.0"
