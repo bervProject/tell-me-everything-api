@@ -56,7 +56,7 @@ jobs:
     - name: Build
       run: yarn compile
     - name: Codecov
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
   test-infra:
     runs-on: ubuntu-24.04
     if: github.event_name == 'pull_request'
