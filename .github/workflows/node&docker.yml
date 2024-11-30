@@ -26,7 +26,7 @@ jobs:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: testpassword
       postgres:
-        image: postgres:13-alpine
+        image: postgres:17-alpine
         ports:
           - 5432:5432
         env:
