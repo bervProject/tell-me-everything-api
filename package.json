@@ -91,7 +91,7 @@
         "@types/crypto-js": "^4.2.2",
         "@types/helmet": "^4.0.0",
         "@types/jest": "^29.5.14",
-        "@types/jsonwebtoken": "^9.0.7",
+        "@types/jsonwebtoken": "^9.0.8",
         "@types/mongodb": "^4.0.7",
         "@types/node": "^22.10.2",
         "@types/nodemailer": "^6.4.17",
