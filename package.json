@@ -63,7 +63,7 @@
         "argon2": "^0.41.1",
         "azure-cognitiveservices-websearch": "^2.0.0",
         "cls-hooked": "^4.2.2",
-        "compression": "^1.7.5",
+        "compression": "^1.8.0",
         "cors": "^2.8.5",
         "crypto-js": "^4.2.0",
         "feathers-authentication-hooks": "^1.0.2",
