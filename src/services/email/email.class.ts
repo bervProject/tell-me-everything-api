@@ -6,7 +6,7 @@ import { Application } from "../../declarations";
 import logger from "../../logger";
 export class Email extends Service {
   transporter: Mail;
-  //eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   constructor(
     options: Partial<MongoDBServiceOptions>,
     app: Application,

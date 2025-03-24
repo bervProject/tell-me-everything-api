@@ -10,7 +10,7 @@ describe("Hook test 'message-encrypt'", () => {
     server = feathers();
     server.use("random", {
       async create(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data: Partial<any> | Partial<any>[],
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         params: feathers.Params,
