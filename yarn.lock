@@ -2194,17 +2194,10 @@
   resolved "https://registry.yarnpkg.com/@types/crypto-js/-/crypto-js-4.2.2.tgz#771c4a768d94eb5922cc202a3009558204df0cea"
   integrity sha512-sDOLlVbHhXpAUAL0YHDUUwDZf3iN4Bwi4W6a0W0b+QcAezUbRtH4FVb+9J4h+XFPW7l/gQ9F8qC7P+Ec4k8QVQ==
 
-"@types/debug@^4.0.0":
+"@types/debug@^4.0.0", "@types/debug@^4.1.8":
   version "4.1.12"
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.12.tgz#a155f21690871953410df4b6b6f53187f0500917"
   integrity sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==
-  dependencies:
-    "@types/ms" "*"
-
-"@types/debug@^4.1.8":
-  version "4.1.8"
-  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.8.tgz#cef723a5d0a90990313faec2d1e22aee5eecb317"
-  integrity sha512-/vPO1EPOs306Cvhwv7KfVfYvOJqA/S/AXjaHQiJboCZzcNDb+TIJFN9/2C9DZ//ijSKWioNyUxD792QmDJ+HKQ==
   dependencies:
     "@types/ms" "*"
 
@@ -6739,10 +6732,10 @@ sequelize-pool@^7.1.0:
   resolved "https://registry.yarnpkg.com/sequelize-pool/-/sequelize-pool-7.1.0.tgz#210b391af4002762f823188fd6ecfc7413020768"
   integrity sha512-G9c0qlIWQSK29pR/5U2JF5dDQeqqHRragoyahj/Nx4KOOQ3CPPfzxnfqFPCSB7x5UgjOgnZ61nSxz+fjDpRlJg==
 
-sequelize@^6.37.6:
-  version "6.37.6"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.37.6.tgz#ceb2cc4b193dd411f6846c1eb54aa61e9c6acf5e"
-  integrity sha512-4Slqjqpktofs7AVqWviFOInzP9w8ZRQDhF+DnRtm4WKIdIATpyzGgedyseP3xbgpBxapvfQcJv6CeIdZe4ZL2A==
+sequelize@^6.37.7:
+  version "6.37.7"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.37.7.tgz#55a6f8555ae76c1fbd4bce76b2ac5fcc0a1e6eb6"
+  integrity sha512-mCnh83zuz7kQxxJirtFD7q6Huy6liPanI67BSlbzSYgVNl5eXVdE2CN1FuAeZwG1SNpGsNRCV+bJAVVnykZAFA==
   dependencies:
     "@types/debug" "^4.1.8"
     "@types/validator" "^13.7.17"
