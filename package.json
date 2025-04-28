@@ -60,7 +60,7 @@
         "@feathersjs/feathers": "^4.5.15",
         "@feathersjs/socketio": "^4.5.18",
         "@line/bot-sdk": "^9.8.0",
-        "argon2": "^0.41.1",
+        "argon2": "^0.43.0",
         "azure-cognitiveservices-websearch": "^2.0.0",
         "cls-hooked": "^4.2.2",
         "compression": "^1.8.0",
