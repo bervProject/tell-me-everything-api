@@ -75,7 +75,7 @@
         "mongodb": "^6.16.0",
         "mongodb-core": "^3.2.7",
         "ms-rest-azure": "^3.0.2",
-        "nodemailer": "^6.10.1",
+        "nodemailer": "^7.0.3",
         "pg": "^8.16.0",
         "sequelize": "^6.37.7",
         "serve-favicon": "^2.5.0",
