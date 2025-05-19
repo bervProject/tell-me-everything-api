@@ -1,6 +1,6 @@
 // Initializes the `email` service on path `/email`
 import { ServiceAddons } from "@feathersjs/feathers";
-import * as aws from "@aws-sdk/client-ses";
+import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import nodemailer from "nodemailer";
 import { Application } from "../../declarations";
 import { Email } from "./email.class";
@@ -15,13 +15,13 @@ declare module "../../declarations" {
 }
 
 export default function (app: Application): void {
-  const ses = new aws.SESClient({
+  const ses = new SESv2Client({
     apiVersion: "2010-12-01",
     region: app.get("sesregion") || "us-east-1",
   });
 
   const transporter = nodemailer.createTransport({
-    SES: { ses, aws },
+    SES: { ses, SendEmailCommand },
   });
 
   const options = {
