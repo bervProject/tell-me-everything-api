@@ -11,6 +11,9 @@ import checkPermissions from "feathers-permissions";
 import { setField } from "feathers-authentication-hooks";
 import emailUser from "../../hooks/email-user";
 import userCreationLimit from "../../hooks/user-creation-limit";
+import { HookOptions } from "@feathersjs/feathers";
+import { Application } from "../../declarations";
+import { Users } from "./users.class";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;
@@ -28,7 +31,7 @@ export default {
           error: false,
         }),
         iff(
-          (context) => !context.params.permitted,
+          (context) => !(context.params as any).permitted,
           setField({
             from: "params.user.id",
             as: "params.query.id",
@@ -45,7 +48,7 @@ export default {
           error: false,
         }),
         iff(
-          (context) => !context.params.permitted,
+          (context) => !(context.params as any).permitted,
           setField({
             from: "params.user.id",
             as: "params.query.id",
@@ -56,7 +59,7 @@ export default {
     create: [
       userCreationLimit(),
       iff(
-        (context) => !context.params.canAll,
+        (context) => !(context.params as any).canAll,
         authenticate("jwt"),
         checkPermissions({
           roles: ["admin"],
@@ -111,4 +114,4 @@ export default {
     patch: [],
     remove: [],
   },
-};
+} as HookOptions<Application, Users>;

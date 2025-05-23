@@ -6,3 +6,4 @@ import "@feathersjs/transport-commons";
 export interface ServiceTypes {}
 // The application instance type that will be used everywhere else
 export type Application = ExpressFeathers<ServiceTypes>;
+export type HookContext = FeathersHookContext<Application>

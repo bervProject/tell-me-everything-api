@@ -15,9 +15,8 @@ const getUrl = (pathname?: string) => {
 describe("Feathers application tests (with jest)", () => {
   let server: Server;
 
-  beforeAll((done) => {
-    server = app.listen(port);
-    server.once("listening", () => done());
+  beforeAll(async () => {
+    server = await app.listen(port);
   });
 
   afterAll((done) => {

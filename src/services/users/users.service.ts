@@ -8,8 +8,7 @@ import hooks from "./users.hooks";
 // Add this service to the service type index
 declare module "../../declarations" {
   interface ServiceTypes {
-    //eslint-disable-next-line @typescript-eslint/no-explicit-any
-    users: Users & ServiceAddons<any>;
+    users: Users;
   }
 }
 
@@ -20,7 +19,7 @@ export default function (app: Application): void {
   };
 
   // Initialize our service with any options it requires
-  app.use("/users", new Users(options, app));
+  app.use("users", new Users(options));
 
   // Get our initialized service so that we can register hooks
   const service = app.service("users");

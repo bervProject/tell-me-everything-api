@@ -1,4 +1,4 @@
-import feathers from "@feathersjs/feathers";
+import {feathers, Application, Params} from "@feathersjs/feathers";
 import {
   AccountLinkEvent,
   MessageEvent,
@@ -10,7 +10,7 @@ import {
 import botLineRespond from "../../src/hooks/bot-line-respond";
 
 describe("Hook test 'bot-error-handling ", () => {
-  let server: feathers.Application<any>;
+  let server: Application<any>;
   beforeAll(() => {
     server = feathers();
     server.use("random", {
@@ -18,7 +18,7 @@ describe("Hook test 'bot-error-handling ", () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
         data: Partial<any> | Partial<any>[],
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        params: feathers.Params,
+        params: Params,
       ) {
         return {};
       },
