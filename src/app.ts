@@ -4,9 +4,16 @@ import compress from "compression";
 import helmet from "helmet";
 import cors from "cors";
 
-import {feathers} from "@feathersjs/feathers";
+import { feathers } from "@feathersjs/feathers";
 import configuration from "@feathersjs/configuration";
-import express, {errorHandler, json, notFound, urlencoded, rest, static as staticFiles} from "@feathersjs/express";
+import express, {
+  errorHandler,
+  json,
+  notFound,
+  urlencoded,
+  rest,
+  static as staticFiles,
+} from "@feathersjs/express";
 import socketio from "@feathersjs/socketio";
 
 import { Application } from "./declarations";

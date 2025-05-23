@@ -1,4 +1,4 @@
-import {feathers, Application, Params} from "@feathersjs/feathers";
+import { feathers, Application, Params } from "@feathersjs/feathers";
 import {
   AccountLinkEvent,
   MessageEvent,

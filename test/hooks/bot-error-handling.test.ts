@@ -1,4 +1,4 @@
-import {feathers, Application, Params} from "@feathersjs/feathers";
+import { feathers, Application, Params } from "@feathersjs/feathers";
 import { JSONParseError, SignatureValidationFailed } from "@line/bot-sdk";
 import botErrorHandling from "../../src/hooks/bot-error-handling";
 

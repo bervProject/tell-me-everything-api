@@ -16,7 +16,10 @@ export default {
         roles: ["admin"],
         error: false,
       }),
-      iff((context) => !(context.params as any).permitted, disallow("external")),
+      iff(
+        (context) => !(context.params as any).permitted,
+        disallow("external"),
+      ),
     ],
     find: [],
     get: [],

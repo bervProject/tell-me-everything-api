@@ -1,4 +1,4 @@
-import {feathers, Application, Params} from "@feathersjs/feathers";
+import { feathers, Application, Params } from "@feathersjs/feathers";
 import messageEncrypt from "../../src/hooks/messages-encrypt";
 import * as argon2 from "argon2";
 import AES from "crypto-js/aes";
