@@ -1,16 +1,16 @@
-import feathers from "@feathersjs/feathers";
+import { feathers, Application, Params } from "@feathersjs/feathers";
 import { JSONParseError, SignatureValidationFailed } from "@line/bot-sdk";
 import botErrorHandling from "../../src/hooks/bot-error-handling";
 
 describe("Hook test 'bot-error-handling ", () => {
-  let server: feathers.Application<any>;
+  let server: Application<any>;
   beforeAll(() => {
     server = feathers();
     server.use("random", {
       async create(
         data: Partial<any> | Partial<any>[],
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        params: feathers.Params,
+        params: Params,
       ) {
         if (Array.isArray(data)) {
           return {};

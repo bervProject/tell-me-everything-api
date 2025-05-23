@@ -8,13 +8,14 @@ import * as argon2 from "argon2";
 export default (options = {}): Hook => {
   return async (context: HookContext) => {
     const { id, params, app } = context;
+    if (!id) return;
     const { headers } = params;
     const messagePassword = headers?.key;
     if (!messagePassword) {
       // without header
       return context;
     }
-    const data = await app.service("message")._get(id);
+    const data = await app.service("message").get(id);
     if (!data) {
       throw new NotFound("Data Not Found!");
     }

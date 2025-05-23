@@ -4,6 +4,9 @@ const { authenticate } = feathersAuthentication.hooks;
 
 import botLineRespond from "../../hooks/bot-line-respond";
 import botErrorHandling from "../../hooks/bot-error-handling";
+import { HookOptions } from "@feathersjs/feathers";
+import { Application } from "../../declarations";
+import { LineBot } from "./line-bot.class";
 
 export default {
   before: {
@@ -60,4 +63,4 @@ export default {
     patch: [],
     remove: [],
   },
-};
+} as HookOptions<Application, LineBot>;

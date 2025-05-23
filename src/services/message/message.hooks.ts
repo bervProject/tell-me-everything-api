@@ -9,6 +9,9 @@ import messagesEncrypt from "../../hooks/messages-encrypt";
 import gettingMessage from "../../hooks/getting-message";
 import openMessage from "../../hooks/open-message";
 import messageSend from "../../hooks/message-send";
+import { HookOptions } from "@feathersjs/feathers";
+import { Application } from "../../declarations";
+import { Message } from "./message.class";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;
@@ -23,7 +26,7 @@ export default {
         error: false,
       }),
       iff(
-        (context) => !context.params.permitted,
+        (context) => !(context.params as any).permitted,
         setField({
           from: "params.user.email",
           as: "params.query.to",
@@ -36,7 +39,7 @@ export default {
         error: false,
       }),
       iff(
-        (context) => !context.params.permitted,
+        (context) => !(context.params as any).permitted,
         setField({
           from: "params.user.email",
           as: "params.query.to",
@@ -95,4 +98,4 @@ export default {
     patch: [],
     remove: [],
   },
-};
+} as HookOptions<Application, Message>;

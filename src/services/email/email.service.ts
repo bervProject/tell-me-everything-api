@@ -5,12 +5,12 @@ import nodemailer from "nodemailer";
 import { Application } from "../../declarations";
 import { Email } from "./email.class";
 import hooks from "./email.hooks";
+import { MongoDBServiceOptions } from "feathers-mongodb";
 
 // Add this service to the service type index
 declare module "../../declarations" {
   interface ServiceTypes {
-    //eslint-disable-next-line @typescript-eslint/no-explicit-any
-    email: Email & ServiceAddons<any>;
+    email: Email;
   }
 }
 
@@ -26,10 +26,10 @@ export default function (app: Application): void {
 
   const options = {
     paginate: app.get("paginate"),
-  };
+  } as Partial<MongoDBServiceOptions>;
 
   // Initialize our service with any options it requires
-  app.use("/email", new Email(options, app, transporter));
+  app.use("email", new Email(options, app, transporter));
 
   // Get our initialized service so that we can register hooks
   const service = app.service("email");

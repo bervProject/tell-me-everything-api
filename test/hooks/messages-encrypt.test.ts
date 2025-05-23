@@ -1,11 +1,11 @@
-import feathers from "@feathersjs/feathers";
+import { feathers, Application, Params } from "@feathersjs/feathers";
 import messageEncrypt from "../../src/hooks/messages-encrypt";
 import * as argon2 from "argon2";
 import AES from "crypto-js/aes";
 import Utf8 from "crypto-js/enc-utf8";
 
 describe("Hook test 'message-encrypt'", () => {
-  let server: feathers.Application<any>;
+  let server: Application<any>;
   beforeAll(() => {
     server = feathers();
     server.use("random", {
@@ -13,7 +13,7 @@ describe("Hook test 'message-encrypt'", () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data: Partial<any> | Partial<any>[],
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        params: feathers.Params,
+        params: Params,
       ) {
         return data;
       },

@@ -8,7 +8,7 @@ export default (options = {}): Hook => {
     const { app, result } = context;
     const frontEndUrl = app.get("frontend");
     if (result.to) {
-      await app.service("email")._create({
+      await app.service("email").create({
         from: "notification@berviantoleo.my.id",
         to: result.to,
         subject: "You've got secret message",
