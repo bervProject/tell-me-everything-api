@@ -48,5 +48,8 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "warn",
     },
   },
-  eslintPluginPrettierRecommended,
+  {
+    ignores: ["**/*.md"],
+    ...eslintPluginPrettierRecommended,
+  },
 );
