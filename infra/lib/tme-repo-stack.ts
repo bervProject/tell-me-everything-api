@@ -8,7 +8,7 @@ export class TmeRepoStack extends cdk.Stack {
 
     const repo = new ecr.Repository(this, "tme-ecr", {
       repositoryName: "tme",
-      imageScanOnPush: true,
+      imageScanOnPush: false,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
       imageTagMutability: ecr.TagMutability.MUTABLE,
       encryption: ecr.RepositoryEncryption.KMS,
