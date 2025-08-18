@@ -1789,10 +1789,10 @@
   dependencies:
     vary "^1.1.2"
 
-"@line/bot-sdk@^10.1.1":
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/@line/bot-sdk/-/bot-sdk-10.1.1.tgz#ce334c815a869dc6cc86efbd64e3e4ac57e7bd23"
-  integrity sha512-0SEkbzovdBEGPy1PF8nJZYjMfLjqdn7WhRXU1K+cjEqc5rX9xzA6M2rt4/g2ZqefwBg37/hGfT5/YhHMkxtZaw==
+"@line/bot-sdk@^10.1.2":
+  version "10.1.2"
+  resolved "https://registry.yarnpkg.com/@line/bot-sdk/-/bot-sdk-10.1.2.tgz#42c50132bff2410f7c12f0b1f2b795383090f486"
+  integrity sha512-vSoPdwK4IAtzPI34H1SKDO82fibDuydTPw9Mq/gb+ei/NJVoFIeRAfuoww1pYHitX41AYjG6SMAE4BK2rMdjPA==
   dependencies:
     "@types/node" "^22.0.0"
   optionalDependencies:
