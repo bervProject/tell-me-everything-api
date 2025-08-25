@@ -119,5 +119,5 @@
         "typescript": "^5.9.2",
         "typescript-eslint": "^8.40.0"
     },
-    "packageManager": "yarn@1.22.19"
+    "packageManager": "yarn@1.22.22"
 }
