@@ -15,13 +15,13 @@ declare module "../../declarations" {
 }
 
 export default function (app: Application): void {
-  const ses = new SESv2Client({
+  const sesClient = new SESv2Client({
     apiVersion: "2010-12-01",
     region: app.get("sesregion") || "us-east-1",
   });
 
   const transporter = nodemailer.createTransport({
-    SES: { ses, SendEmailCommand },
+    SES: { sesClient, SendEmailCommand },
   });
 
   const options = {
