@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-import { Service, MongoDBServiceOptions } from "feathers-mongodb";
+import { Service, MongoDBServiceOptions } from "@feathersjs/mongodb";
 import { Application } from "../../declarations";
 import logger from "../../logger";
 

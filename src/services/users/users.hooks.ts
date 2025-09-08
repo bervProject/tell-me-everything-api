@@ -8,7 +8,7 @@ import {
 } from "feathers-hooks-common";
 import { userAuditHook } from "@bervproject/feathers-advance-hook";
 import checkPermissions from "feathers-permissions";
-import { setField } from "feathers-authentication-hooks";
+import { setField } from "feathers-hooks-common";
 import emailUser from "../../hooks/email-user";
 import userCreationLimit from "../../hooks/user-creation-limit";
 import { HookOptions } from "@feathersjs/feathers";

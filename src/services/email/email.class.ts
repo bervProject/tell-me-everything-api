@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-import { Service, MongoDBServiceOptions } from "feathers-mongodb";
+import { Service, MongoDBServiceOptions } from "@feathersjs/mongodb";
 import { Params } from "@feathersjs/feathers";
 import Mail from "nodemailer/lib/mailer";
 import { Application } from "../../declarations";

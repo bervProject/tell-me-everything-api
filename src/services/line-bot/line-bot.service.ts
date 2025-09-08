@@ -1,5 +1,5 @@
 // Initializes the `line-bot` service on path `/line-bot`
-import { MongoDBServiceOptions } from "feathers-mongodb";
+import { MongoDBServiceOptions } from "@feathersjs/mongodb";
 import { Application } from "../../declarations";
 import { LineBot } from "./line-bot.class";
 import hooks from "./line-bot.hooks";

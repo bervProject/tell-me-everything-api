@@ -3,7 +3,7 @@ import * as feathersAuthentication from "@feathersjs/authentication";
 import * as local from "@feathersjs/authentication-local";
 import checkPermissions from "feathers-permissions";
 import { iff, required, preventChanges } from "feathers-hooks-common";
-import { setField } from "feathers-authentication-hooks";
+import { setField } from "feathers-hooks-common";
 
 import messagesEncrypt from "../../hooks/messages-encrypt";
 import gettingMessage from "../../hooks/getting-message";

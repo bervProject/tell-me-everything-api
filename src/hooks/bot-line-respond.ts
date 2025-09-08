@@ -1,8 +1,6 @@
 // Use this hook to manipulate incoming or outgoing data.
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 import { Hook, HookContext } from "@feathersjs/feathers";
-import { CognitiveServicesCredentials } from "ms-rest-azure";
-import { WebSearchClient } from "azure-cognitiveservices-websearch";
 import logger from "../logger";
 import { messagingApi } from "@line/bot-sdk";
 import {
@@ -150,85 +148,103 @@ async function handleSearch(
   const splitText = messageText.split(" ", 2);
   if (splitText.length > 1) {
     const searchText = splitText[1];
-    const credentials = new CognitiveServicesCredentials(
-      process.env.SEARCH_KEY || "",
-    );
-    const webSearchClient = new WebSearchClient(credentials);
-    const result = await webSearchClient.web.search(searchText);
-    const output = new Array<FlexBubble>();
-    if (result.webPages) {
-      for (const content of result.webPages.value) {
-        if (
-          content.displayUrl &&
-          (content.displayUrl.startsWith("https://") ||
-            content.displayUrl.startsWith("http://"))
-        ) {
-          output.push({
-            type: "bubble",
-            header: {
-              type: "box",
-              layout: "vertical",
-              contents: [
-                {
-                  type: "text",
-                  text: content.name || "",
-                },
-              ],
-            },
-            body: {
-              type: "box",
-              layout: "vertical",
-              contents: [
-                {
-                  type: "text",
-                  text: content.url || "",
-                },
-              ],
-            },
-            action: {
-              label: "link",
-              type: "uri",
-              uri: content.displayUrl || "",
-            },
-          });
+    
+    try {
+      const response = await fetch(`https://api.bing.microsoft.com/v7.0/search?q=${encodeURIComponent(searchText)}`, {
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.SEARCH_KEY || "",
+        },
+      });
+      
+      const result = await response.json();
+      const output = new Array<FlexBubble>();
+      
+      if (result.webPages?.value) {
+        for (const content of result.webPages.value) {
+          if (
+            content.displayUrl &&
+            (content.displayUrl.startsWith("https://") ||
+              content.displayUrl.startsWith("http://"))
+          ) {
+            output.push({
+              type: "bubble",
+              header: {
+                type: "box",
+                layout: "vertical",
+                contents: [
+                  {
+                    type: "text",
+                    text: content.name || "",
+                  },
+                ],
+              },
+              body: {
+                type: "box",
+                layout: "vertical",
+                contents: [
+                  {
+                    type: "text",
+                    text: content.url || "",
+                  },
+                ],
+              },
+              action: {
+                label: "link",
+                type: "uri",
+                uri: content.displayUrl || "",
+              },
+            });
+          }
         }
       }
-    }
-    if (output.length == 0) {
+      
+      if (output.length == 0) {
+        await client.replyMessage({
+          replyToken: messageEvent.replyToken,
+          messages: [
+            {
+              type: "text",
+              text: "Sepertinya pencarian kakak tidak ditemukan. :(",
+            },
+          ],
+        });
+      } else if (output.length > 10) {
+        await client.replyMessage({
+          replyToken: messageEvent.replyToken,
+          messages: [
+            {
+              type: "flex",
+              altText: "Web Result",
+              contents: {
+                type: "carousel",
+                contents: output.slice(0, 10),
+              },
+            },
+          ],
+        });
+      } else {
+        await client.replyMessage({
+          replyToken: messageEvent.replyToken,
+          messages: [
+            {
+              type: "flex",
+              altText: "Web Result",
+              contents: {
+                type: "carousel",
+                contents: output,
+              },
+            },
+          ],
+        });
+      }
+    } catch (error) {
+      logger.error(`Search error: ${JSON.stringify(error)}`);
       await client.replyMessage({
         replyToken: messageEvent.replyToken,
         messages: [
           {
             type: "text",
-            text: "Sepertinya pencarian kakak tidak ditemukan. :(",
-          },
-        ],
-      });
-    } else if (output.length > 10) {
-      await client.replyMessage({
-        replyToken: messageEvent.replyToken,
-        messages: [
-          {
-            type: "flex",
-            altText: "Web Result",
-            contents: {
-              type: "carousel",
-              contents: output.slice(0, 10),
-            },
-          },
-        ],
-      });
-    } else {
-      await client.replyMessage({
-        replyToken: messageEvent.replyToken,
-        messages: [
-          {
-            type: "flex",
-            altText: "Web Result",
-            contents: {
-              type: "carousel",
-              contents: output,
-            },
+            text: "Maaf, terjadi kesalahan saat mencari. Silakan coba lagi nanti.",
           },
         ],
       });

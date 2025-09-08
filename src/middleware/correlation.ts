@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import { v4 as uuidv4 } from "uuid";
+import { v7 as uuidv7 } from "uuid";
 import { Namespace } from "cls-hooked";
 
 export default (namespace: Namespace) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const correlationId = uuidv4();
+    const correlationId = uuidv7();
     if (!req.feathers) {
       req.feathers = {};
     }
