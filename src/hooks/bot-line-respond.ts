@@ -148,17 +148,20 @@ async function handleSearch(
   const splitText = messageText.split(" ", 2);
   if (splitText.length > 1) {
     const searchText = splitText[1];
-    
+
     try {
-      const response = await fetch(`https://api.bing.microsoft.com/v7.0/search?q=${encodeURIComponent(searchText)}`, {
-        headers: {
-          'Ocp-Apim-Subscription-Key': process.env.SEARCH_KEY || "",
+      const response = await fetch(
+        `https://api.bing.microsoft.com/v7.0/search?q=${encodeURIComponent(searchText)}`,
+        {
+          headers: {
+            "Ocp-Apim-Subscription-Key": process.env.SEARCH_KEY || "",
+          },
         },
-      });
-      
+      );
+
       const result = await response.json();
       const output = new Array<FlexBubble>();
-      
+
       if (result.webPages?.value) {
         for (const content of result.webPages.value) {
           if (
@@ -197,7 +200,7 @@ async function handleSearch(
           }
         }
       }
-      
+
       if (output.length == 0) {
         await client.replyMessage({
           replyToken: messageEvent.replyToken,

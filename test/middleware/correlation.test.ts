@@ -18,9 +18,9 @@ describe("Correlation Middleware", () => {
 
   it("should generate UUID v7 correlation ID", () => {
     const middleware = correlationMiddleware(namespace);
-    
+
     middleware(req as Request, res as Response, next);
-    
+
     expect(req.feathers?.correlationId).toBeDefined();
     expect(uuidValidate(req.feathers.correlationId)).toBe(true);
     expect(uuidVersion(req.feathers.correlationId)).toBe(7);
@@ -29,7 +29,7 @@ describe("Correlation Middleware", () => {
 
   it("should set correlation ID in namespace", (done) => {
     const middleware = correlationMiddleware(namespace);
-    
+
     middleware(req as Request, res as Response, () => {
       const correlationId = namespace.get("correlationId");
       expect(correlationId).toBeDefined();
