@@ -21,7 +21,7 @@ This project uses [Feathers](http://feathersjs.com).
 ```env
 LINE_CHANNEL_ACCESS_TOKEN=
 LINE_CHANNEL_SECRET=
-SEARCH_KEY=
+SEARCH_KEY= # Bing Search API v7 subscription key
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 ENCRYPT_SALT=

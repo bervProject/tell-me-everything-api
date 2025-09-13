@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 import { Application } from "../../declarations";
 import { Email } from "./email.class";
 import hooks from "./email.hooks";
-import { MongoDBServiceOptions } from "feathers-mongodb";
+import { MongoDBServiceOptions } from "@feathersjs/mongodb";
 
 // Add this service to the service type index
 declare module "../../declarations" {
