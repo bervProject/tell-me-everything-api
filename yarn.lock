@@ -1810,12 +1810,12 @@
   dependencies:
     vary "^1.1.2"
 
-"@line/bot-sdk@^10.3.0":
-  version "10.3.0"
-  resolved "https://registry.yarnpkg.com/@line/bot-sdk/-/bot-sdk-10.3.0.tgz#9149c83d0275ecb04a48ace24a6841f619bd295e"
-  integrity sha512-+8EWzaU9v8XBGWA1UhYTHQvwP2SQ/ohoOQGa6Q3kaLdFmTomj5sPpsOOG4lHDLBuRhf9qmNclXJHSVQmPgmE6w==
+"@line/bot-sdk@^10.4.0":
+  version "10.4.0"
+  resolved "https://registry.yarnpkg.com/@line/bot-sdk/-/bot-sdk-10.4.0.tgz#59c71e0c76cde75f342b573bef968e93318f03c7"
+  integrity sha512-deUato9NM0o30cxtREuRGdKEdr7cXytK9glntr7FcYYkVm7nTTTnN/UOO4NoGJp6B3bXDQF5+RcGliBSFuBywA==
   dependencies:
-    "@types/node" "^22.0.0"
+    "@types/node" "^22.18.10"
   optionalDependencies:
     axios "^1.7.4"
 
@@ -2664,10 +2664,10 @@
   dependencies:
     undici-types "~7.14.0"
 
-"@types/node@^22.0.0":
-  version "22.15.30"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.15.30.tgz#3a20431783e28dd0b0326f84ab386a2ec81d921d"
-  integrity sha512-6Q7lr06bEHdlfplU6YRbgG1SFBdlsfNC4/lX+SkhiTs0cpJkOElmWls8PxDFv4yY/xKb8Y6SO0OmSX4wgqTZbA==
+"@types/node@^22.18.10":
+  version "22.18.12"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.18.12.tgz#e165d87bc25d7bf6d3657035c914db7485de84fb"
+  integrity sha512-BICHQ67iqxQGFSzfCFTT7MRQ5XcBjG5aeKh5Ok38UBbPe5fxTyE+aHFxwVrGyr8GNlqFMLKD1D3P2K/1ks8tog==
   dependencies:
     undici-types "~6.21.0"
 
