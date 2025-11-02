@@ -1,11 +1,10 @@
 // Initializes the `email` service on path `/email`
-import { ServiceAddons } from "@feathersjs/feathers";
 import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
+import { MongoDBAdapterOptions } from "@feathersjs/mongodb";
 import nodemailer from "nodemailer";
 import { Application } from "../../declarations";
 import { Email } from "./email.class";
 import hooks from "./email.hooks";
-import { MongoDBServiceOptions } from "feathers-mongodb";
 
 // Add this service to the service type index
 declare module "../../declarations" {
@@ -24,9 +23,11 @@ export default function (app: Application): void {
     SES: { sesClient, SendEmailCommand },
   });
 
-  const options = {
+  const options: MongoDBAdapterOptions = {
     paginate: app.get("paginate"),
-  } as Partial<MongoDBServiceOptions>;
+    // eslint-disable-next-lint @typescript-eslint/no-explicit-any
+    Model: app.get("mongoClient").then((db: any) => db.collection("email")),
+  };
 
   // Initialize our service with any options it requires
   app.use("email", new Email(options, app, transporter));
