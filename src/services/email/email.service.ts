@@ -26,7 +26,7 @@ export default function (app: Application): void {
   const options: MongoDBAdapterOptions = {
     paginate: app.get("paginate"),
     // eslint-disable-next-lint @typescript-eslint/no-explicit-any
-    Model: app.get("mongoClient").then((db: any) => db.collection("email")),
+    Model: app.get("mongoClient")?.then((db: any) => db.collection("email")),
   };
 
   // Initialize our service with any options it requires

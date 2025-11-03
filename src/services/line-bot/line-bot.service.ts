@@ -3,7 +3,6 @@ import type { MongoDBAdapterOptions } from "@feathersjs/mongodb";
 import { Application } from "../../declarations";
 import { LineBot } from "./line-bot.class";
 import hooks from "./line-bot.hooks";
-import { MongoClient } from "mongodb";
 
 // Add this service to the service type index
 declare module "../../declarations" {
@@ -15,7 +14,7 @@ declare module "../../declarations" {
 export default function (app: Application): void {
   const options: MongoDBAdapterOptions = {
     paginate: app.get("paginate"),
-    Model: app.get("mongoClient").then((db: any) => db.collection("linebot")),
+    Model: app.get("mongoClient")?.then((db: any) => db.collection("linebot")),
   };
 
   // Initialize our service with any options it requires

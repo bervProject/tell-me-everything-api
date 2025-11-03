@@ -3,6 +3,14 @@ import { Application } from "./declarations";
 
 export default function (app: Application): void {
   const connection = app.get("mongodb");
-  const mongoClient = new MongoClient(connection);
-  app.set("mongoClient", mongoClient);
+  if (!connection) {
+    const mongoClient = new MongoClient(connection);
+    mongoClient.connect().then(() => {
+      const mongoDbName = app.get("mongodbname");
+      if (!mongoDbName) {
+        const db = mongoClient.db(mongoDbName);
+        app.set("mongoClient", db);
+      }
+    });
+  }
 }
