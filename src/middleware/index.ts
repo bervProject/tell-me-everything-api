@@ -14,5 +14,6 @@ export default function (app: Application): void {
     channelAccessToken: app.get("lineAccessToken"),
     channelSecret: app.get("lineSecret"),
   };
+  // @ts-expect-error different type
   app.use("line-bot", middleware(lineConfig), lineBotMiddleware());
 }

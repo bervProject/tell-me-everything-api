@@ -1,7 +1,6 @@
-import { Request, Response, NextFunction } from "express";
-
 export default () => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (req: any, res: any, next: any) => {
     if (!req.feathers) {
       req.feathers = {};
     }

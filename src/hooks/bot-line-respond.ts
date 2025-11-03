@@ -1,8 +1,8 @@
 // Use this hook to manipulate incoming or outgoing data.
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 import { Hook, HookContext } from "@feathersjs/feathers";
-import { CognitiveServicesCredentials } from "ms-rest-azure";
-import { WebSearchClient } from "azure-cognitiveservices-websearch";
+import { CognitiveServicesCredentials } from "@azure/ms-rest-azure-js";
+import { WebSearchClient } from "@azure/cognitiveservices-websearch";
 import logger from "../logger";
 import { messagingApi } from "@line/bot-sdk";
 import {

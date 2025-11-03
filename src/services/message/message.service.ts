@@ -1,5 +1,4 @@
 // Initializes the `message` service on path `/message`
-import { ServiceAddons } from "@feathersjs/feathers";
 import { Application } from "../../declarations";
 import { Message } from "./message.class";
 import createModel from "../../models/message.model";

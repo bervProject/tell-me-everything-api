@@ -7,7 +7,7 @@ import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 import markdown from "@eslint/markdown";
 
 export default tseslint.config(
-  globalIgnores([".yarn/"]),
+  globalIgnores([".yarn/", "lib/"]),
   {
     files: ["**/*.md"],
     plugins: {

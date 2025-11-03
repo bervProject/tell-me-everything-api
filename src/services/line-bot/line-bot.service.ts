@@ -1,5 +1,5 @@
 // Initializes the `line-bot` service on path `/line-bot`
-import { MongoDBServiceOptions } from "feathers-mongodb";
+import type { MongoDBAdapterOptions } from "@feathersjs/mongodb";
 import { Application } from "../../declarations";
 import { LineBot } from "./line-bot.class";
 import hooks from "./line-bot.hooks";
@@ -12,12 +12,13 @@ declare module "../../declarations" {
 }
 
 export default function (app: Application): void {
-  const options = {
+  const options: MongoDBAdapterOptions = {
     paginate: app.get("paginate"),
-  } as Partial<MongoDBServiceOptions>;
+    Model: app.get("mongoClient")?.then((db: any) => db.collection("linebot")),
+  };
 
   // Initialize our service with any options it requires
-  app.use("line-bot", new LineBot(options, app));
+  app.use("line-bot", new LineBot(options));
 
   // Get our initialized service so that we can register hooks
   const service = app.service("line-bot");

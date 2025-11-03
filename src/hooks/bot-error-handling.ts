@@ -8,11 +8,15 @@ export default (options = {}): Hook => {
   return async (context: HookContext) => {
     const { error } = context;
     if (error instanceof SignatureValidationFailed) {
-      context.statusCode = 401;
+      if (context.http) {
+        context.http.status = 401;
+      }
       context.error = error.signature;
       context.result = error.signature;
     } else if (error instanceof JSONParseError) {
-      context.statusCode = 400;
+      if (context.http) {
+        context.http.status = 400;
+      }
       context.error = error.raw;
       context.result = error.raw;
     }
