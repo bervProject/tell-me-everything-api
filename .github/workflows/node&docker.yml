@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        node-version: [22.x, 24.x]
+        node-version: [24.x, 25.x]
     steps:
     - uses: actions/checkout@v5
     - name: Use Node.js ${{ matrix.node-version }}
@@ -62,10 +62,10 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v5
-      - name: Use Node.js 22.x
+      - name: Use Node.js 24.x
         uses: actions/setup-node@v6
         with:
-          node-version: 22.x
+          node-version: 24.x
       - name: Install Dependencies
         working-directory: ./infra
         run: npm i
