@@ -2186,10 +2186,10 @@
   dependencies:
     vary "^1.1.2"
 
-"@line/bot-sdk@^10.5.0":
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/@line/bot-sdk/-/bot-sdk-10.5.0.tgz#223b5f4234ecc4985c2cfc6c8c2841ad0266a970"
-  integrity sha512-YmFDH1fr6b3kWiTDld8JID80cI+O5IlYegYeqhvBZx/zh2GBHdeV7i+pdwDjATRY9FHahYkcYmHb27UQldh0qw==
+"@line/bot-sdk@^10.6.0":
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/@line/bot-sdk/-/bot-sdk-10.6.0.tgz#1207f29a2b7866351f81a763852d5167e1818b6f"
+  integrity sha512-4hSpglL/G/cW2JCcohaYz/BS0uOSJNV9IEYdMm0EiPEvDLayoI2hGq2D86uYPQFD2gvgkyhmzdShpWLG3P5r3w==
   dependencies:
     "@types/node" "^24.0.0"
   optionalDependencies:
