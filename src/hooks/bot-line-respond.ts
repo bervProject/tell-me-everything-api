@@ -4,19 +4,17 @@ import { Hook, HookContext } from "@feathersjs/feathers";
 import { CognitiveServicesCredentials } from "@azure/ms-rest-azure-js";
 import { WebSearchClient } from "@azure/cognitiveservices-websearch";
 import logger from "../logger";
-import { messagingApi } from "@line/bot-sdk";
-import {
-  MemberJoinEvent,
-  MessageEvent,
-  TextEventMessage,
-  WebhookEvent,
-  WebhookRequestBody,
-  Room,
-  Group,
-  JoinEvent,
-  FollowEvent,
-} from "@line/bot-sdk";
-import { FlexBubble } from "@line/bot-sdk/dist/messaging-api/api";
+import { messagingApi, webhook } from "@line/bot-sdk";
+type MemberJoinEvent = webhook.MemberJoinedEvent;
+type MessageEvent = webhook.MessageEvent;
+type TextEventMessage = webhook.TextMessageContent;
+type WebhookEvent = webhook.Event;
+type WebhookRequestBody = webhook.CallbackRequest;
+type Room = webhook.RoomSource;
+type Group = webhook.GroupSource;
+type JoinEvent = webhook.JoinEvent;
+type FollowEvent = webhook.FollowEvent;
+type FlexBubble = messagingApi.FlexBubble;
 
 async function handleBye(
   sourceType: "room" | "group" | "user",
@@ -24,12 +22,12 @@ async function handleBye(
   client: messagingApi.MessagingApiClient,
 ) {
   if (sourceType === "room") {
-    await client.leaveRoom((messageEvent.source as Room).roomId);
+    await client.leaveRoom((messageEvent.source as Room).roomId!);
   } else if (sourceType === "group") {
-    await client.leaveGroup((messageEvent.source as Group).groupId);
+    await client.leaveGroup((messageEvent.source as Group).groupId!);
   } else {
     await client.replyMessage({
-      replyToken: messageEvent.replyToken,
+      replyToken: messageEvent.replyToken!,
       messages: [
         {
           type: "text",
@@ -44,14 +42,14 @@ async function handleHi(
   messageEvent: MessageEvent,
   client: messagingApi.MessagingApiClient,
 ) {
-  const userId = messageEvent.source.userId;
+  const userId = messageEvent.source?.userId;
   let name = "";
   if (userId != undefined) {
     const profile = await client.getProfile(userId);
     name = profile.displayName;
   }
   await client.replyMessage({
-    replyToken: messageEvent.replyToken,
+    replyToken: messageEvent.replyToken!,
     messages: [
       {
         type: "text",
@@ -69,7 +67,7 @@ async function handleHelp(
   client: messagingApi.MessagingApiClient,
 ) {
   await client.replyMessage({
-    replyToken: messageEvent.replyToken,
+    replyToken: messageEvent.replyToken!,
     messages: [
       {
         type: "text",
@@ -196,7 +194,7 @@ async function handleSearch(
     }
     if (output.length == 0) {
       await client.replyMessage({
-        replyToken: messageEvent.replyToken,
+        replyToken: messageEvent.replyToken!,
         messages: [
           {
             type: "text",
@@ -206,7 +204,7 @@ async function handleSearch(
       });
     } else if (output.length > 10) {
       await client.replyMessage({
-        replyToken: messageEvent.replyToken,
+        replyToken: messageEvent.replyToken!,
         messages: [
           {
             type: "flex",
@@ -220,7 +218,7 @@ async function handleSearch(
       });
     } else {
       await client.replyMessage({
-        replyToken: messageEvent.replyToken,
+        replyToken: messageEvent.replyToken!,
         messages: [
           {
             type: "flex",
@@ -235,7 +233,7 @@ async function handleSearch(
     }
   } else {
     await client.replyMessage({
-      replyToken: messageEvent.replyToken,
+      replyToken: messageEvent.replyToken!,
       messages: [
         {
           type: "text",
@@ -251,14 +249,14 @@ async function proccessMessageEvent(
   client: messagingApi.MessagingApiClient,
 ) {
   const message = messageEvent.message;
-  const sourceType = messageEvent.source.type;
+  const sourceType = messageEvent.source?.type;
   logger.info(JSON.stringify(message));
   const messageType = message.type;
   if (messageType === "text") {
     const messageText = (message as TextEventMessage).text.toLowerCase();
     switch (messageText) {
       case "bye":
-        await handleBye(sourceType, messageEvent, client);
+        await handleBye(sourceType ?? "user", messageEvent, client);
         break;
       case "hi":
         await handleHi(messageEvent, client);
@@ -271,7 +269,7 @@ async function proccessMessageEvent(
           await handleSearch(messageText, messageEvent, client);
         } else {
           await client.replyMessage({
-            replyToken: messageEvent.replyToken,
+            replyToken: messageEvent.replyToken!,
             messages: [
               {
                 type: "text",
@@ -292,9 +290,9 @@ async function proccessMemberJoin(
   const joinedMembers = joinEvent.joined.members;
   for (const member of joinedMembers) {
     logger.info(`Welcome to ${member.userId}`);
-    const profile = await client.getProfile(member.userId);
+    const profile = await client.getProfile(member.userId!);
     await client.replyMessage({
-      replyToken: joinEvent.replyToken,
+      replyToken: joinEvent.replyToken!,
       messages: [
         {
           type: "text",
@@ -309,14 +307,14 @@ async function proccessFollowEvent(
   followEvent: FollowEvent,
   client: messagingApi.MessagingApiClient,
 ) {
-  const sourceType = followEvent.source.type.toLowerCase();
+  const sourceType = followEvent.source?.type.toLowerCase();
   if (sourceType === "user") {
-    const userId = followEvent.source.userId;
+    const userId = followEvent.source?.userId;
     logger.info(`Welcoming to ${userId}`);
     if (userId != undefined) {
       const profile = await client.getProfile(userId);
       await client.replyMessage({
-        replyToken: followEvent.replyToken,
+        replyToken: followEvent.replyToken!,
         messages: [
           {
             type: "text",
@@ -356,7 +354,7 @@ async function handleEvent(
       case "join":
         const joinEvent = event as JoinEvent;
         await client.replyMessage({
-          replyToken: joinEvent.replyToken,
+          replyToken: joinEvent.replyToken!,
           messages: [
             {
               type: "text",

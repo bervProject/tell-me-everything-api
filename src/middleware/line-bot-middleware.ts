@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import logger from "../logger";
-import { WebhookRequestBody } from "@line/bot-sdk";
+import { webhook } from "@line/bot-sdk";
+type WebhookRequestBody = webhook.CallbackRequest;
 
 export default () => {
   return (req: Request, res: Response, next: NextFunction): void => {
