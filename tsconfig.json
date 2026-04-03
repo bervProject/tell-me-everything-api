@@ -8,8 +8,5 @@
     "skipLibCheck": true,
     "esModuleInterop": true
   },
-  "exclude": [
-    "test",
-    "infra"
-  ]
+  "exclude": ["test", "infra"]
 }

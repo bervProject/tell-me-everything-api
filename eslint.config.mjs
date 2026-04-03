@@ -2,7 +2,7 @@ import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginJest from "eslint-plugin-jest";
 import { globalIgnores } from "eslint/config";
-import json from "eslint-plugin-json";
+import json from "eslint-plugin-jsonc";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import markdown from "@eslint/markdown";
 
@@ -20,10 +20,10 @@ export default tseslint.config(
   },
   {
     files: ["**/*.json"],
-    plugins: { json },
-    processor: "json/json",
+    plugins: { jsonc: json },
+    language: "jsonc/json",
     rules: {
-      "json/*": ["error", "allowComments"],
+      "jsonc/no-comments": "error",
     },
   },
   {

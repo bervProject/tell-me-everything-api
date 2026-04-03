@@ -2,6 +2,11 @@ module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
   collectCoverage: true,
+  globals: {
+    "ts-jest": {
+      tsconfig: "tsconfig.test.json",
+    },
+  },
   transform: {
     "^.+\\.ts?$": "ts-jest",
     "^.+\\.(js|jsx)$": "babel-jest",

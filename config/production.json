@@ -10,11 +10,7 @@
   "mongodbname": "MONGO_DB_NAME",
   "authentication": {
     "secret": "AUTH_SECRET",
-    "authStrategies": [
-      "jwt",
-      "local",
-      "oauth"
-    ],
+    "authStrategies": ["jwt", "local", "oauth"],
     "jwtOptions": {
       "header": {
         "typ": "access"
@@ -30,11 +26,7 @@
         "key": "OAUTH_CLIENT_ID",
         "secret": "OAUTH_CLIENT_SECRET",
         "subdomain": "OAUTH_SUBDOMAIN",
-        "scope": [
-          "openid",
-          "profile",
-          "email"
-        ]
+        "scope": ["openid", "profile", "email"]
       }
     }
   }

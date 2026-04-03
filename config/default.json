@@ -15,10 +15,7 @@
     "entity": "user",
     "service": "users",
     "secret": "sNG73ZV3b6leI2Oa6oCD9/uFxmo=",
-    "authStrategies": [
-      "jwt",
-      "local"
-    ],
+    "authStrategies": ["jwt", "local"],
     "jwtOptions": {
       "header": {
         "typ": "access"
