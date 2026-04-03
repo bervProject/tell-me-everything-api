@@ -1,12 +1,11 @@
 import { feathers, Application, Params } from "@feathersjs/feathers";
-import {
-  AccountLinkEvent,
-  MessageEvent,
-  FollowEvent,
-  JoinEvent,
-  MemberJoinEvent,
-  WebhookRequestBody,
-} from "@line/bot-sdk";
+import { webhook } from "@line/bot-sdk";
+type AccountLinkEvent = webhook.AccountLinkEvent;
+type MessageEvent = webhook.MessageEvent;
+type FollowEvent = webhook.FollowEvent;
+type JoinEvent = webhook.JoinEvent;
+type MemberJoinEvent = webhook.MemberJoinedEvent;
+type WebhookRequestBody = webhook.CallbackRequest;
 import botLineRespond from "../../src/hooks/bot-line-respond";
 
 describe("Hook test 'bot-error-handling ", () => {
@@ -95,6 +94,7 @@ describe("Hook test 'bot-error-handling ", () => {
       replyToken: "mock",
       webhookEventId: "anyid-1",
       deliveryContext: { isRedelivery: false },
+      follow: { isUnblocked: false },
     };
     const request: WebhookRequestBody = {
       destination: "here",
