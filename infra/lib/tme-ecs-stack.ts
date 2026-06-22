@@ -123,6 +123,8 @@ export class TmeEcsStack extends cdk.Stack {
     const imageUri = `${repo.repositoryUri}:${imageTag.valueAsString}`;
 
     // Build secrets array for Express Mode
+    // Note: DATABASE_URL should be a complete PostgreSQL connection string in Secrets Manager
+    // Format: postgresql://username:password@host:port/database
     const expressSecrets: ecs.CfnExpressGatewayService.SecretProperty[] = [
       { name: "AUTH_SECRET", valueFrom: `${secrets.secretArn}:AUTH_SECRET::` },
       {
@@ -157,10 +159,6 @@ export class TmeEcsStack extends cdk.Stack {
       },
       { name: "MONGO_URL", valueFrom: `${secrets.secretArn}:MONGO_URL::` },
       {
-        name: "NODE_AUTH_TOKEN",
-        valueFrom: `${secrets.secretArn}:NODE_AUTH_TOKEN::`,
-      },
-      {
         name: "OAUTH_CLIENT_ID",
         valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_ID::`,
       },
@@ -176,12 +174,6 @@ export class TmeEcsStack extends cdk.Stack {
         name: "OAUTH_SUBDOMAIN",
         valueFrom: `${secrets.secretArn}:OAUTH_SUBDOMAIN::`,
       },
-      { name: "PGDATABASE", valueFrom: `${secrets.secretArn}:PGDATABASE::` },
-      { name: "PGHOST", valueFrom: `${secrets.secretArn}:PGHOST::` },
-      { name: "PGPASSWORD", valueFrom: `${secrets.secretArn}:PGPASSWORD::` },
-      { name: "PGPORT", valueFrom: `${secrets.secretArn}:PGPORT::` },
-      { name: "PGUSER", valueFrom: `${secrets.secretArn}:PGUSER::` },
-      { name: "SEARCH_KEY", valueFrom: `${secrets.secretArn}:SEARCH_KEY::` },
     ];
 
     // Build environment variables array
