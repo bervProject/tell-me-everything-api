@@ -1,68 +1,34 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as ecr from "aws-cdk-lib/aws-ecr";
 import * as ecs from "aws-cdk-lib/aws-ecs";
-import * as elbv2 from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import * as iam from "aws-cdk-lib/aws-iam";
-import * as logs from "aws-cdk-lib/aws-logs";
-import * as cloudwatch from "aws-cdk-lib/aws-cloudwatch";
-import * as appscaling from "aws-cdk-lib/aws-applicationautoscaling";
 import { Secret } from "aws-cdk-lib/aws-secretsmanager";
 
 export interface TmeEcsStackProps extends cdk.StackProps {
   /**
-   * Use default VPC or create new one
-   * @default false - creates new VPC (set to true to use default VPC, requires AWS credentials)
-   */
-  useDefaultVpc?: boolean;
-
-  /**
-   * Minimum number of tasks
-   * @default 1
-   */
-  minCapacity?: number;
-
-  /**
-   * Maximum number of tasks
-   * @default 10
-   */
-  maxCapacity?: number;
-
-  /**
-   * Desired number of tasks
-   * @default 2
-   */
-  desiredCount?: number;
-
-  /**
    * CPU units for the task (256 = 0.25 vCPU)
-   * @default 256
+   * @default "256"
    */
-  cpu?: number;
+  cpu?: string;
 
   /**
    * Memory in MiB
-   * @default 512
+   * @default "512"
    */
-  memoryLimitMiB?: number;
+  memory?: string;
 }
 
 export class TmeEcsStack extends cdk.Stack {
-  public readonly service: ecs.FargateService;
-  public readonly loadBalancer: elbv2.ApplicationLoadBalancer;
+  public readonly expressService: ecs.CfnExpressGatewayService;
 
   constructor(scope: Construct, id: string, props?: TmeEcsStackProps) {
     super(scope, id, props);
 
     // Configuration with defaults
     const config = {
-      useDefaultVpc: props?.useDefaultVpc ?? false,
-      minCapacity: props?.minCapacity ?? 1,
-      maxCapacity: props?.maxCapacity ?? 10,
-      desiredCount: props?.desiredCount ?? 2,
-      cpu: props?.cpu ?? 256,
-      memoryLimitMiB: props?.memoryLimitMiB ?? 512,
+      cpu: props?.cpu ?? "256",
+      memory: props?.memory ?? "512",
     };
 
     // Parameters
@@ -80,21 +46,6 @@ export class TmeEcsStack extends cdk.Stack {
       "ecs-secret",
       "dev/AppRunner/tme",
     );
-
-    // VPC - use default or create new
-    const vpc = config.useDefaultVpc
-      ? ec2.Vpc.fromLookup(this, "DefaultVPC", { isDefault: true })
-      : new ec2.Vpc(this, "TmeVpc", {
-          maxAzs: 2,
-          natGateways: 1,
-        });
-
-    // ECS Cluster with Fargate Spot enabled
-    const cluster = new ecs.Cluster(this, "TmeCluster", {
-      vpc,
-      clusterName: "tme-cluster",
-      enableFargateCapacityProviders: true,
-    });
 
     // Task Execution Role - for ECS to pull images and write logs
     const taskExecutionRole = new iam.Role(this, "TmeTaskExecutionRole", {
@@ -133,221 +84,134 @@ export class TmeEcsStack extends cdk.Stack {
       }),
     );
 
-    // Task Definition
-    const taskDefinition = new ecs.FargateTaskDefinition(this, "TmeTaskDef", {
-      memoryLimitMiB: config.memoryLimitMiB,
-      cpu: config.cpu,
-      executionRole: taskExecutionRole,
-      taskRole: taskRole,
-      runtimePlatform: {
-        cpuArchitecture: ecs.CpuArchitecture.X86_64,
-        operatingSystemFamily: ecs.OperatingSystemFamily.LINUX,
-      },
-    });
-
-    // Container Definition
-    const container = taskDefinition.addContainer("TmeContainer", {
-      image: ecs.ContainerImage.fromEcrRepository(repo, imageTag.valueAsString),
-      logging: ecs.LogDrivers.awsLogs({
-        streamPrefix: "tme",
-        logRetention: logs.RetentionDays.ONE_WEEK,
-      }),
-      secrets: {
-        AUTH_SECRET: ecs.Secret.fromSecretsManager(secrets, "AUTH_SECRET"),
-        DATABASE_URL: ecs.Secret.fromSecretsManager(secrets, "DATABASE_URL"),
-        ENCRYPT_SALT: ecs.Secret.fromSecretsManager(secrets, "ENCRYPT_SALT"),
-        FRONTEND_URL: ecs.Secret.fromSecretsManager(secrets, "FRONTEND_URL"),
-        HOSTNAME: ecs.Secret.fromSecretsManager(secrets, "HOSTNAME"),
-        JWT_AUDIANCE: ecs.Secret.fromSecretsManager(secrets, "JWT_AUDIANCE"),
-        JWT_ISSUERS: ecs.Secret.fromSecretsManager(secrets, "JWT_ISSUERS"),
-        LINE_CHANNEL_ACCESS_TOKEN: ecs.Secret.fromSecretsManager(
-          secrets,
-          "LINE_CHANNEL_ACCESS_TOKEN",
+    // Infrastructure Role - for Express Mode to manage AWS resources
+    const infrastructureRole = new iam.Role(this, "TmeInfrastructureRole", {
+      assumedBy: new iam.ServicePrincipal("ecs.amazonaws.com"),
+      roleName: "TmeEcsInfrastructureRole",
+      description: "Role for ECS Express Mode to manage infrastructure",
+      managedPolicies: [
+        iam.ManagedPolicy.fromAwsManagedPolicyName(
+          "service-role/AmazonECSInfrastructureRolePolicyForExpressMode",
         ),
-        LINE_CHANNEL_SECRET: ecs.Secret.fromSecretsManager(
-          secrets,
-          "LINE_CHANNEL_SECRET",
-        ),
-        MONGO_DB_NAME: ecs.Secret.fromSecretsManager(secrets, "MONGO_DB_NAME"),
-        MONGO_URL: ecs.Secret.fromSecretsManager(secrets, "MONGO_URL"),
-        NODE_AUTH_TOKEN: ecs.Secret.fromSecretsManager(
-          secrets,
-          "NODE_AUTH_TOKEN",
-        ),
-        OAUTH_CLIENT_ID: ecs.Secret.fromSecretsManager(
-          secrets,
-          "OAUTH_CLIENT_ID",
-        ),
-        OAUTH_CLIENT_SECRET: ecs.Secret.fromSecretsManager(
-          secrets,
-          "OAUTH_CLIENT_SECRET",
-        ),
-        OAUTH_REDIRECT_URL: ecs.Secret.fromSecretsManager(
-          secrets,
-          "OAUTH_REDIRECT_URL",
-        ),
-        OAUTH_SUBDOMAIN: ecs.Secret.fromSecretsManager(
-          secrets,
-          "OAUTH_SUBDOMAIN",
-        ),
-        PGDATABASE: ecs.Secret.fromSecretsManager(secrets, "PGDATABASE"),
-        PGHOST: ecs.Secret.fromSecretsManager(secrets, "PGHOST"),
-        PGPASSWORD: ecs.Secret.fromSecretsManager(secrets, "PGPASSWORD"),
-        PGPORT: ecs.Secret.fromSecretsManager(secrets, "PGPORT"),
-        PGUSER: ecs.Secret.fromSecretsManager(secrets, "PGUSER"),
-        SEARCH_KEY: ecs.Secret.fromSecretsManager(secrets, "SEARCH_KEY"),
-      },
-      environment: {
-        NODE_ENV: "production",
-        PORT: "3030",
-      },
-      portMappings: [
-        {
-          containerPort: 3030,
-          protocol: ecs.Protocol.TCP,
-        },
       ],
-      healthCheck: {
-        command: ["CMD-SHELL", "curl -f http://localhost:3030/ || exit 1"],
-        interval: cdk.Duration.seconds(30),
-        timeout: cdk.Duration.seconds(5),
-        retries: 3,
-        startPeriod: cdk.Duration.seconds(60),
-      },
     });
 
-    // Application Load Balancer
-    this.loadBalancer = new elbv2.ApplicationLoadBalancer(this, "TmeALB", {
-      vpc,
-      internetFacing: true,
-      loadBalancerName: "tme-alb",
-    });
+    // Build image URI
+    const imageUri = `${repo.repositoryUri}:${imageTag.valueAsString}`;
 
-    // Target Group
-    const targetGroup = new elbv2.ApplicationTargetGroup(
-      this,
-      "TmeTargetGroup",
+    // Build secrets array for Express Mode
+    const expressSecrets: ecs.CfnExpressGatewayService.SecretProperty[] = [
+      { name: "AUTH_SECRET", valueFrom: `${secrets.secretArn}:AUTH_SECRET::` },
       {
-        vpc,
-        port: 3030,
-        protocol: elbv2.ApplicationProtocol.HTTP,
-        targetType: elbv2.TargetType.IP,
-        healthCheck: {
-          path: "/",
-          interval: cdk.Duration.seconds(30),
-          timeout: cdk.Duration.seconds(5),
-          healthyThresholdCount: 2,
-          unhealthyThresholdCount: 3,
+        name: "DATABASE_URL",
+        valueFrom: `${secrets.secretArn}:DATABASE_URL::`,
+      },
+      {
+        name: "ENCRYPT_SALT",
+        valueFrom: `${secrets.secretArn}:ENCRYPT_SALT::`,
+      },
+      {
+        name: "FRONTEND_URL",
+        valueFrom: `${secrets.secretArn}:FRONTEND_URL::`,
+      },
+      { name: "HOSTNAME", valueFrom: `${secrets.secretArn}:HOSTNAME::` },
+      {
+        name: "JWT_AUDIANCE",
+        valueFrom: `${secrets.secretArn}:JWT_AUDIANCE::`,
+      },
+      { name: "JWT_ISSUERS", valueFrom: `${secrets.secretArn}:JWT_ISSUERS::` },
+      {
+        name: "LINE_CHANNEL_ACCESS_TOKEN",
+        valueFrom: `${secrets.secretArn}:LINE_CHANNEL_ACCESS_TOKEN::`,
+      },
+      {
+        name: "LINE_CHANNEL_SECRET",
+        valueFrom: `${secrets.secretArn}:LINE_CHANNEL_SECRET::`,
+      },
+      {
+        name: "MONGO_DB_NAME",
+        valueFrom: `${secrets.secretArn}:MONGO_DB_NAME::`,
+      },
+      { name: "MONGO_URL", valueFrom: `${secrets.secretArn}:MONGO_URL::` },
+      {
+        name: "NODE_AUTH_TOKEN",
+        valueFrom: `${secrets.secretArn}:NODE_AUTH_TOKEN::`,
+      },
+      {
+        name: "OAUTH_CLIENT_ID",
+        valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_ID::`,
+      },
+      {
+        name: "OAUTH_CLIENT_SECRET",
+        valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_SECRET::`,
+      },
+      {
+        name: "OAUTH_REDIRECT_URL",
+        valueFrom: `${secrets.secretArn}:OAUTH_REDIRECT_URL::`,
+      },
+      {
+        name: "OAUTH_SUBDOMAIN",
+        valueFrom: `${secrets.secretArn}:OAUTH_SUBDOMAIN::`,
+      },
+      { name: "PGDATABASE", valueFrom: `${secrets.secretArn}:PGDATABASE::` },
+      { name: "PGHOST", valueFrom: `${secrets.secretArn}:PGHOST::` },
+      { name: "PGPASSWORD", valueFrom: `${secrets.secretArn}:PGPASSWORD::` },
+      { name: "PGPORT", valueFrom: `${secrets.secretArn}:PGPORT::` },
+      { name: "PGUSER", valueFrom: `${secrets.secretArn}:PGUSER::` },
+      { name: "SEARCH_KEY", valueFrom: `${secrets.secretArn}:SEARCH_KEY::` },
+    ];
+
+    // Build environment variables array
+    const expressEnvironment: ecs.CfnExpressGatewayService.KeyValuePairProperty[] =
+      [
+        { name: "NODE_ENV", value: "production" },
+        { name: "PORT", value: "3030" },
+      ];
+
+    // ECS Express Mode Service using CfnExpressGatewayService
+    // This is AWS-managed infrastructure similar to App Runner
+    this.expressService = new ecs.CfnExpressGatewayService(
+      this,
+      "TmeExpressService",
+      {
+        serviceName: "tme-express-service",
+        executionRoleArn: taskExecutionRole.roleArn,
+        infrastructureRoleArn: infrastructureRole.roleArn,
+        taskRoleArn: taskRole.roleArn,
+        cpu: config.cpu,
+        memory: config.memory,
+        healthCheckPath: "/",
+        primaryContainer: {
+          image: imageUri,
+          containerPort: 3030,
+          environment: expressEnvironment,
+          secrets: expressSecrets,
+          awsLogsConfiguration: {
+            logGroup: `/aws/ecs/tme-express`,
+            logStreamPrefix: "tme",
+          },
         },
-        deregistrationDelay: cdk.Duration.seconds(30),
+        scalingTarget: {
+          minTaskCount: 1,
+          maxTaskCount: 10,
+        },
       },
     );
 
-    // Listener
-    const listener = this.loadBalancer.addListener("TmeListener", {
-      port: 80,
-      protocol: elbv2.ApplicationProtocol.HTTP,
-      defaultTargetGroups: [targetGroup],
-    });
-
-    // ECS Service with Fargate Spot
-    this.service = new ecs.FargateService(this, "TmeService", {
-      cluster,
-      taskDefinition,
-      serviceName: "tme-service",
-      desiredCount: config.desiredCount,
-      capacityProviderStrategies: [
-        {
-          capacityProvider: "FARGATE_SPOT",
-          weight: 4,
-          base: 0,
-        },
-        {
-          capacityProvider: "FARGATE",
-          weight: 1,
-          base: 1, // Ensure at least 1 task on regular Fargate
-        },
-      ],
-      circuitBreaker: {
-        rollback: true,
-      },
-      enableExecuteCommand: true,
-      healthCheckGracePeriod: cdk.Duration.seconds(60),
-      minHealthyPercent: 50,
-      maxHealthyPercent: 200,
-    });
-
-    // Attach service to target group
-    this.service.attachToApplicationTargetGroup(targetGroup);
-
-    // Auto Scaling Configuration
-    const scaling = this.service.autoScaleTaskCount({
-      minCapacity: config.minCapacity,
-      maxCapacity: config.maxCapacity,
-    });
-
-    // CPU-based scaling
-    scaling.scaleOnCpuUtilization("CpuScaling", {
-      targetUtilizationPercent: 70,
-      scaleInCooldown: cdk.Duration.seconds(60),
-      scaleOutCooldown: cdk.Duration.seconds(60),
-    });
-
-    // Memory-based scaling
-    scaling.scaleOnMemoryUtilization("MemoryScaling", {
-      targetUtilizationPercent: 80,
-      scaleInCooldown: cdk.Duration.seconds(60),
-      scaleOutCooldown: cdk.Duration.seconds(60),
-    });
-
-    // Request count scaling
-    scaling.scaleOnRequestCount("RequestScaling", {
-      requestsPerTarget: 1000,
-      targetGroup: targetGroup,
-      scaleInCooldown: cdk.Duration.seconds(60),
-      scaleOutCooldown: cdk.Duration.seconds(60),
-    });
-
-    // CloudWatch Alarms
-    new cloudwatch.Alarm(this, "HighCpuAlarm", {
-      metric: this.service.metricCpuUtilization(),
-      threshold: 85,
-      evaluationPeriods: 2,
-      alarmDescription: "Alert when CPU exceeds 85%",
-      alarmName: "tme-high-cpu",
-    });
-
-    new cloudwatch.Alarm(this, "HighMemoryAlarm", {
-      metric: this.service.metricMemoryUtilization(),
-      threshold: 90,
-      evaluationPeriods: 2,
-      alarmDescription: "Alert when memory exceeds 90%",
-      alarmName: "tme-high-memory",
-    });
-
-    new cloudwatch.Alarm(this, "UnhealthyTargetAlarm", {
-      metric: targetGroup.metrics.unhealthyHostCount(),
-      threshold: 1,
-      evaluationPeriods: 2,
-      alarmDescription: "Alert when targets are unhealthy",
-      alarmName: "tme-unhealthy-targets",
-    });
+    // Ensure roles are created before the service
+    this.expressService.node.addDependency(taskExecutionRole);
+    this.expressService.node.addDependency(taskRole);
+    this.expressService.node.addDependency(infrastructureRole);
 
     // Outputs
-    new cdk.CfnOutput(this, "LoadBalancerDNS", {
-      value: this.loadBalancer.loadBalancerDnsName,
-      description: "Application Load Balancer DNS name",
-      exportName: "TmeAlbDns",
-    });
-
     new cdk.CfnOutput(this, "ServiceName", {
-      value: this.service.serviceName,
-      description: "ECS Service name",
+      value: this.expressService.serviceName!,
+      description: "ECS Express Service name",
     });
 
-    new cdk.CfnOutput(this, "ClusterName", {
-      value: cluster.clusterName,
-      description: "ECS Cluster name",
+    new cdk.CfnOutput(this, "ServiceArn", {
+      value: this.expressService.attrServiceArn,
+      description: "ECS Express Service ARN",
     });
   }
 }
