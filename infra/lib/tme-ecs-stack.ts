@@ -44,7 +44,7 @@ export class TmeEcsStack extends cdk.Stack {
     const secrets = Secret.fromSecretNameV2(
       this,
       "ecs-secret",
-      "dev/AppRunner/tme"
+      "dev/AppRunner/tme",
     );
 
     // Task Execution Role - for ECS to pull images and write logs
@@ -54,7 +54,7 @@ export class TmeEcsStack extends cdk.Stack {
       description: "Role for ECS tasks to pull images and write logs",
       managedPolicies: [
         iam.ManagedPolicy.fromAwsManagedPolicyName(
-          "service-role/AmazonECSTaskExecutionRolePolicy"
+          "service-role/AmazonECSTaskExecutionRolePolicy",
         ),
       ],
     });
@@ -65,7 +65,7 @@ export class TmeEcsStack extends cdk.Stack {
         effect: iam.Effect.ALLOW,
         actions: ["secretsmanager:GetSecretValue"],
         resources: [secrets.secretArn],
-      })
+      }),
     );
 
     // Task Role - for application runtime permissions
@@ -79,13 +79,9 @@ export class TmeEcsStack extends cdk.Stack {
     taskRole.addToPolicy(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
-        actions: [
-          "ses:SendEmail",
-          "ses:SendRawEmail",
-          "sesv2:SendEmail",
-        ],
+        actions: ["ses:SendEmail", "ses:SendRawEmail", "sesv2:SendEmail"],
         resources: ["*"],
-      })
+      }),
     );
 
     // Infrastructure Role - for Express Mode to manage AWS resources
@@ -95,7 +91,7 @@ export class TmeEcsStack extends cdk.Stack {
       description: "Role for ECS Express Mode to manage infrastructure",
       managedPolicies: [
         iam.ManagedPolicy.fromAwsManagedPolicyName(
-          "service-role/AmazonECSInfrastructureRolePolicyForExpressMode"
+          "service-role/AmazonECSInfrastructureRolePolicyForExpressMode",
         ),
       ],
     });
@@ -106,21 +102,57 @@ export class TmeEcsStack extends cdk.Stack {
     // Build secrets array for Express Mode
     const expressSecrets: ecs.CfnExpressGatewayService.SecretProperty[] = [
       { name: "AUTH_SECRET", valueFrom: `${secrets.secretArn}:AUTH_SECRET::` },
-      { name: "DATABASE_URL", valueFrom: `${secrets.secretArn}:DATABASE_URL::` },
-      { name: "ENCRYPT_SALT", valueFrom: `${secrets.secretArn}:ENCRYPT_SALT::` },
-      { name: "FRONTEND_URL", valueFrom: `${secrets.secretArn}:FRONTEND_URL::` },
+      {
+        name: "DATABASE_URL",
+        valueFrom: `${secrets.secretArn}:DATABASE_URL::`,
+      },
+      {
+        name: "ENCRYPT_SALT",
+        valueFrom: `${secrets.secretArn}:ENCRYPT_SALT::`,
+      },
+      {
+        name: "FRONTEND_URL",
+        valueFrom: `${secrets.secretArn}:FRONTEND_URL::`,
+      },
       { name: "HOSTNAME", valueFrom: `${secrets.secretArn}:HOSTNAME::` },
-      { name: "JWT_AUDIANCE", valueFrom: `${secrets.secretArn}:JWT_AUDIANCE::` },
+      {
+        name: "JWT_AUDIANCE",
+        valueFrom: `${secrets.secretArn}:JWT_AUDIANCE::`,
+      },
       { name: "JWT_ISSUERS", valueFrom: `${secrets.secretArn}:JWT_ISSUERS::` },
-      { name: "LINE_CHANNEL_ACCESS_TOKEN", valueFrom: `${secrets.secretArn}:LINE_CHANNEL_ACCESS_TOKEN::` },
-      { name: "LINE_CHANNEL_SECRET", valueFrom: `${secrets.secretArn}:LINE_CHANNEL_SECRET::` },
-      { name: "MONGO_DB_NAME", valueFrom: `${secrets.secretArn}:MONGO_DB_NAME::` },
+      {
+        name: "LINE_CHANNEL_ACCESS_TOKEN",
+        valueFrom: `${secrets.secretArn}:LINE_CHANNEL_ACCESS_TOKEN::`,
+      },
+      {
+        name: "LINE_CHANNEL_SECRET",
+        valueFrom: `${secrets.secretArn}:LINE_CHANNEL_SECRET::`,
+      },
+      {
+        name: "MONGO_DB_NAME",
+        valueFrom: `${secrets.secretArn}:MONGO_DB_NAME::`,
+      },
       { name: "MONGO_URL", valueFrom: `${secrets.secretArn}:MONGO_URL::` },
-      { name: "NODE_AUTH_TOKEN", valueFrom: `${secrets.secretArn}:NODE_AUTH_TOKEN::` },
-      { name: "OAUTH_CLIENT_ID", valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_ID::` },
-      { name: "OAUTH_CLIENT_SECRET", valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_SECRET::` },
-      { name: "OAUTH_REDIRECT_URL", valueFrom: `${secrets.secretArn}:OAUTH_REDIRECT_URL::` },
-      { name: "OAUTH_SUBDOMAIN", valueFrom: `${secrets.secretArn}:OAUTH_SUBDOMAIN::` },
+      {
+        name: "NODE_AUTH_TOKEN",
+        valueFrom: `${secrets.secretArn}:NODE_AUTH_TOKEN::`,
+      },
+      {
+        name: "OAUTH_CLIENT_ID",
+        valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_ID::`,
+      },
+      {
+        name: "OAUTH_CLIENT_SECRET",
+        valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_SECRET::`,
+      },
+      {
+        name: "OAUTH_REDIRECT_URL",
+        valueFrom: `${secrets.secretArn}:OAUTH_REDIRECT_URL::`,
+      },
+      {
+        name: "OAUTH_SUBDOMAIN",
+        valueFrom: `${secrets.secretArn}:OAUTH_SUBDOMAIN::`,
+      },
       { name: "PGDATABASE", valueFrom: `${secrets.secretArn}:PGDATABASE::` },
       { name: "PGHOST", valueFrom: `${secrets.secretArn}:PGHOST::` },
       { name: "PGPASSWORD", valueFrom: `${secrets.secretArn}:PGPASSWORD::` },
@@ -130,10 +162,11 @@ export class TmeEcsStack extends cdk.Stack {
     ];
 
     // Build environment variables array
-    const expressEnvironment: ecs.CfnExpressGatewayService.KeyValuePairProperty[] = [
-      { name: "NODE_ENV", value: "production" },
-      { name: "PORT", value: "3030" },
-    ];
+    const expressEnvironment: ecs.CfnExpressGatewayService.KeyValuePairProperty[] =
+      [
+        { name: "NODE_ENV", value: "production" },
+        { name: "PORT", value: "3030" },
+      ];
 
     // ECS Express Mode Service using CfnExpressGatewayService
     // This is AWS-managed infrastructure similar to App Runner
@@ -162,7 +195,7 @@ export class TmeEcsStack extends cdk.Stack {
           minTaskCount: 1,
           maxTaskCount: 10,
         },
-      }
+      },
     );
 
     // Ensure roles are created before the service
