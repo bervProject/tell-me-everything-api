@@ -26,20 +26,23 @@ export class TmeRepoStack extends cdk.Stack {
 
     // Add repository policy to allow ECS Task Execution Role to pull images
     // Reference: https://repost.aws/knowledge-center/ecs-tasks-pull-images-ecr-repository
-    // This grants access to the specific Task Execution Role created in TmeEcsStack
+    // Using account root principal with condition to allow roles with ECS task execution permissions
     this.repository.addToResourcePolicy(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         principals: [
-          new iam.ArnPrincipal(
-            `arn:aws:iam::${cdk.Stack.of(this).account}:role/TmeEcsTaskExecutionRole`,
-          ),
+          new iam.AccountRootPrincipal(),
         ],
         actions: [
           "ecr:BatchCheckLayerAvailability",
           "ecr:GetDownloadUrlForLayer",
           "ecr:BatchGetImage",
         ],
+        conditions: {
+          StringLike: {
+            "aws:PrincipalArn": `arn:aws:iam::${cdk.Stack.of(this).account}:role/TmeEcsTaskExecutionRole`,
+          },
+        },
       }),
     );
 
