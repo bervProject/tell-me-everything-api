@@ -72,6 +72,12 @@ jobs:
       - name: Build
         working-directory: ./infra
         run: npm run build
+      - name: Synthesize ECS Stack
+        working-directory: ./infra
+        run: npm run cdk synth TmeEcsStack
+      - name: Synthesize Repo Stack
+        working-directory: ./infra
+        run: npm run cdk synth TmeRepoStack
   docker-test:
     runs-on: ubuntu-24.04
     needs: build
