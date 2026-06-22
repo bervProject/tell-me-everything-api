@@ -48,15 +48,9 @@ export class TmeEcsStack extends cdk.Stack {
       "dev/AppRunner/tme",
     );
 
-    // Helper function to create ECS secret reference using ecs.Secret
-    const createEcsSecret = (name: string, key: string) => {
-      const ecsSecret = ecs.Secret.fromSecretsManager(secrets, key);
-      // Extract the valueFrom string from the ECS Secret
-      return {
-        name: name,
-        valueFrom: ecsSecret.arn + `:${key}::`,
-      };
-    };
+    // Construct secret ARN with wildcard pattern (same as IAM policy)
+    // ECS supports wildcards in secret ARN references
+    const secretArnPattern = `arn:aws:secretsmanager:${this.region}:${this.account}:secret:dev/AppRunner/tme-*`;
 
     // Task Execution Role - for ECS to pull images and write logs
     const taskExecutionRole = new iam.Role(this, "TmeTaskExecutionRole", {
@@ -133,25 +127,26 @@ export class TmeEcsStack extends cdk.Stack {
     // Build image URI
     const imageUri = `${repo.repositoryUri}:${imageTag.valueAsString}`;
 
-    // Build secrets array for Express Mode using ecs.Secret helper
+    // Build secrets array for Express Mode
     // Note: DATABASE_URL should be a complete PostgreSQL connection string in Secrets Manager
     // Format: postgresql://username:password@host:port/database
+    // Using wildcard ARN pattern (same as IAM policy)
     const expressSecrets: ecs.CfnExpressGatewayService.SecretProperty[] = [
-      createEcsSecret("AUTH_SECRET", "AUTH_SECRET"),
-      createEcsSecret("DATABASE_URL", "DATABASE_URL"),
-      createEcsSecret("ENCRYPT_SALT", "ENCRYPT_SALT"),
-      createEcsSecret("FRONTEND_URL", "FRONTEND_URL"),
-      createEcsSecret("HOSTNAME", "HOSTNAME"),
-      createEcsSecret("JWT_AUDIANCE", "JWT_AUDIANCE"),
-      createEcsSecret("JWT_ISSUERS", "JWT_ISSUERS"),
-      createEcsSecret("LINE_CHANNEL_ACCESS_TOKEN", "LINE_CHANNEL_ACCESS_TOKEN"),
-      createEcsSecret("LINE_CHANNEL_SECRET", "LINE_CHANNEL_SECRET"),
-      createEcsSecret("MONGO_DB_NAME", "MONGO_DB_NAME"),
-      createEcsSecret("MONGO_URL", "MONGO_URL"),
-      createEcsSecret("OAUTH_CLIENT_ID", "OAUTH_CLIENT_ID"),
-      createEcsSecret("OAUTH_CLIENT_SECRET", "OAUTH_CLIENT_SECRET"),
-      createEcsSecret("OAUTH_REDIRECT_URL", "OAUTH_REDIRECT_URL"),
-      createEcsSecret("OAUTH_SUBDOMAIN", "OAUTH_SUBDOMAIN"),
+      { name: "AUTH_SECRET", valueFrom: `${secretArnPattern}:AUTH_SECRET::` },
+      { name: "DATABASE_URL", valueFrom: `${secretArnPattern}:DATABASE_URL::` },
+      { name: "ENCRYPT_SALT", valueFrom: `${secretArnPattern}:ENCRYPT_SALT::` },
+      { name: "FRONTEND_URL", valueFrom: `${secretArnPattern}:FRONTEND_URL::` },
+      { name: "HOSTNAME", valueFrom: `${secretArnPattern}:HOSTNAME::` },
+      { name: "JWT_AUDIANCE", valueFrom: `${secretArnPattern}:JWT_AUDIANCE::` },
+      { name: "JWT_ISSUERS", valueFrom: `${secretArnPattern}:JWT_ISSUERS::` },
+      { name: "LINE_CHANNEL_ACCESS_TOKEN", valueFrom: `${secretArnPattern}:LINE_CHANNEL_ACCESS_TOKEN::` },
+      { name: "LINE_CHANNEL_SECRET", valueFrom: `${secretArnPattern}:LINE_CHANNEL_SECRET::` },
+      { name: "MONGO_DB_NAME", valueFrom: `${secretArnPattern}:MONGO_DB_NAME::` },
+      { name: "MONGO_URL", valueFrom: `${secretArnPattern}:MONGO_URL::` },
+      { name: "OAUTH_CLIENT_ID", valueFrom: `${secretArnPattern}:OAUTH_CLIENT_ID::` },
+      { name: "OAUTH_CLIENT_SECRET", valueFrom: `${secretArnPattern}:OAUTH_CLIENT_SECRET::` },
+      { name: "OAUTH_REDIRECT_URL", valueFrom: `${secretArnPattern}:OAUTH_REDIRECT_URL::` },
+      { name: "OAUTH_SUBDOMAIN", valueFrom: `${secretArnPattern}:OAUTH_SUBDOMAIN::` },
     ];
 
     // Build environment variables array
