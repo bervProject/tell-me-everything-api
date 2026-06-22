@@ -27,8 +27,8 @@ export class TmeEcsStack extends cdk.Stack {
 
     // Configuration with defaults
     const config = {
-      cpu: props?.cpu ?? "256",
-      memory: props?.memory ?? "512",
+      cpu: props?.cpu ?? "1024",
+      memory: props?.memory ?? "2048",
     };
 
     // Parameters
