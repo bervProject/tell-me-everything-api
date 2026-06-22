@@ -40,7 +40,8 @@ export class TmeEcsStack extends cdk.Stack {
     const secretArn = new cdk.CfnParameter(this, "secretArn", {
       type: "String",
       description: "Full ARN of the Secrets Manager secret",
-      default: "arn:aws:secretsmanager:ap-southeast-1:092318301320:secret:dev/AppRunner/tme-pjsiZH",
+      default:
+        "arn:aws:secretsmanager:ap-southeast-1:092318301320:secret:dev/AppRunner/tme-pjsiZH",
     });
 
     // Get existing ECR repository
@@ -134,20 +135,53 @@ export class TmeEcsStack extends cdk.Stack {
     // Using secrets.secretArn which contains the full ARN
     const expressSecrets: ecs.CfnExpressGatewayService.SecretProperty[] = [
       { name: "AUTH_SECRET", valueFrom: `${secrets.secretArn}:AUTH_SECRET::` },
-      { name: "DATABASE_URL", valueFrom: `${secrets.secretArn}:DATABASE_URL::` },
-      { name: "ENCRYPT_SALT", valueFrom: `${secrets.secretArn}:ENCRYPT_SALT::` },
-      { name: "FRONTEND_URL", valueFrom: `${secrets.secretArn}:FRONTEND_URL::` },
+      {
+        name: "DATABASE_URL",
+        valueFrom: `${secrets.secretArn}:DATABASE_URL::`,
+      },
+      {
+        name: "ENCRYPT_SALT",
+        valueFrom: `${secrets.secretArn}:ENCRYPT_SALT::`,
+      },
+      {
+        name: "FRONTEND_URL",
+        valueFrom: `${secrets.secretArn}:FRONTEND_URL::`,
+      },
       { name: "HOSTNAME", valueFrom: `${secrets.secretArn}:HOSTNAME::` },
-      { name: "JWT_AUDIANCE", valueFrom: `${secrets.secretArn}:JWT_AUDIANCE::` },
+      {
+        name: "JWT_AUDIANCE",
+        valueFrom: `${secrets.secretArn}:JWT_AUDIANCE::`,
+      },
       { name: "JWT_ISSUERS", valueFrom: `${secrets.secretArn}:JWT_ISSUERS::` },
-      { name: "LINE_CHANNEL_ACCESS_TOKEN", valueFrom: `${secrets.secretArn}:LINE_CHANNEL_ACCESS_TOKEN::` },
-      { name: "LINE_CHANNEL_SECRET", valueFrom: `${secrets.secretArn}:LINE_CHANNEL_SECRET::` },
-      { name: "MONGO_DB_NAME", valueFrom: `${secrets.secretArn}:MONGO_DB_NAME::` },
+      {
+        name: "LINE_CHANNEL_ACCESS_TOKEN",
+        valueFrom: `${secrets.secretArn}:LINE_CHANNEL_ACCESS_TOKEN::`,
+      },
+      {
+        name: "LINE_CHANNEL_SECRET",
+        valueFrom: `${secrets.secretArn}:LINE_CHANNEL_SECRET::`,
+      },
+      {
+        name: "MONGO_DB_NAME",
+        valueFrom: `${secrets.secretArn}:MONGO_DB_NAME::`,
+      },
       { name: "MONGO_URL", valueFrom: `${secrets.secretArn}:MONGO_URL::` },
-      { name: "OAUTH_CLIENT_ID", valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_ID::` },
-      { name: "OAUTH_CLIENT_SECRET", valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_SECRET::` },
-      { name: "OAUTH_REDIRECT_URL", valueFrom: `${secrets.secretArn}:OAUTH_REDIRECT_URL::` },
-      { name: "OAUTH_SUBDOMAIN", valueFrom: `${secrets.secretArn}:OAUTH_SUBDOMAIN::` },
+      {
+        name: "OAUTH_CLIENT_ID",
+        valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_ID::`,
+      },
+      {
+        name: "OAUTH_CLIENT_SECRET",
+        valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_SECRET::`,
+      },
+      {
+        name: "OAUTH_REDIRECT_URL",
+        valueFrom: `${secrets.secretArn}:OAUTH_REDIRECT_URL::`,
+      },
+      {
+        name: "OAUTH_SUBDOMAIN",
+        valueFrom: `${secrets.secretArn}:OAUTH_SUBDOMAIN::`,
+      },
     ];
 
     // Build environment variables array

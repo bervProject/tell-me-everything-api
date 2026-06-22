@@ -30,9 +30,7 @@ export class TmeRepoStack extends cdk.Stack {
     this.repository.addToResourcePolicy(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
-        principals: [
-          new iam.AccountRootPrincipal(),
-        ],
+        principals: [new iam.AccountRootPrincipal()],
         actions: [
           "ecr:BatchCheckLayerAvailability",
           "ecr:GetDownloadUrlForLayer",
