@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import "source-map-support/register";
 import * as cdk from "aws-cdk-lib";
-import { TmeStack } from "../lib/infra-stack";
 import { TmeRepoStack } from "../lib/tme-repo-stack";
 import { TmeEcsStack } from "../lib/tme-ecs-stack";
 
@@ -36,10 +35,3 @@ new TmeEcsStack(app, "TmeEcsStack", {
   // },
 });
 
-// OLD: App Runner Stack (commented out for migration, keep for rollback)
-// Uncomment this if you need to rollback to App Runner
-/*
-new TmeStack(app, "TmeStack", {
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
-});
-*/

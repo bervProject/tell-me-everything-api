@@ -93,7 +93,6 @@ export class TmeEcsStack extends cdk.Stack {
     const cluster = new ecs.Cluster(this, "TmeCluster", {
       vpc,
       clusterName: "tme-cluster",
-      containerInsights: true,
       enableFargateCapacityProviders: true,
     });
 
@@ -338,7 +337,7 @@ export class TmeEcsStack extends cdk.Stack {
     });
 
     new cloudwatch.Alarm(this, "UnhealthyTargetAlarm", {
-      metric: targetGroup.metricUnhealthyHostCount(),
+      metric: targetGroup.metrics.unhealthyHostCount(),
       threshold: 1,
       evaluationPeriods: 2,
       alarmDescription: "Alert when targets are unhealthy",
