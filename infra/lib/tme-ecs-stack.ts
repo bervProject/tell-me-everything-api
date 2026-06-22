@@ -86,7 +86,7 @@ export class TmeEcsStack extends cdk.Stack {
         effect: iam.Effect.ALLOW,
         actions: ["secretsmanager:GetSecretValue"],
         resources: [
-          `arn:aws:secretsmanager:${this.region}:${this.account}:secret:dev/AppRunner/tme-*`,
+          fullSecretArn ?? secrets.secretArn,
         ],
       }),
     );
