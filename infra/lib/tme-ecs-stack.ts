@@ -49,7 +49,7 @@ export class TmeEcsStack extends cdk.Stack {
     );
 
     // Full ARN with AWS-generated suffix for ECS secret references
-    const fullSecretArn = secrets.secretFullArn;
+    const fullSecretArn = secrets.secretFullArn ?? secrets.secretArn;
 
     // Task Execution Role - for ECS to pull images and write logs
     const taskExecutionRole = new iam.Role(this, "TmeTaskExecutionRole", {
@@ -86,7 +86,7 @@ export class TmeEcsStack extends cdk.Stack {
         effect: iam.Effect.ALLOW,
         actions: ["secretsmanager:GetSecretValue"],
         resources: [
-          fullSecretArn ?? secrets.secretArn,
+          fullSecretArn,
         ],
       }),
     );
