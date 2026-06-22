@@ -16,31 +16,31 @@ export interface TmeEcsStackProps extends cdk.StackProps {
    * @default false - creates new VPC (set to true to use default VPC, requires AWS credentials)
    */
   useDefaultVpc?: boolean;
-  
+
   /**
    * Minimum number of tasks
    * @default 1
    */
   minCapacity?: number;
-  
+
   /**
    * Maximum number of tasks
    * @default 10
    */
   maxCapacity?: number;
-  
+
   /**
    * Desired number of tasks
    * @default 2
    */
   desiredCount?: number;
-  
+
   /**
    * CPU units for the task (256 = 0.25 vCPU)
    * @default 256
    */
   cpu?: number;
-  
+
   /**
    * Memory in MiB
    * @default 512
@@ -78,7 +78,7 @@ export class TmeEcsStack extends cdk.Stack {
     const secrets = Secret.fromSecretNameV2(
       this,
       "ecs-secret",
-      "dev/AppRunner/tme"
+      "dev/AppRunner/tme",
     );
 
     // VPC - use default or create new
@@ -103,7 +103,7 @@ export class TmeEcsStack extends cdk.Stack {
       description: "Role for ECS tasks to pull images and write logs",
       managedPolicies: [
         iam.ManagedPolicy.fromAwsManagedPolicyName(
-          "service-role/AmazonECSTaskExecutionRolePolicy"
+          "service-role/AmazonECSTaskExecutionRolePolicy",
         ),
       ],
     });
@@ -114,7 +114,7 @@ export class TmeEcsStack extends cdk.Stack {
         effect: iam.Effect.ALLOW,
         actions: ["secretsmanager:GetSecretValue"],
         resources: [secrets.secretArn],
-      })
+      }),
     );
 
     // Task Role - for application runtime permissions
@@ -128,37 +128,26 @@ export class TmeEcsStack extends cdk.Stack {
     taskRole.addToPolicy(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
-        actions: [
-          "ses:SendEmail",
-          "ses:SendRawEmail",
-          "sesv2:SendEmail",
-        ],
+        actions: ["ses:SendEmail", "ses:SendRawEmail", "sesv2:SendEmail"],
         resources: ["*"],
-      })
+      }),
     );
 
     // Task Definition
-    const taskDefinition = new ecs.FargateTaskDefinition(
-      this,
-      "TmeTaskDef",
-      {
-        memoryLimitMiB: config.memoryLimitMiB,
-        cpu: config.cpu,
-        executionRole: taskExecutionRole,
-        taskRole: taskRole,
-        runtimePlatform: {
-          cpuArchitecture: ecs.CpuArchitecture.X86_64,
-          operatingSystemFamily: ecs.OperatingSystemFamily.LINUX,
-        },
-      }
-    );
+    const taskDefinition = new ecs.FargateTaskDefinition(this, "TmeTaskDef", {
+      memoryLimitMiB: config.memoryLimitMiB,
+      cpu: config.cpu,
+      executionRole: taskExecutionRole,
+      taskRole: taskRole,
+      runtimePlatform: {
+        cpuArchitecture: ecs.CpuArchitecture.X86_64,
+        operatingSystemFamily: ecs.OperatingSystemFamily.LINUX,
+      },
+    });
 
     // Container Definition
     const container = taskDefinition.addContainer("TmeContainer", {
-      image: ecs.ContainerImage.fromEcrRepository(
-        repo,
-        imageTag.valueAsString
-      ),
+      image: ecs.ContainerImage.fromEcrRepository(repo, imageTag.valueAsString),
       logging: ecs.LogDrivers.awsLogs({
         streamPrefix: "tme",
         logRetention: logs.RetentionDays.ONE_WEEK,
@@ -173,33 +162,33 @@ export class TmeEcsStack extends cdk.Stack {
         JWT_ISSUERS: ecs.Secret.fromSecretsManager(secrets, "JWT_ISSUERS"),
         LINE_CHANNEL_ACCESS_TOKEN: ecs.Secret.fromSecretsManager(
           secrets,
-          "LINE_CHANNEL_ACCESS_TOKEN"
+          "LINE_CHANNEL_ACCESS_TOKEN",
         ),
         LINE_CHANNEL_SECRET: ecs.Secret.fromSecretsManager(
           secrets,
-          "LINE_CHANNEL_SECRET"
+          "LINE_CHANNEL_SECRET",
         ),
         MONGO_DB_NAME: ecs.Secret.fromSecretsManager(secrets, "MONGO_DB_NAME"),
         MONGO_URL: ecs.Secret.fromSecretsManager(secrets, "MONGO_URL"),
         NODE_AUTH_TOKEN: ecs.Secret.fromSecretsManager(
           secrets,
-          "NODE_AUTH_TOKEN"
+          "NODE_AUTH_TOKEN",
         ),
         OAUTH_CLIENT_ID: ecs.Secret.fromSecretsManager(
           secrets,
-          "OAUTH_CLIENT_ID"
+          "OAUTH_CLIENT_ID",
         ),
         OAUTH_CLIENT_SECRET: ecs.Secret.fromSecretsManager(
           secrets,
-          "OAUTH_CLIENT_SECRET"
+          "OAUTH_CLIENT_SECRET",
         ),
         OAUTH_REDIRECT_URL: ecs.Secret.fromSecretsManager(
           secrets,
-          "OAUTH_REDIRECT_URL"
+          "OAUTH_REDIRECT_URL",
         ),
         OAUTH_SUBDOMAIN: ecs.Secret.fromSecretsManager(
           secrets,
-          "OAUTH_SUBDOMAIN"
+          "OAUTH_SUBDOMAIN",
         ),
         PGDATABASE: ecs.Secret.fromSecretsManager(secrets, "PGDATABASE"),
         PGHOST: ecs.Secret.fromSecretsManager(secrets, "PGHOST"),
@@ -251,7 +240,7 @@ export class TmeEcsStack extends cdk.Stack {
           unhealthyThresholdCount: 3,
         },
         deregistrationDelay: cdk.Duration.seconds(30),
-      }
+      },
     );
 
     // Listener

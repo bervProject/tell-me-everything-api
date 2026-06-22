@@ -34,4 +34,3 @@ new TmeEcsStack(app, "TmeEcsStack", {
   //   region: process.env.CDK_DEFAULT_REGION
   // },
 });
-
