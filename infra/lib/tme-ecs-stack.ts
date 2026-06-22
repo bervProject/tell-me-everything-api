@@ -59,6 +59,21 @@ export class TmeEcsStack extends cdk.Stack {
       ],
     });
 
+    // Add CloudWatch Logs permissions to execution role
+    taskExecutionRole.addToPolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+        ],
+        resources: [
+          `arn:aws:logs:${this.region}:${this.account}:log-group:/aws/ecs/tme-express*`,
+        ],
+      }),
+    );
+
     // Add Secrets Manager permissions to execution role
     // Using wildcard to match the secret with its random suffix
     taskExecutionRole.addToPolicy(
