@@ -60,11 +60,12 @@ export class TmeEcsStack extends cdk.Stack {
     });
 
     // Add Secrets Manager permissions to execution role
+    // Using wildcard to match the secret with its random suffix
     taskExecutionRole.addToPolicy(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["secretsmanager:GetSecretValue"],
-        resources: [secrets.secretArn],
+        resources: [`${secrets.secretArn}*`],
       }),
     );
 
