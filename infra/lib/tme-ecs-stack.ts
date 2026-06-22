@@ -127,7 +127,10 @@ export class TmeEcsStack extends cdk.Stack {
     // Format: postgresql://username:password@host:port/database
     // Using the parameter value directly for the ARN
     const expressSecrets: ecs.CfnExpressGatewayService.SecretProperty[] = [
-      { name: "AUTH_SECRET", valueFrom: `${secretArn.valueAsString}:AUTH_SECRET::` },
+      {
+        name: "AUTH_SECRET",
+        valueFrom: `${secretArn.valueAsString}:AUTH_SECRET::`,
+      },
       {
         name: "DATABASE_URL",
         valueFrom: `${secretArn.valueAsString}:DATABASE_URL::`,
@@ -145,7 +148,10 @@ export class TmeEcsStack extends cdk.Stack {
         name: "JWT_AUDIANCE",
         valueFrom: `${secretArn.valueAsString}:JWT_AUDIANCE::`,
       },
-      { name: "JWT_ISSUERS", valueFrom: `${secretArn.valueAsString}:JWT_ISSUERS::` },
+      {
+        name: "JWT_ISSUERS",
+        valueFrom: `${secretArn.valueAsString}:JWT_ISSUERS::`,
+      },
       {
         name: "LINE_CHANNEL_ACCESS_TOKEN",
         valueFrom: `${secretArn.valueAsString}:LINE_CHANNEL_ACCESS_TOKEN::`,
@@ -158,7 +164,10 @@ export class TmeEcsStack extends cdk.Stack {
         name: "MONGO_DB_NAME",
         valueFrom: `${secretArn.valueAsString}:MONGO_DB_NAME::`,
       },
-      { name: "MONGO_URL", valueFrom: `${secretArn.valueAsString}:MONGO_URL::` },
+      {
+        name: "MONGO_URL",
+        valueFrom: `${secretArn.valueAsString}:MONGO_URL::`,
+      },
       {
         name: "OAUTH_CLIENT_ID",
         valueFrom: `${secretArn.valueAsString}:OAUTH_CLIENT_ID::`,
