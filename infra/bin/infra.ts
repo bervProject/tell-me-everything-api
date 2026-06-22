@@ -20,17 +20,9 @@ new TmeRepoStack(app, "TmeRepoStack", {
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
 
-// NEW: ECS Express Mode Stack with Fargate Spot
+// NEW: ECS Express Mode Stack
+// Uses CfnExpressGatewayService (AWS-managed infrastructure like App Runner)
 new TmeEcsStack(app, "TmeEcsStack", {
-  useDefaultVpc: false, // Set to true to use default VPC (requires AWS credentials for lookup)
-  minCapacity: 1,
-  maxCapacity: 10,
-  desiredCount: 2,
-  cpu: 256,
-  memoryLimitMiB: 512,
-  // Uncomment when deploying to specify account/region
-  // env: {
-  //   account: process.env.CDK_DEFAULT_ACCOUNT,
-  //   region: process.env.CDK_DEFAULT_REGION
-  // },
+  cpu: "256",
+  memory: "512",
 });
