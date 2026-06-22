@@ -85,15 +85,55 @@ export class TmeEcsStack extends cdk.Stack {
     );
 
     // Infrastructure Role - for Express Mode to manage AWS resources
+    // Based on: https://dev.to/aws-builders/amazon-ecs-express-mode-from-an-iac-perspective-294i
+    // The infrastructure role needs specific trust relationships for ECS Express Mode
     const infrastructureRole = new iam.Role(this, "TmeInfrastructureRole", {
-      assumedBy: new iam.ServicePrincipal("ecs.amazonaws.com"),
+      assumedBy: new iam.CompositePrincipal(
+        new iam.ServicePrincipal("ecs.amazonaws.com"),
+        new iam.ServicePrincipal("vpc-lattice.amazonaws.com"),
+      ),
       roleName: "TmeEcsInfrastructureRole",
       description: "Role for ECS Express Mode to manage infrastructure",
-      managedPolicies: [
-        iam.ManagedPolicy.fromAwsManagedPolicyName(
-          "service-role/AmazonECSInfrastructureRolePolicyForExpressMode",
-        ),
-      ],
+      inlinePolicies: {
+        ExpressModeInfrastructure: new iam.PolicyDocument({
+          statements: [
+            new iam.PolicyStatement({
+              effect: iam.Effect.ALLOW,
+              actions: [
+                "ec2:CreateVpc",
+                "ec2:CreateSubnet",
+                "ec2:CreateInternetGateway",
+                "ec2:CreateRouteTable",
+                "ec2:CreateRoute",
+                "ec2:CreateSecurityGroup",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:AuthorizeSecurityGroupEgress",
+                "ec2:RevokeSecurityGroupIngress",
+                "ec2:RevokeSecurityGroupEgress",
+                "ec2:DeleteSecurityGroup",
+                "ec2:DescribeVpcs",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeInternetGateways",
+                "ec2:DescribeRouteTables",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:CreateTags",
+                "ec2:DeleteTags",
+                "elasticloadbalancing:*",
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+                "logs:DescribeLogGroups",
+                "logs:DescribeLogStreams",
+                "logs:PutRetentionPolicy",
+                "vpc-lattice:*",
+              ],
+              resources: ["*"],
+            }),
+          ],
+        }),
+      },
     });
 
     // Build image URI
