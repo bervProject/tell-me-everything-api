@@ -90,7 +90,7 @@ export class TmeEcsStack extends cdk.Stack {
     const infrastructureRole = new iam.Role(this, "TmeInfrastructureRole", {
       assumedBy: new iam.CompositePrincipal(
         new iam.ServicePrincipal("ecs.amazonaws.com"),
-        new iam.ServicePrincipal("vpc-lattice.amazonaws.com")
+        new iam.ServicePrincipal("vpc-lattice.amazonaws.com"),
       ),
       roleName: "TmeEcsInfrastructureRole",
       description: "Role for ECS Express Mode to manage infrastructure",
