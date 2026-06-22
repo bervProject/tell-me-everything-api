@@ -48,8 +48,15 @@ export class TmeEcsStack extends cdk.Stack {
       "dev/AppRunner/tme",
     );
 
-    // Full ARN with AWS-generated suffix for ECS secret references
-    const fullSecretArn = secrets.secretFullArn ?? secrets.secretArn;
+    // Helper function to create ECS secret reference using ecs.Secret
+    const createEcsSecret = (name: string, key: string) => {
+      const ecsSecret = ecs.Secret.fromSecretsManager(secrets, key);
+      // Extract the valueFrom string from the ECS Secret
+      return {
+        name: name,
+        valueFrom: ecsSecret.arn + `:${key}::`,
+      };
+    };
 
     // Task Execution Role - for ECS to pull images and write logs
     const taskExecutionRole = new iam.Role(this, "TmeTaskExecutionRole", {
@@ -86,7 +93,7 @@ export class TmeEcsStack extends cdk.Stack {
         effect: iam.Effect.ALLOW,
         actions: ["secretsmanager:GetSecretValue"],
         resources: [
-          fullSecretArn,
+          `arn:aws:secretsmanager:${this.region}:${this.account}:secret:dev/AppRunner/tme-*`,
         ],
       }),
     );
@@ -126,59 +133,25 @@ export class TmeEcsStack extends cdk.Stack {
     // Build image URI
     const imageUri = `${repo.repositoryUri}:${imageTag.valueAsString}`;
 
-    // Build secrets array for Express Mode
+    // Build secrets array for Express Mode using ecs.Secret helper
     // Note: DATABASE_URL should be a complete PostgreSQL connection string in Secrets Manager
     // Format: postgresql://username:password@host:port/database
-    // Using the full secret ARN (including AWS-generated suffix)
     const expressSecrets: ecs.CfnExpressGatewayService.SecretProperty[] = [
-      { name: "AUTH_SECRET", valueFrom: `${fullSecretArn}:AUTH_SECRET::` },
-      {
-        name: "DATABASE_URL",
-        valueFrom: `${fullSecretArn}:DATABASE_URL::`,
-      },
-      {
-        name: "ENCRYPT_SALT",
-        valueFrom: `${fullSecretArn}:ENCRYPT_SALT::`,
-      },
-      {
-        name: "FRONTEND_URL",
-        valueFrom: `${fullSecretArn}:FRONTEND_URL::`,
-      },
-      { name: "HOSTNAME", valueFrom: `${fullSecretArn}:HOSTNAME::` },
-      {
-        name: "JWT_AUDIANCE",
-        valueFrom: `${fullSecretArn}:JWT_AUDIANCE::`,
-      },
-      { name: "JWT_ISSUERS", valueFrom: `${fullSecretArn}:JWT_ISSUERS::` },
-      {
-        name: "LINE_CHANNEL_ACCESS_TOKEN",
-        valueFrom: `${fullSecretArn}:LINE_CHANNEL_ACCESS_TOKEN::`,
-      },
-      {
-        name: "LINE_CHANNEL_SECRET",
-        valueFrom: `${fullSecretArn}:LINE_CHANNEL_SECRET::`,
-      },
-      {
-        name: "MONGO_DB_NAME",
-        valueFrom: `${fullSecretArn}:MONGO_DB_NAME::`,
-      },
-      { name: "MONGO_URL", valueFrom: `${fullSecretArn}:MONGO_URL::` },
-      {
-        name: "OAUTH_CLIENT_ID",
-        valueFrom: `${fullSecretArn}:OAUTH_CLIENT_ID::`,
-      },
-      {
-        name: "OAUTH_CLIENT_SECRET",
-        valueFrom: `${fullSecretArn}:OAUTH_CLIENT_SECRET::`,
-      },
-      {
-        name: "OAUTH_REDIRECT_URL",
-        valueFrom: `${fullSecretArn}:OAUTH_REDIRECT_URL::`,
-      },
-      {
-        name: "OAUTH_SUBDOMAIN",
-        valueFrom: `${fullSecretArn}:OAUTH_SUBDOMAIN::`,
-      },
+      createEcsSecret("AUTH_SECRET", "AUTH_SECRET"),
+      createEcsSecret("DATABASE_URL", "DATABASE_URL"),
+      createEcsSecret("ENCRYPT_SALT", "ENCRYPT_SALT"),
+      createEcsSecret("FRONTEND_URL", "FRONTEND_URL"),
+      createEcsSecret("HOSTNAME", "HOSTNAME"),
+      createEcsSecret("JWT_AUDIANCE", "JWT_AUDIANCE"),
+      createEcsSecret("JWT_ISSUERS", "JWT_ISSUERS"),
+      createEcsSecret("LINE_CHANNEL_ACCESS_TOKEN", "LINE_CHANNEL_ACCESS_TOKEN"),
+      createEcsSecret("LINE_CHANNEL_SECRET", "LINE_CHANNEL_SECRET"),
+      createEcsSecret("MONGO_DB_NAME", "MONGO_DB_NAME"),
+      createEcsSecret("MONGO_URL", "MONGO_URL"),
+      createEcsSecret("OAUTH_CLIENT_ID", "OAUTH_CLIENT_ID"),
+      createEcsSecret("OAUTH_CLIENT_SECRET", "OAUTH_CLIENT_SECRET"),
+      createEcsSecret("OAUTH_REDIRECT_URL", "OAUTH_REDIRECT_URL"),
+      createEcsSecret("OAUTH_SUBDOMAIN", "OAUTH_SUBDOMAIN"),
     ];
 
     // Build environment variables array
