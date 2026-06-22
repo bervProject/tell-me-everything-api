@@ -41,11 +41,15 @@ export class TmeEcsStack extends cdk.Stack {
     const repo = ecr.Repository.fromRepositoryName(this, "tme-ecr", "tme");
 
     // Get secrets from Secrets Manager
+    // Import the secret for IAM permissions
     const secrets = Secret.fromSecretNameV2(
       this,
       "ecs-secret",
       "dev/AppRunner/tme",
     );
+
+    // Full ARN with AWS-generated suffix for ECS secret references
+    const fullSecretArn = secrets.secretFullArn;
 
     // Task Execution Role - for ECS to pull images and write logs
     const taskExecutionRole = new iam.Role(this, "TmeTaskExecutionRole", {
@@ -125,54 +129,55 @@ export class TmeEcsStack extends cdk.Stack {
     // Build secrets array for Express Mode
     // Note: DATABASE_URL should be a complete PostgreSQL connection string in Secrets Manager
     // Format: postgresql://username:password@host:port/database
+    // Using the full secret ARN (including AWS-generated suffix)
     const expressSecrets: ecs.CfnExpressGatewayService.SecretProperty[] = [
-      { name: "AUTH_SECRET", valueFrom: `${secrets.secretArn}:AUTH_SECRET::` },
+      { name: "AUTH_SECRET", valueFrom: `${fullSecretArn}:AUTH_SECRET::` },
       {
         name: "DATABASE_URL",
-        valueFrom: `${secrets.secretArn}:DATABASE_URL::`,
+        valueFrom: `${fullSecretArn}:DATABASE_URL::`,
       },
       {
         name: "ENCRYPT_SALT",
-        valueFrom: `${secrets.secretArn}:ENCRYPT_SALT::`,
+        valueFrom: `${fullSecretArn}:ENCRYPT_SALT::`,
       },
       {
         name: "FRONTEND_URL",
-        valueFrom: `${secrets.secretArn}:FRONTEND_URL::`,
+        valueFrom: `${fullSecretArn}:FRONTEND_URL::`,
       },
-      { name: "HOSTNAME", valueFrom: `${secrets.secretArn}:HOSTNAME::` },
+      { name: "HOSTNAME", valueFrom: `${fullSecretArn}:HOSTNAME::` },
       {
         name: "JWT_AUDIANCE",
-        valueFrom: `${secrets.secretArn}:JWT_AUDIANCE::`,
+        valueFrom: `${fullSecretArn}:JWT_AUDIANCE::`,
       },
-      { name: "JWT_ISSUERS", valueFrom: `${secrets.secretArn}:JWT_ISSUERS::` },
+      { name: "JWT_ISSUERS", valueFrom: `${fullSecretArn}:JWT_ISSUERS::` },
       {
         name: "LINE_CHANNEL_ACCESS_TOKEN",
-        valueFrom: `${secrets.secretArn}:LINE_CHANNEL_ACCESS_TOKEN::`,
+        valueFrom: `${fullSecretArn}:LINE_CHANNEL_ACCESS_TOKEN::`,
       },
       {
         name: "LINE_CHANNEL_SECRET",
-        valueFrom: `${secrets.secretArn}:LINE_CHANNEL_SECRET::`,
+        valueFrom: `${fullSecretArn}:LINE_CHANNEL_SECRET::`,
       },
       {
         name: "MONGO_DB_NAME",
-        valueFrom: `${secrets.secretArn}:MONGO_DB_NAME::`,
+        valueFrom: `${fullSecretArn}:MONGO_DB_NAME::`,
       },
-      { name: "MONGO_URL", valueFrom: `${secrets.secretArn}:MONGO_URL::` },
+      { name: "MONGO_URL", valueFrom: `${fullSecretArn}:MONGO_URL::` },
       {
         name: "OAUTH_CLIENT_ID",
-        valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_ID::`,
+        valueFrom: `${fullSecretArn}:OAUTH_CLIENT_ID::`,
       },
       {
         name: "OAUTH_CLIENT_SECRET",
-        valueFrom: `${secrets.secretArn}:OAUTH_CLIENT_SECRET::`,
+        valueFrom: `${fullSecretArn}:OAUTH_CLIENT_SECRET::`,
       },
       {
         name: "OAUTH_REDIRECT_URL",
-        valueFrom: `${secrets.secretArn}:OAUTH_REDIRECT_URL::`,
+        valueFrom: `${fullSecretArn}:OAUTH_REDIRECT_URL::`,
       },
       {
         name: "OAUTH_SUBDOMAIN",
-        valueFrom: `${secrets.secretArn}:OAUTH_SUBDOMAIN::`,
+        valueFrom: `${fullSecretArn}:OAUTH_SUBDOMAIN::`,
       },
     ];
 
