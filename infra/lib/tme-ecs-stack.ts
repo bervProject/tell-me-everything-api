@@ -127,21 +127,63 @@ export class TmeEcsStack extends cdk.Stack {
     // Format: postgresql://username:password@host:port/database
     // valueFrom only needs the secret ARN, the key is specified in the name field
     const expressSecrets: ecs.CfnExpressGatewayService.SecretProperty[] = [
-      { name: "AUTH_SECRET", valueFrom: secretArn.valueAsString },
-      { name: "DATABASE_URL", valueFrom: secretArn.valueAsString },
-      { name: "ENCRYPT_SALT", valueFrom: secretArn.valueAsString },
-      { name: "FRONTEND_URL", valueFrom: secretArn.valueAsString },
-      { name: "HOSTNAME", valueFrom: secretArn.valueAsString },
-      { name: "JWT_AUDIANCE", valueFrom: secretArn.valueAsString },
-      { name: "JWT_ISSUERS", valueFrom: secretArn.valueAsString },
-      { name: "LINE_CHANNEL_ACCESS_TOKEN", valueFrom: secretArn.valueAsString },
-      { name: "LINE_CHANNEL_SECRET", valueFrom: secretArn.valueAsString },
-      { name: "MONGO_DB_NAME", valueFrom: secretArn.valueAsString },
-      { name: "MONGO_URL", valueFrom: secretArn.valueAsString },
-      { name: "OAUTH_CLIENT_ID", valueFrom: secretArn.valueAsString },
-      { name: "OAUTH_CLIENT_SECRET", valueFrom: secretArn.valueAsString },
-      { name: "OAUTH_REDIRECT_URL", valueFrom: secretArn.valueAsString },
-      { name: "OAUTH_SUBDOMAIN", valueFrom: secretArn.valueAsString },
+      {
+        name: "AUTH_SECRET",
+        valueFrom: `${secretArn.valueAsString}:AUTH_SECRET::`,
+      },
+      {
+        name: "DATABASE_URL",
+        valueFrom: `${secretArn.valueAsString}:DATABASE_URL::`,
+      },
+      {
+        name: "ENCRYPT_SALT",
+        valueFrom: `${secretArn.valueAsString}:ENCRYPT_SALT::`,
+      },
+      {
+        name: "FRONTEND_URL",
+        valueFrom: `${secretArn.valueAsString}:FRONTEND_URL::`,
+      },
+      { name: "HOSTNAME", valueFrom: `${secretArn.valueAsString}:HOSTNAME::` },
+      {
+        name: "JWT_AUDIANCE",
+        valueFrom: `${secretArn.valueAsString}:JWT_AUDIANCE::`,
+      },
+      {
+        name: "JWT_ISSUERS",
+        valueFrom: `${secretArn.valueAsString}:JWT_ISSUERS::`,
+      },
+      {
+        name: "LINE_CHANNEL_ACCESS_TOKEN",
+        valueFrom: `${secretArn.valueAsString}:LINE_CHANNEL_ACCESS_TOKEN::`,
+      },
+      {
+        name: "LINE_CHANNEL_SECRET",
+        valueFrom: `${secretArn.valueAsString}:LINE_CHANNEL_SECRET::`,
+      },
+      {
+        name: "MONGO_DB_NAME",
+        valueFrom: `${secretArn.valueAsString}:MONGO_DB_NAME::`,
+      },
+      {
+        name: "MONGO_URL",
+        valueFrom: `${secretArn.valueAsString}:MONGO_URL::`,
+      },
+      {
+        name: "OAUTH_CLIENT_ID",
+        valueFrom: `${secretArn.valueAsString}:OAUTH_CLIENT_ID::`,
+      },
+      {
+        name: "OAUTH_CLIENT_SECRET",
+        valueFrom: `${secretArn.valueAsString}:OAUTH_CLIENT_SECRET::`,
+      },
+      {
+        name: "OAUTH_REDIRECT_URL",
+        valueFrom: `${secretArn.valueAsString}:OAUTH_REDIRECT_URL::`,
+      },
+      {
+        name: "OAUTH_SUBDOMAIN",
+        valueFrom: `${secretArn.valueAsString}:OAUTH_SUBDOMAIN::`,
+      },
     ];
 
     // Build environment variables array
