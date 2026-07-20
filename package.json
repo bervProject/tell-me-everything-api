@@ -63,7 +63,7 @@
     "@feathersjs/mongodb": "^5.0.46",
     "@feathersjs/socketio": "^5.0.46",
     "@line/bot-sdk": "^11.2.0",
-    "argon2": "^0.44.0",
+    "argon2": "^0.45.0",
     "cls-hooked": "^4.2.2",
     "compression": "^1.8.1",
     "cors": "^2.8.6",
