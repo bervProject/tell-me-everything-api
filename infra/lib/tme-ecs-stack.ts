@@ -27,8 +27,8 @@ export class TmeEcsStack extends cdk.Stack {
 
     // Configuration with defaults
     const config = {
-      cpu: props?.cpu ?? "1024",
-      memory: props?.memory ?? "2048",
+      cpu: props?.cpu ?? "512",
+      memory: props?.memory ?? "1024",
     };
 
     // Parameters
@@ -217,8 +217,10 @@ export class TmeEcsStack extends cdk.Stack {
           },
         },
         scalingTarget: {
+          autoScalingMetric: 'REQUEST_COUNT_PER_TARGET',
+          autoScalingTargetValue: 20,
           minTaskCount: 1,
-          maxTaskCount: 10,
+          maxTaskCount: 3,
         },
       },
     );

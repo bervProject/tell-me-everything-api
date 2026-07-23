@@ -23,6 +23,6 @@ new TmeRepoStack(app, "TmeRepoStack", {
 // NEW: ECS Express Mode Stack
 // Uses CfnExpressGatewayService (AWS-managed infrastructure like App Runner)
 new TmeEcsStack(app, "TmeEcsStack", {
-  cpu: "512",
-  memory: "1024",
+  cpu: "256",
+  memory: "512",
 });
