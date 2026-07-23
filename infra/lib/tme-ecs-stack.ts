@@ -217,7 +217,7 @@ export class TmeEcsStack extends cdk.Stack {
           },
         },
         scalingTarget: {
-          autoScalingMetric: 'REQUEST_COUNT_PER_TARGET',
+          autoScalingMetric: "REQUEST_COUNT_PER_TARGET",
           autoScalingTargetValue: 20,
           minTaskCount: 1,
           maxTaskCount: 3,
