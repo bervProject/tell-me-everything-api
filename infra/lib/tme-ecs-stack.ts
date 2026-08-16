@@ -120,126 +120,126 @@ export class TmeEcsStack extends cdk.Stack {
     });
 
     // Build image URI
-    const imageUri = `${repo.repositoryUri}:${imageTag.valueAsString}`;
+    // const imageUri = `${repo.repositoryUri}:${imageTag.valueAsString}`;
 
-    // Build secrets array for Express Mode
-    // Note: DATABASE_URL should be a complete PostgreSQL connection string in Secrets Manager
-    // Format: postgresql://username:password@host:port/database
-    // valueFrom only needs the secret ARN, the key is specified in the name field
-    const expressSecrets: ecs.CfnExpressGatewayService.SecretProperty[] = [
-      {
-        name: "AUTH_SECRET",
-        valueFrom: `${secretArn.valueAsString}:AUTH_SECRET::`,
-      },
-      {
-        name: "DATABASE_URL",
-        valueFrom: `${secretArn.valueAsString}:DATABASE_URL::`,
-      },
-      {
-        name: "ENCRYPT_SALT",
-        valueFrom: `${secretArn.valueAsString}:ENCRYPT_SALT::`,
-      },
-      {
-        name: "FRONTEND_URL",
-        valueFrom: `${secretArn.valueAsString}:FRONTEND_URL::`,
-      },
-      { name: "HOSTNAME", valueFrom: `${secretArn.valueAsString}:HOSTNAME::` },
-      {
-        name: "JWT_AUDIANCE",
-        valueFrom: `${secretArn.valueAsString}:JWT_AUDIANCE::`,
-      },
-      {
-        name: "JWT_ISSUERS",
-        valueFrom: `${secretArn.valueAsString}:JWT_ISSUERS::`,
-      },
-      {
-        name: "LINE_CHANNEL_ACCESS_TOKEN",
-        valueFrom: `${secretArn.valueAsString}:LINE_CHANNEL_ACCESS_TOKEN::`,
-      },
-      {
-        name: "LINE_CHANNEL_SECRET",
-        valueFrom: `${secretArn.valueAsString}:LINE_CHANNEL_SECRET::`,
-      },
-      {
-        name: "MONGO_DB_NAME",
-        valueFrom: `${secretArn.valueAsString}:MONGO_DB_NAME::`,
-      },
-      {
-        name: "MONGO_URL",
-        valueFrom: `${secretArn.valueAsString}:MONGO_URL::`,
-      },
-      {
-        name: "OAUTH_CLIENT_ID",
-        valueFrom: `${secretArn.valueAsString}:OAUTH_CLIENT_ID::`,
-      },
-      {
-        name: "OAUTH_CLIENT_SECRET",
-        valueFrom: `${secretArn.valueAsString}:OAUTH_CLIENT_SECRET::`,
-      },
-      {
-        name: "OAUTH_REDIRECT_URL",
-        valueFrom: `${secretArn.valueAsString}:OAUTH_REDIRECT_URL::`,
-      },
-      {
-        name: "OAUTH_SUBDOMAIN",
-        valueFrom: `${secretArn.valueAsString}:OAUTH_SUBDOMAIN::`,
-      },
-    ];
+    // // Build secrets array for Express Mode
+    // // Note: DATABASE_URL should be a complete PostgreSQL connection string in Secrets Manager
+    // // Format: postgresql://username:password@host:port/database
+    // // valueFrom only needs the secret ARN, the key is specified in the name field
+    // const expressSecrets: ecs.CfnExpressGatewayService.SecretProperty[] = [
+    //   {
+    //     name: "AUTH_SECRET",
+    //     valueFrom: `${secretArn.valueAsString}:AUTH_SECRET::`,
+    //   },
+    //   {
+    //     name: "DATABASE_URL",
+    //     valueFrom: `${secretArn.valueAsString}:DATABASE_URL::`,
+    //   },
+    //   {
+    //     name: "ENCRYPT_SALT",
+    //     valueFrom: `${secretArn.valueAsString}:ENCRYPT_SALT::`,
+    //   },
+    //   {
+    //     name: "FRONTEND_URL",
+    //     valueFrom: `${secretArn.valueAsString}:FRONTEND_URL::`,
+    //   },
+    //   { name: "HOSTNAME", valueFrom: `${secretArn.valueAsString}:HOSTNAME::` },
+    //   {
+    //     name: "JWT_AUDIANCE",
+    //     valueFrom: `${secretArn.valueAsString}:JWT_AUDIANCE::`,
+    //   },
+    //   {
+    //     name: "JWT_ISSUERS",
+    //     valueFrom: `${secretArn.valueAsString}:JWT_ISSUERS::`,
+    //   },
+    //   {
+    //     name: "LINE_CHANNEL_ACCESS_TOKEN",
+    //     valueFrom: `${secretArn.valueAsString}:LINE_CHANNEL_ACCESS_TOKEN::`,
+    //   },
+    //   {
+    //     name: "LINE_CHANNEL_SECRET",
+    //     valueFrom: `${secretArn.valueAsString}:LINE_CHANNEL_SECRET::`,
+    //   },
+    //   {
+    //     name: "MONGO_DB_NAME",
+    //     valueFrom: `${secretArn.valueAsString}:MONGO_DB_NAME::`,
+    //   },
+    //   {
+    //     name: "MONGO_URL",
+    //     valueFrom: `${secretArn.valueAsString}:MONGO_URL::`,
+    //   },
+    //   {
+    //     name: "OAUTH_CLIENT_ID",
+    //     valueFrom: `${secretArn.valueAsString}:OAUTH_CLIENT_ID::`,
+    //   },
+    //   {
+    //     name: "OAUTH_CLIENT_SECRET",
+    //     valueFrom: `${secretArn.valueAsString}:OAUTH_CLIENT_SECRET::`,
+    //   },
+    //   {
+    //     name: "OAUTH_REDIRECT_URL",
+    //     valueFrom: `${secretArn.valueAsString}:OAUTH_REDIRECT_URL::`,
+    //   },
+    //   {
+    //     name: "OAUTH_SUBDOMAIN",
+    //     valueFrom: `${secretArn.valueAsString}:OAUTH_SUBDOMAIN::`,
+    //   },
+    // ];
 
-    // Build environment variables array
-    const expressEnvironment: ecs.CfnExpressGatewayService.KeyValuePairProperty[] =
-      [
-        { name: "NODE_ENV", value: "production" },
-        { name: "PORT", value: "3030" },
-      ];
+    // // Build environment variables array
+    // const expressEnvironment: ecs.CfnExpressGatewayService.KeyValuePairProperty[] =
+    //   [
+    //     { name: "NODE_ENV", value: "production" },
+    //     { name: "PORT", value: "3030" },
+    //   ];
 
     // ECS Express Mode Service using CfnExpressGatewayService
     // This is AWS-managed infrastructure similar to App Runner
-    this.expressService = new ecs.CfnExpressGatewayService(
-      this,
-      "TmeExpressService",
-      {
-        serviceName: "tme-express-service",
-        executionRoleArn: taskExecutionRole.roleArn,
-        infrastructureRoleArn: infrastructureRole.roleArn,
-        taskRoleArn: taskRole.roleArn,
-        cpu: config.cpu,
-        memory: config.memory,
-        healthCheckPath: "/",
-        primaryContainer: {
-          image: imageUri,
-          containerPort: 3030,
-          environment: expressEnvironment,
-          secrets: expressSecrets,
-          awsLogsConfiguration: {
-            logGroup: `/aws/ecs/tme-express`,
-            logStreamPrefix: "tme",
-          },
-        },
-        scalingTarget: {
-          autoScalingMetric: "REQUEST_COUNT_PER_TARGET",
-          autoScalingTargetValue: 20,
-          minTaskCount: 1,
-          maxTaskCount: 3,
-        },
-      },
-    );
+    // this.expressService = new ecs.CfnExpressGatewayService(
+    //   this,
+    //   "TmeExpressService",
+    //   {
+    //     serviceName: "tme-express-service",
+    //     executionRoleArn: taskExecutionRole.roleArn,
+    //     infrastructureRoleArn: infrastructureRole.roleArn,
+    //     taskRoleArn: taskRole.roleArn,
+    //     cpu: config.cpu,
+    //     memory: config.memory,
+    //     healthCheckPath: "/",
+    //     primaryContainer: {
+    //       image: imageUri,
+    //       containerPort: 3030,
+    //       environment: expressEnvironment,
+    //       secrets: expressSecrets,
+    //       awsLogsConfiguration: {
+    //         logGroup: `/aws/ecs/tme-express`,
+    //         logStreamPrefix: "tme",
+    //       },
+    //     },
+    //     scalingTarget: {
+    //       autoScalingMetric: "REQUEST_COUNT_PER_TARGET",
+    //       autoScalingTargetValue: 20,
+    //       minTaskCount: 1,
+    //       maxTaskCount: 3,
+    //     },
+    //   },
+    // );
 
     // Ensure roles are created before the service
-    this.expressService.node.addDependency(taskExecutionRole);
-    this.expressService.node.addDependency(taskRole);
-    this.expressService.node.addDependency(infrastructureRole);
+    // this.expressService.node.addDependency(taskExecutionRole);
+    // this.expressService.node.addDependency(taskRole);
+    // this.expressService.node.addDependency(infrastructureRole);
 
     // Outputs
-    new cdk.CfnOutput(this, "ServiceName", {
-      value: this.expressService.serviceName!,
-      description: "ECS Express Service name",
-    });
+    // new cdk.CfnOutput(this, "ServiceName", {
+    //   value: this.expressService.serviceName!,
+    //   description: "ECS Express Service name",
+    // });
 
-    new cdk.CfnOutput(this, "ServiceArn", {
-      value: this.expressService.attrServiceArn,
-      description: "ECS Express Service ARN",
-    });
+    // new cdk.CfnOutput(this, "ServiceArn", {
+    //   value: this.expressService.attrServiceArn,
+    //   description: "ECS Express Service ARN",
+    // });
   }
 }
 
