@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@aws-sdk/client-sesv2@^3.1130.0":
-  version "3.1130.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-sesv2/-/client-sesv2-3.1130.0.tgz#8c2f3bcdedafa321ff858f1a186016499785517b"
-  integrity sha512-VkGg0E5iDO79ByWUr1nGNyak8JRfRm9MWzXXO33rzy+v695Jk8gyau3JPt1Qsck/TOSPDlyMfhYeKPb/aUzUnw==
+"@aws-sdk/client-sesv2@^3.1135.0":
+  version "3.1135.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-sesv2/-/client-sesv2-3.1135.0.tgz#5c41ef83b25b87e23769298a04dc7d9e96bfc4ed"
+  integrity sha512-AENgG8Xu5fFkifQgEYsdmMcUrqhdc+Plb9a2cztUbbRjAZAwvds0dATkEYkcUJUYg+TlPGHuty5QulabO7guww==
   dependencies:
     "@aws-sdk/core" "^3.978.0"
     "@aws-sdk/credential-provider-node" "^3.972.83"
