@@ -74,7 +74,7 @@
     "feathers-sequelize": "^7.0.3",
     "helmet": "^8.3.0",
     "mongodb": "^7.6.0",
-    "nodemailer": "^10.0.3",
+    "nodemailer": "^10.0.10",
     "pg": "^8.23.0",
     "sequelize": "^6.37.8",
     "serve-favicon": "^2.5.1",
