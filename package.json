@@ -73,7 +73,7 @@
     "feathers-permissions": "^2.1.4",
     "feathers-sequelize": "^7.0.3",
     "helmet": "^8.3.0",
-    "mongodb": "^7.6.0",
+    "mongodb": "^7.7.0",
     "nodemailer": "^10.0.3",
     "pg": "^8.23.0",
     "sequelize": "^6.37.8",
