@@ -8,6 +8,7 @@ jobs:
   deploy-image:
     # Ensure test job passes before pushing image.
     runs-on: ubuntu-24.04
+    environment: production
     permissions:
       id-token: write   # This is required for requesting the JWT
       contents: read
